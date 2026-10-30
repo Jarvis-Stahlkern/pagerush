@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jarvis-stahlkern.github.io/pagerush/sitemap.xml
