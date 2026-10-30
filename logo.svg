@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+ <defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4d6"/><stop offset=".35" stop-color="#f6cf86"/><stop offset=".7" stop-color="#e2a24f"/><stop offset="1" stop-color="#b8752a"/></linearGradient>
+  <linearGradient id="silber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f6fb"/><stop offset=".5" stop-color="#aeb6c8"/><stop offset="1" stop-color="#6f7890"/></linearGradient>
+  <linearGradient id="glas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3142" stop-opacity=".95"/><stop offset="1" stop-color="#0e1118" stop-opacity=".95"/></linearGradient>
+  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ </defs>
+ <g transform="translate(8 20) skewX(-12)">
+  <rect x="14" y="10" width="76" height="58" rx="11" fill="url(#glas)" stroke="url(#silber)" stroke-width="2.4"/>
+  <path d="M14 26 H90" stroke="url(#silber)" stroke-width="1.6" opacity=".7"/>
+  <circle cx="24" cy="18.5" r="2.6" fill="#f4f6fb"/><circle cx="32" cy="18.5" r="2.6" fill="#f4f6fb"/><circle cx="40" cy="18.5" r="2.6" fill="#f4f6fb"/>
+ </g>
+ <path filter="url(#glow)" d="M86 8 L52 66 H74 L58 120 L104 50 H80 L98 8 Z" fill="url(#gold)" stroke="#fff3d0" stroke-width="1.2" stroke-linejoin="round"/>
+</svg>
