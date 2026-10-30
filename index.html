@@ -718,13 +718,29 @@ async function erzeugen(text, bau = true) {
 }
 // Text verstehen
 const NICHT_ORT = /^(Blau|Rot|Grün|Gold|Lila|Orange|Pink|Türkis|Schwarz|Weiß|Braun|Gelb|Silber|Petrol|Mint|Rosa|Bordeaux|Violett|Deutschland|Zukunft|Kürze|Ordnung|Ruhe)$/;
+function nameWunsch(t) {
+ const X = "[„\"“'‚]?([^„\"“”'‘\\n.!?]{2,40}?)[“\"”'‘]?\\s*(?=[.!?\\n]|$)";
+ const res = [
+  new RegExp("(?:(?:firmen|seiten|web(?:seiten|site)?|neuer?)\\s*name|\\bname|\\bfirma)\\b[^.:=\\n]{0,40}?(?:soll(?:te)?\\s+)?(?:heißen|heissen|heißt|heisst|lauten|lautet|ist|wird|:|=)\\s*" + X, "i"),
+  new RegExp("(?:(?:web)?seite|website|homepage|firma|laden|shop|projekt)\\b[^.:=\\n]{0,30}?(?:soll(?:te)?\\s+)?(?:heißen|heissen|heißt|heisst|lauten|lautet)\\s*" + X, "i"),
+  new RegExp("(?:nenn|benenn|umbenenn)\\w*\\s+(?:(?:sie|es|die\\s+(?:web)?seite|die\\s+website|die\\s+firma)\\s+)?(?:um\\s+)?(?:in\\s+)?" + X, "i")
+ ,
+  new RegExp("(?:\\bname|\\bfirma)\\b[^.:=\\n]{0,40}?soll(?:te)?\\s+[„\"“'‚]?([^„\"“”'‘\\n.!?]{2,40}?)[“\"”'‘]?\\s+(?:heißen|heissen|lauten|sein)\\b", "i"),
+  new RegExp("(?:(?:web)?seite|website|homepage|laden|shop|projekt)\\b[^.:=\\n]{0,30}?soll(?:te)?\\s+[„\"“'‚]?([^„\"“”'‘\\n.!?]{2,40}?)[“\"”'‘]?\\s+(?:heißen|heissen|lauten)\\b", "i")
+ ];
+ for (const re of res) { const m = t.match(re); if (m && m[1].trim().length > 1) return { name: m[1].trim().replace(/\s+/g, " "), ganz: m[0] }; }
+ return null;
+}
 function verstehen(t, erst) {
+ const nm = nameWunsch(t); if (nm) t = t.replace(nm.ganz, " ");
  const s = t.toLowerCase(), done = [];
+ if (nm && !erst) { bd.firma = nm.name; done.push("Name: " + nm.name); }
  const ohne = re => new RegExp("(?:ohne|kein|weg mit|raus mit|entfern)[^.,]{0,25}(?:" + re.source + ")|(?:" + re.source + ")[^.,]{0,15}(?:weg|raus|entfernen|löschen)").test(s);
  if (erst) {
   for (const [k, re] of ERKENNE) if (re.test(s)) { bd.branche = k; break; }
   let n = t.match(/[„"“'‚]([^“"”'‘]{2,40})[“"”'‘]/) || t.match(/(?:firma|heißt|heisst|namens|name ist|name:)\s+([A-ZÄÖÜ0-9][^,.\n]{1,40}?)(?=\s+(?:in|aus|und|mit|ist|,)\b|[,.\n]|$)/i) || t.match(/([A-ZÄÖÜ][\w&äöüß.\-]*(?:\s+[A-ZÄÖÜ&][\w&äöüß.\-]*){0,3}\s+(?:GmbH|UG|e\.\s?K\.|KG|AG|GbR|OHG))/) || t.match(/^\s*([A-ZÄÖÜ][\wäöüß&.\-]*(?:\s+[A-ZÄÖÜ&][\wäöüß&.\-]*){0,3})\s*[,–\-:]/);
   if (n) bd.firma = n[1].trim().replace(/\s+/g, " ");
+  if (nm) bd.firma = nm.name;
   const orte = [...t.matchAll(/\b(?:in|aus|bei)\s+([A-ZÄÖÜ][a-zäöüß\-]+(?:\s(?:am|an der|im|bei)\s[A-ZÄÖÜ][a-zäöüß\-]+)?)/g)].map(m => m[1]).filter(o => !NICHT_ORT.test(o));
   if (orte.length) bd.ort = orte[0];
   const tel = t.match(/(\+?\d[\d \/\-]{6,}\d)/); if (tel) bd.tel = tel[1];
@@ -745,7 +761,7 @@ function verstehen(t, erst) {
  const ti = t.match(/(?:überschrift|titel|slogan)\s*[:=]\s*(.+)/i); if (ti) { bd.titel = ti[1].slice(0, 80); done.push("neue Überschrift"); }
  const ut = t.match(/(?:untertitel|unterzeile)\s*[:=]\s*(.+)/i); if (ut) { bd.untertitel = ut[1].slice(0, 160); done.push("neue Unterzeile"); }
  const le = t.match(/(?:leistungen|angebot|wir bieten|services?)\s*[:=]\s*([^\n]+)/i); if (le) { bd.leistungen = le[1].split(/,|;| und | sowie |\//).map(x => x.trim().replace(/\.$/, "")).filter(x => x.length > 1).slice(0, 8); done.push("eigene Leistungen"); }
- if (!erst) { const nn = t.match(/(?:firma|name)\s*(?:ist|:|=)\s*([^,.\n]{2,40})/i); if (nn) { bd.firma = nn[1].trim(); done.push("Name: " + bd.firma); }
+ if (!erst) {
   const oo = t.match(/(?:stadt|ort)\s*(?:ist|:|=)\s*([A-ZÄÖÜ][\wäöüß\- ]{1,30})/i); if (oo) { bd.ort = oo[1].trim(); done.push("Ort: " + bd.ort); } }
  return done;
 }
