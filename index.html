@@ -720,7 +720,7 @@ function sag(t, wer = "ki") { const m = document.createElement("div"); m.classNa
 let alleTexte = [];
 function merken() { try { localStorage.setItem("pagerush_projekt", JSON.stringify({ bd, beschreibung, wuensche, alleTexte, verlauf: B$.verlauf.innerHTML, zeit: Date.now() })); } catch (e) {} }
 function laden() { try { const d = JSON.parse(localStorage.getItem("pagerush_projekt") || "null"); if (!d || !d.beschreibung) return false;
- beschreibung = d.beschreibung; if (d.bd) bd = d.bd; else { bd = { firma: "Deine Firma", branche: "allg", ort: "deiner Stadt", stil: "warm", anim: "sanft" }; verstehen(d.beschreibung, true); (d.alleTexte || []).slice(1).forEach(x => verstehen(x, false)); } wuensche = d.wuensche || []; alleTexte = d.alleTexte || [];
+ beschreibung = d.beschreibung; if (d.bd) { bd = d.bd; if (!bd.apple && /apple|lovable|leuchtf|strahlend|farbwechsel|blau.{0,6}violett|purple|aurora/.test((d.alleTexte || [d.beschreibung]).join(" ").toLowerCase())) { bd.apple = true; bd.dunkel = true; if (bd.anim === "sanft") bd.anim = "parallax"; } } else { bd = { firma: "Deine Firma", branche: "allg", ort: "deiner Stadt", stil: "warm", anim: "sanft" }; verstehen(d.beschreibung, true); (d.alleTexte || []).slice(1).forEach(x => verstehen(x, false)); } wuensche = d.wuensche || []; alleTexte = d.alleTexte || [];
  B$.lv.dataset.modus = "editor"; B$.verlauf.innerHTML = d.verlauf || ""; passen(); erzeugen("", false); $("pText").value = beschreibung; return true; } catch (e) { return false; } }
 function bilderDaten() { const r = k => bilder.filter(b => b.rolle === k).map(b => b.url); return { logo: r("logo")[0] || null, hero: r("hero"), galerie: r("galerie") }; }
 function verkleinern(datei) {
