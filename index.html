@@ -1325,8 +1325,8 @@ footer{overflow:hidden}
      <div class="dateien" id="dateiListe"></div></div>
    </div>
    </div>
-   <button class="knopf" type="submit" style="margin-top:22px"><svg width="16" height="16"><use href="#cursor"/></svg>Bestellung abschicken · 99 €</button>
-   <div class="meldung" id="bestellMeldung" hidden>Fast geschafft: Dein Mailprogramm öffnet sich mit deiner fertigen Bestellung. Einmal auf Senden tippen (Logo und Fotos gern anhängen), dann bekommst du von uns den sicheren Zahlungslink. Öffnet sich nichts? Schreib uns an info@stahlkern.gmbh.</div>
+   <button class="knopf" type="submit" style="margin-top:22px"><svg width="16" height="16"><use href="#cursor"/></svg>Weiter zur Zahlung · 99 €</button>
+   <div class="meldung" id="bestellMeldung" hidden></div>
   </form>
  </div>
 </section>
@@ -1845,14 +1845,18 @@ const BSP = [
 ];
 $("beispiele-raster").innerHTML = BSP.map(b => { const s = seiteHTML(b.firma, b.branche, b.ort, b.stil);
  return `<div class="bsp"><div class="buehne"><div class="leiste"><i></i><i></i><i></i><div class="url">${slug(b.firma)}.de</div></div><div class="seite" style="${s.stil}">${s.html.replace(/data-b/g, "")}</div></div><p>${b.t}</p></div>`; }).join("");
-// Bestellung (noch ohne Zahlung)
+// Bestellung: Daten speichern, dann Stripe-Zahlung (99 €)
 $("b-dateien").addEventListener("change", e => { const f = [...e.target.files]; $("dateiListe").textContent = f.length ? f.slice(0, 20).map(x => "✓ " + x.name).join("   ") : ""; });
 $("bestellForm").addEventListener("submit", e => { e.preventDefault();
- const v = id => ($(id).value || "").trim(), dat = [...($("b-dateien").files || [])].map(f => f.name);
- const text = `Hallo Pagerush-Team,\n\nich möchte meine Website für 99 € bestellen.\n\nName: ${v("b-name")}\nE-Mail: ${v("b-mail")}\nFirma: ${v("b-firma")}\nBranche: ${v("b-branche")}\n${window.pagerushDomain ? window.pagerushDomain() : ""}\n\nWas auf die Website soll:\n${v("b-text") || "-"}\n` + (dat.length ? `\nLogo/Fotos (bitte als Anhang an diese Mail): ${dat.join(", ")}\n` : "") + `\nBitte schickt mir den Zahlungslink.\n`;
- try { localStorage.setItem("pagerush_bestellung", JSON.stringify({ t: Date.now(), name: v("b-name"), mail: v("b-mail"), firma: v("b-firma"), branche: v("b-branche"), text: v("b-text"), domain: window.pagerushDomain ? window.pagerushDomain() : "" })); } catch (_) {}
- location.href = "mailto:info@stahlkern.gmbh?subject=" + encodeURIComponent("Pagerush-Bestellung: " + v("b-firma")) + "&body=" + encodeURIComponent(text);
- $("bestellMeldung").hidden = false; });
+ const v = id => ($(id).value || "").trim(), dat = [...($("b-dateien").files || [])].map(f => f.name), M = $("bestellMeldung"), K = e.target.querySelector("button[type=submit]");
+ const best = { name: v("b-name"), mail: v("b-mail"), firma: v("b-firma"), branche: v("b-branche"), domain: window.pagerushDomain ? window.pagerushDomain() : "", text: v("b-text") + (dat.length ? "\n[Dateien folgen per Mail: " + dat.join(", ") + "]" : "") };
+ try { localStorage.setItem("pagerush_bestellung", JSON.stringify({ t: Date.now(), ...best })); } catch (_) {}
+ K.disabled = true; M.hidden = false; M.textContent = "Einen Moment, ich leite dich sicher zur Zahlung weiter …";
+ fetch("https://2-31-5-96.sslip.io/pagerush-api/bestellung", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(best) })
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(j => { location.href = "https://buy.stripe.com/eVq28rbUEdus0z74tJ3cc08?client_reference_id=" + encodeURIComponent(j.ref) + "&prefilled_email=" + encodeURIComponent(best.mail); })
+  .catch(() => { K.disabled = false; M.textContent = "Das hat gerade nicht geklappt. Bitte versuch es gleich nochmal oder schreib uns an info@stahlkern.gmbh."; });
+});
 })();
 </script>
 <script>
