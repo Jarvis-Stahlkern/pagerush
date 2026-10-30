@@ -683,7 +683,7 @@ body.ap.lt .faeden{opacity:.75}
 .faeden path{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:260 1300;animation:faden 11s linear infinite}
 .faeden path:nth-child(2){animation-duration:15s;animation-delay:-4s;stroke-width:1.2}.faeden path:nth-child(3){animation-duration:19s;animation-delay:-9s}.faeden path:nth-child(4){animation-duration:13s;animation-delay:-2s;stroke-width:1}
 @keyframes faden{to{stroke-dashoffset:-1560}}` : ""}
-</style></head><body${ap ? ' class="ap"' : ""}>${an === "keine" ? "" : '<div class="fortschritt"></div>'}
+</style>${d.css ? "<style>" + String(d.css).replace(/<\/?(style|script)/gi, "") + "</style>" : ""}</head><body${ap ? ' class="ap"' : ""}>${an === "keine" ? "" : '<div class="fortschritt"></div>'}
 ${ap ? `<svg class="faeden" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg1" x1="0" x2="1"><stop offset="0" stop-color="#0a84ff"/><stop offset=".5" stop-color="#5e5ce6"/><stop offset="1" stop-color="#bf5af2"/></linearGradient></defs><path stroke="url(#fg1)" d="M-50,720 C250,520 420,860 720,600 S1180,260 1500,420"/><path stroke="url(#fg1)" d="M-50,200 C300,380 520,40 860,260 S1240,640 1500,540"/><path stroke="url(#fg1)" d="M-50,520 C200,300 540,700 800,420 S1200,120 1500,260"/><path stroke="url(#fg1)" d="M-50,860 C330,760 600,900 940,720 S1260,520 1500,700"/></svg>` : ""}
 <nav class="nav"><div class="w"><span class="logo">${logo}</span><ul>${nav.map(n => `<li><a href="#${n[0]}">${n[1]}</a></li>`).join("")}</ul><span class="burger">☰</span></div></nav>
 <header class="hero">${ap ? '<div class="aur"><i></i><i></i><i></i></div>' : ""}${heroHTML}<div class="w"><p class="k" style="color:inherit;opacity:.85">${esc(d.firma)} · ${esc(d.ort)}</p><h1>${h.split(" ").map((w, j) => `<span class="wort" style="--j:${j}">${w}</span>`).join(" ")}</h1><p>${sub}</p><div class="bt"><a class="btn" href="#kontakt">${esc(B.btn)}</a><a class="btn l" href="#leistungen">Leistungen ansehen</a></div></div>
@@ -842,7 +842,7 @@ function starten(text) {
  const eingebaut = done.filter(x => !x.startsWith("Bewertungen")); if (bd.anim !== "keine" && !eingebaut.some(x => x.startsWith("Animation"))) eingebaut.push("Scroll-Effekte: " + ANIMS[bd.anim]);
  erzeugen(`Fertig: Website für <b>${esc(bd.firma)}</b> in <b>${esc(bd.ort)}</b>${bd.branche !== "allg" ? "" : ""}.${eingebaut.length ? " Eingebaut: " + eingebaut.join(", ") + "." : ""}${bilder.length ? " Deine Fotos sind drin." : " Tipp: Lade deine Fotos und dein Logo mit 📎 hoch."}<br>Schreib mir einfach, was anders sein soll.`);
  $("lv").scrollIntoView({ behavior: "smooth", block: "start" });
- if (bd.preise && /\d\s?(€|euro)/i.test(text)) setTimeout(() => kiWunsch("Trag in die Preisliste genau meine Preise aus der Beschreibung ein."), 4800);
+ setTimeout(() => kiWunsch("NEUBAU: Baue die komplette Website genau nach dieser Beschreibung des Kunden (Texte, Leistungen, passende Abschnitte, Farben und Design-Wünsche): " + text), 400);
 }
 const KI_URL = "https://2-31-5-96.sslip.io/pagerush-api/wunsch"; let kiAnzahl = 0;
 async function kiWunsch(t, hinweis) {
@@ -850,11 +850,11 @@ async function kiWunsch(t, hinweis) {
  if (kiAnzahl >= 12) return fallback();
  kiAnzahl++; B$.status.hidden = false; B$.statusT.textContent = "KI liest deinen Wunsch …";
  try {
-  const stand = { beschreibung: (beschreibung || "").slice(0, 2500), untertitel: bd.untertitel || null, leistungen: bd.leistungen || null, ueber: bd.ueber || null, preisliste: bd.preisliste || null, extra: bd.extra || [], firma: bd.firma, branche: bd.branche, ort: bd.ort, stil: bd.stil, anim: bd.anim, dunkel: !!bd.dunkel, farbe: bd.farbe || null, titel: bd.titel || null, preise: !!bd.preise, team: !!bd.team, zeiten: !!bd.zeiten, faq: !!bd.faq, karte: !!bd.karte };
+  const stand = { css: bd.css || "", toene: bd.toene || null, toeneKontakt: bd.toeneKontakt || null, beschreibung: (beschreibung || "").slice(0, 2500), untertitel: bd.untertitel || null, leistungen: bd.leistungen || null, ueber: bd.ueber || null, preisliste: bd.preisliste || null, extra: bd.extra || [], firma: bd.firma, branche: bd.branche, ort: bd.ort, stil: bd.stil, anim: bd.anim, dunkel: !!bd.dunkel, farbe: bd.farbe || null, titel: bd.titel || null, preise: !!bd.preise, team: !!bd.team, zeiten: !!bd.zeiten, faq: !!bd.faq, karte: !!bd.karte };
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 45000);
   const r = await fetch(KI_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ wunsch: t, stand }), signal: ctl.signal }); clearTimeout(to);
   if (!r.ok) throw 0; const d = await r.json(), p = d.patch || {};
-  if (Object.keys(p).length) { Object.assign(bd, p); erzeugen(esc(d.antwort || "Erledigt.") + (hinweis ? "<br>" + hinweis + "." : ""), true); }
+  if (Object.keys(p).length) { if (p.toene) { bd.apple = true; } Object.assign(bd, p); erzeugen(esc(d.antwort || "Erledigt.") + (hinweis ? "<br>" + hinweis + "." : ""), true); }
   else { B$.status.hidden = true; wuensche.push(t); sag(esc(d.antwort || "Notiert.") + (hinweis ? "<br>" + hinweis + "." : "")); }
  } catch (e) { B$.status.hidden = true; wuensche.push(t); fallback(); }
 }
