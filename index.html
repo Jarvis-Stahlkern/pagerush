@@ -778,11 +778,25 @@ function starten(text) {
  erzeugen(`Fertig: Website für <b>${esc(bd.firma)}</b> in <b>${esc(bd.ort)}</b>${bd.branche !== "allg" ? "" : ""}.${eingebaut.length ? " Eingebaut: " + eingebaut.join(", ") + "." : ""}${bilder.length ? " Deine Fotos sind drin." : " Tipp: Lade deine Fotos und dein Logo mit 📎 hoch."}<br>Schreib mir einfach, was anders sein soll.`);
  $("lv").scrollIntoView({ behavior: "smooth", block: "start" });
 }
+const KI_URL = "https://2-31-5-96.sslip.io/pagerush-api/wunsch"; let kiAnzahl = 0;
+async function kiWunsch(t, hinweis) {
+ const fallback = () => sag(`Notiert ✓ – <b>„${esc(t.slice(0, 80))}“</b> kommt in deine fertige Website. Unser Team setzt das um. ${hinweis ? "<br>" + hinweis + "." : ""}<br><small>Sofort sichtbar in der Vorschau: Farben, hell/dunkel, Stil, Abschnitte, Animation, Überschrift, Leistungen, Fotos.</small>`);
+ if (kiAnzahl >= 8) return fallback();
+ kiAnzahl++; B$.status.hidden = false; B$.statusT.textContent = "KI liest deinen Wunsch …";
+ try {
+  const stand = { firma: bd.firma, branche: bd.branche, ort: bd.ort, stil: bd.stil, anim: bd.anim, dunkel: !!bd.dunkel, farbe: bd.farbe || null, titel: bd.titel || null, preise: !!bd.preise, team: !!bd.team, zeiten: !!bd.zeiten, faq: !!bd.faq, karte: !!bd.karte };
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 45000);
+  const r = await fetch(KI_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ wunsch: t, stand }), signal: ctl.signal }); clearTimeout(to);
+  if (!r.ok) throw 0; const d = await r.json(), p = d.patch || {};
+  if (Object.keys(p).length) { Object.assign(bd, p); erzeugen(esc(d.antwort || "Erledigt.") + (hinweis ? "<br>" + hinweis + "." : ""), true); }
+  else { B$.status.hidden = true; wuensche.push(t); sag(esc(d.antwort || "Notiert.") + (hinweis ? "<br>" + hinweis + "." : "")); }
+ } catch (e) { B$.status.hidden = true; wuensche.push(t); fallback(); }
+}
 function wunsch(t) {
  sag(esc(t), "du"); const done = verstehen(t, false);
  const echt = done.filter(x => !x.startsWith("Bewertungen")), hinweis = done.find(x => x.startsWith("Bewertungen"));
  if (echt.length) erzeugen(`Erledigt: <b>${echt.join(", ")}</b>.${hinweis ? "<br>" + hinweis + "." : ""}`, true);
- else { wuensche.push(t); sag(`Notiert ✓ – <b>„${esc(t.slice(0, 80))}“</b> kommt in deine fertige Website. Unsere KI und unser Team setzen das um. ${hinweis ? "<br>" + hinweis + "." : ""}<br><small>Sofort sichtbar in der Vorschau: Farben, hell/dunkel, Stil, Abschnitte, Animation, Überschrift, Leistungen, Fotos.</small>`); }
+ else kiWunsch(t, hinweis);
 }
 function animKnoepfe() {
  $("bAnim").innerHTML = "<span>Animation:</span>" + Object.entries(ANIMS).map(([k, v]) => `<button type="button" data-a="${k}" aria-pressed="${bd.anim === k}">${v}</button>`).join("");
