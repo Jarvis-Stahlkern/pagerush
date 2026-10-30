@@ -750,7 +750,7 @@ function verstehen(t, erst) {
  }
  if (/dunk|schwarz|nacht|dark/.test(s) && !ohne(/dunk/)) { bd.dunkel = true; done.push("dunkles Design"); }
  if (/\bhell|heller|weiß|weiss|freundlich|light/.test(s)) { bd.dunkel = false; done.push("helles Design"); }
- for (const [k, v] of Object.entries(FARBEN)) if (new RegExp(k.replace("ü", "(ü|ue)")).test(s)) { bd.farbe = v; done.push("Farbe " + k); break; }
+ for (const [k, v] of Object.entries(FARBEN)) if (new RegExp("(?:(?<![a-zäöüß])|(?<=dunkel|hell|neon|pastell))" + k.replace("ü", "(ü|ue)")).test(s)) { bd.farbe = v; done.push("Farbe " + k); break; }
  const stilWort = [["edel",/edel|luxus|luxuri|elegant|premium|hochwertig/],["modern",/modern|tech|futur|cool/],["frisch",/frisch|clean|leicht|jung/],["warm",/warm|gemütlich|rustikal|natürlich/]];
  for (const [k, re] of stilWort) if (re.test(s)) { bd.stil = k; if (!/farbe|blau|rot|grün|gold|lila|orange|pink|türkis|braun|gelb|silber|petrol|mint|rosa|bordeaux|violett/.test(s)) bd.farbe = null; done.push("Stil " + k); break; }
  const abschn = [["preise",/preis/,"Preisliste"],["team",/team|mitarbeiter/,"Team-Bereich"],["zeiten",/öffnungszeit|oeffnungszeit|öffnungs|zeiten/,"Öffnungszeiten"],["faq",/faq|häufige fragen|fragen/,"FAQ"],["karte",/karte|anfahrt|standort|maps/,"Anfahrt"]];
