@@ -704,8 +704,9 @@ if(!bau||matchMedia('(prefers-reduced-motion: reduce)').matches){normal();return
 sek.forEach(function(s){s.classList.add('skel')});var i=0;
 function weiter(){if(i>=sek.length){setTimeout(function(){scrollTo({top:0,behavior:'smooth'});normal();},700);return;}var s=sek[i++];scrollTo({top:Math.max(0,s.offsetTop-66),behavior:'smooth'});s.querySelectorAll('.r').forEach(function(x){x.classList.add('in')});setTimeout(function(){s.classList.remove('skel');setTimeout(weiter,650);},520);}
 setTimeout(weiter,1500);})();
-<\/script>${ap ? `<script>(function(){var sek=[].slice.call(document.querySelectorAll('.sek')),b=document.body;sek.forEach(function(s,i){s.dataset.t=s.id==='galerie'?'dk':'lh'});
-function f(){var y=scrollY,h=document.documentElement.scrollHeight-innerHeight,m=innerHeight*.5,hell=false;sek.forEach(function(s){var r=s.getBoundingClientRect();if(r.top<m&&r.bottom>m&&s.dataset.t==='lh')hell=true;});b.classList.toggle('lt',hell);b.style.setProperty('--hue',h>0?Math.round(y/h*80):0);}
+<\/script>${ap ? `<script>(function(){var sek=[].slice.call(document.querySelectorAll('.sek')),b=document.body;var T=${d.toene ? "[" + d.toene.map(x => x === "lh" ? "'lh'" : "'dk'").join(",") + "]" : "null"},K=${d.toeneKontakt ? "'" + (d.toeneKontakt === "lh" ? "lh" : "dk") + "'" : "null"},hero=document.querySelector('.hero'),alle=(hero?[hero]:[]).concat(sek);
+if(T){var vor='lh';alle.forEach(function(s,i){var t=T[i]||(vor==='dk'?'lh':'dk');if(s.id==='kontakt'&&K)t=K;s.dataset.t=t;vor=t;});}else sek.forEach(function(s,i){s.dataset.t=s.id==='galerie'?'dk':'lh'});
+function f(){var y=scrollY,h=document.documentElement.scrollHeight-innerHeight,m=innerHeight*.5,hell=false;alle.forEach(function(s){var r=s.getBoundingClientRect();if(r.top<m&&r.bottom>m&&s.dataset.t==='lh')hell=true;});b.classList.toggle('lt',hell);b.style.setProperty('--hue',h>0?Math.round(y/h*80):0);}
 addEventListener('scroll',f,{passive:true});f();
 document.addEventListener('mousemove',function(e){var k=e.target.closest&&e.target.closest('.kachel');if(k){var r=k.getBoundingClientRect();k.style.setProperty('--mx',(e.clientX-r.left)+'px');k.style.setProperty('--my',(e.clientY-r.top)+'px');}});})();<\/script>` : ""}
 </body></html>`;
@@ -720,7 +721,7 @@ function sag(t, wer = "ki") { const m = document.createElement("div"); m.classNa
 let alleTexte = [];
 function merken() { try { localStorage.setItem("pagerush_projekt", JSON.stringify({ bd, beschreibung, wuensche, alleTexte, verlauf: B$.verlauf.innerHTML, zeit: Date.now() })); } catch (e) {} }
 function laden() { try { const d = JSON.parse(localStorage.getItem("pagerush_projekt") || "null"); if (!d || !d.beschreibung) return false;
- beschreibung = d.beschreibung; if (d.bd) { bd = d.bd; if (!bd.apple && /apple|lovable|leuchtf|strahlend|farbwechsel|blau.{0,6}violett|purple|aurora/.test((d.alleTexte || [d.beschreibung]).join(" ").toLowerCase())) { bd.apple = true; bd.dunkel = true; if (bd.anim === "sanft") bd.anim = "parallax"; } } else { bd = { firma: "Deine Firma", branche: "allg", ort: "deiner Stadt", stil: "warm", anim: "sanft" }; verstehen(d.beschreibung, true); (d.alleTexte || []).slice(1).forEach(x => verstehen(x, false)); } wuensche = d.wuensche || []; alleTexte = d.alleTexte || [];
+ beschreibung = d.beschreibung; if (d.bd) { bd = d.bd; if (!bd.toene) for (const x of (d.alleTexte || [d.beschreibung])) { const tw = toeneWunsch(x || ""); if (tw) { bd.toene = tw.toene; bd.toeneKontakt = tw.kontakt; bd.apple = true; bd.dunkel = true; } } if (!bd.apple && /apple|lovable|leuchtf|strahlend|farbwechsel|blau.{0,6}violett|purple|aurora/.test((d.alleTexte || [d.beschreibung]).join(" ").toLowerCase())) { bd.apple = true; bd.dunkel = true; if (bd.anim === "sanft") bd.anim = "parallax"; } } else { bd = { firma: "Deine Firma", branche: "allg", ort: "deiner Stadt", stil: "warm", anim: "sanft" }; verstehen(d.beschreibung, true); (d.alleTexte || []).slice(1).forEach(x => verstehen(x, false)); } wuensche = d.wuensche || []; alleTexte = d.alleTexte || [];
  B$.lv.dataset.modus = "editor"; B$.verlauf.innerHTML = d.verlauf || ""; passen(); erzeugen("", false); $("pText").value = beschreibung; return true; } catch (e) { return false; } }
 function bilderDaten() { const r = k => bilder.filter(b => b.rolle === k).map(b => b.url); return { logo: r("logo")[0] || null, hero: r("hero"), galerie: r("galerie") }; }
 function verkleinern(datei) {
@@ -765,7 +766,7 @@ async function erzeugen(text, bau = true) {
  if (text) sag(text);
 }
 // Text verstehen
-const NICHT_ORT = /^(Blau|Rot|Grün|Gold|Lila|Orange|Pink|Türkis|Schwarz|Weiß|Braun|Gelb|Silber|Petrol|Mint|Rosa|Bordeaux|Violett|Deutschland|Zukunft|Kürze|Ordnung|Ruhe)$/;
+const NICHT_ORT = /^(Blau|Rot|Grün|Gold|Lila|Orange|Pink|Türkis|Schwarz|Weiß|Braun|Gelb|Silber|Petrol|Mint|Rosa|Bordeaux|Violett|Deutschland|Zukunft|Kürze|Ordnung|Ruhe|Kontakt|Display|Teil|Abschnitt|Seite|Hero|Leistungen|Galerie|Preise|Team|Anfahrt)$/;
 function nameWunsch(t) {
  const X = "[„\"“'‚]?([^„\"“”'‘\\n.!?]{2,40}?)[“\"”'‘]?\\s*(?=[.!?\\n]|$)";
  const res = [
@@ -778,6 +779,17 @@ function nameWunsch(t) {
  ];
  for (const re of res) { const m = t.match(re); if (m && m[1].trim().length > 1) return { name: m[1].trim().replace(/\s+/g, " "), ganz: m[0] }; }
  return null;
+}
+function toeneWunsch(t) {
+ const s = t.toLowerCase(), ORD = { erst: 0, zweit: 1, dritt: 2, viert: 3, "fünft": 4, fuenft: 4, sechst: 5, siebt: 6, acht: 7 };
+ const ton = w => /schwarz|dunkel/.test(w) ? "dk" : "lh", T = [];
+ for (const m of s.matchAll(/\b(erst|zweit|dritt|viert|fünft|fuenft|sechst|siebt|acht)(?:e[rnsm]?)?\s+(?:teil|abschnitt|bereich|block|sektion|section)[^.!?]{0,60}?(schwarz|dunkel|weiß|weiss|hell)/g)) T[ORD[m[1]]] = ton(m[2]);
+ const k = s.match(/kontakt[^.!?]{0,40}?(schwarz|dunkel|weiß|weiss|hell)/);
+ const abw = /abwechselnd|im wechsel/.test(s) && /schwarz|dunkel/.test(s) && /weiß|weiss|hell/.test(s);
+ if (!T.length && !k && !abw) return null;
+ if (!T.length) T[0] = "dk";
+ for (let i = 0; i < T.length; i++) if (!T[i]) T[i] = T[i - 1] === "dk" ? "lh" : "dk";
+ return { toene: T, kontakt: k ? ton(k[1]) : null };
 }
 function verstehen(t, erst) {
  const nm = nameWunsch(t); if (nm) t = t.replace(nm.ganz, " ");
@@ -797,8 +809,12 @@ function verstehen(t, erst) {
   if (bd.firma === "Deine Firma" && bd.branche !== "allg") bd.firma = { baeckerei: "Bäckerei", friseur: "Salon", elektro: "Elektro", kfz: "Autowerkstatt" }[bd.branche] ? ({ baeckerei: "Bäckerei", friseur: "Salon", elektro: "Elektro", kfz: "Autowerkstatt" }[bd.branche] + " " + (bd.ort !== "deiner Stadt" ? bd.ort : "Muster")) : "Deine Firma";
  }
  if (/apple|lovable|leuchtf|strahlend|farbwechsel|blau.{0,6}violett|purple|aurora/.test(s) && !ohne(/apple/)) { bd.apple = true; bd.dunkel = true; if (bd.anim === "sanft") bd.anim = "parallax"; done.push("Apple-Look (Schwarz mit Blau-Violett, Farbwechsel beim Scrollen, Leuchtfäden)"); }
+ const tw = toeneWunsch(t);
+ if (tw) { bd.toene = tw.toene; bd.toeneKontakt = tw.kontakt; bd.apple = true; bd.dunkel = true; done.push("Abschnitte im Wechsel: " + tw.toene.map((x, i) => (i + 1) + ". " + (x === "dk" ? "schwarz" : "weiß")).join(", ") + (tw.kontakt ? ", Kontakt " + (tw.kontakt === "dk" ? "schwarz" : "weiß") : "")); }
+ else {
  if (/dunk|schwarz|nacht|dark/.test(s) && !ohne(/dunk/)) { bd.dunkel = true; done.push("dunkles Design"); }
  if (/\bhell|heller|weiß|weiss|freundlich|light/.test(s)) { bd.dunkel = false; done.push("helles Design"); }
+ }
  for (const [k, v] of Object.entries(FARBEN)) if (new RegExp("(?:(?<![a-zäöüß])|(?<=dunkel|hell|neon|pastell))" + k.replace("ü", "(ü|ue)")).test(s)) { bd.farbe = v; done.push("Farbe " + k); break; }
  const stilWort = [["edel",/edel|luxus|luxuri|elegant|premium|hochwertig/],["modern",/modern|tech|futur|cool/],["frisch",/frisch|clean|leicht|jung/],["warm",/warm|gemütlich|rustikal|natürlich/]];
  for (const [k, re] of stilWort) if (re.test(s)) { bd.stil = k; if (!/farbe|blau|rot|grün|gold|lila|orange|pink|türkis|braun|gelb|silber|petrol|mint|rosa|bordeaux|violett/.test(s)) bd.farbe = null; done.push("Stil " + k); break; }
@@ -846,6 +862,7 @@ function wunsch(t) {
  alleTexte.push(t); sag(esc(t), "du"); const done = verstehen(t, false);
  const echt = done.filter(x => !x.startsWith("Bewertungen")), hinweis = done.find(x => x.startsWith("Bewertungen"));
  if (echt.length) erzeugen(`Erledigt: <b>${echt.join(", ")}</b>.${hinweis ? "<br>" + hinweis + "." : ""}`, true)
+ if (echt.some(x => x.startsWith("Abschnitte im Wechsel")) && t.length < 600 && !/leistung|preis|über uns|text|bild|foto|name|überschrift|abschnitt.{0,20}(dazu|neu)/i.test(t.replace(/abschnitt[^.]{0,0}/gi, ""))) return;
  if (echt.includes("Preisliste dazu") && !bd.preisliste && /\d\s?(€|euro)/i.test(beschreibung + " " + t)) kiWunsch("Trag in die Preisliste genau meine Preise aus der Beschreibung ein.", hinweis);
  else kiWunsch(t, hinweis);
 }
