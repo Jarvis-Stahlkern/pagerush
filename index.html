@@ -2362,7 +2362,8 @@ var URLS={nordlicht:'nordlicht-labs.de',lena:'lena-hoffmann.de',kraemer:'kraemer
 addEventListener('message',function(e){var d=e.data;if(!d||!d.pagerush)return;recs.forEach(function(r){if(r.frame.contentWindow===e.source)r.h=d.h})});
 // sanftes Auto-Scrollen (hin und her), nur sichtbare Geräte
 var last=0;
-(function lauf(t){requestAnimationFrame(lauf);if(ruhig)return;last=t;
+var schwach=matchMedia('(max-width:900px),(pointer:coarse)').matches,fk=0;
+(function lauf(t){requestAnimationFrame(lauf);if(ruhig)return;if(schwach&&(fk++&1))return;last=t;
  recs.forEach(function(r){if(!r.vis||!r.auto||!r.ok||!r.h||!r.vh)return;var max=Math.max(0,r.h-r.vh);if(max<20)return;
   var v=(r.tel?95:75)/r.sc; var per=max/v*1000; var q=((t-r.t0)%(2*per+3000));var y=q<per?q/per:(q<per+1500?1:(q<2*per+1500?1-(q-per-1500)/per:0));
   y=y*y*(3-2*y)*max;y=Math.round(y);if(y!==r.y){r.y=y;try{r.frame.contentWindow.postMessage({y:y},'*')}catch(_){}}})})(0);
@@ -2416,4 +2417,29 @@ if(raster){
  raster.classList.add('zg-vier')}
 })();
 </script>
+
+<style id="perf-mobil">
+/* HANDY-SPARMODUS (31.10.): weniger Ebenen, kein Weichzeichner im Scrollen, keine 3D-Kippung der Geräte */
+@media (max-width:900px),(pointer:coarse){
+ *,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ header{background:rgba(10,11,15,.96)!important}
+ .wow-korn,.wow-licht,#wowFaeden{display:none!important}
+ .wow-aurora{filter:none!important}
+ .wow-aurora i{filter:none!important;animation:none!important;mix-blend-mode:normal!important;will-change:auto!important;transform:none!important}
+ .wow-aurora i:nth-child(1){opacity:.45}
+ .wow-kopf{will-change:auto}
+ .wow-h1 .z{filter:none!important;animation:wortRein 1s cubic-bezier(.2,.7,.1,1) forwards!important}
+ .wow-rein,.ks-l{filter:none!important;transition:opacity .6s,transform .6s!important}
+ .km-pin::before,.wow-glanz,.glasv::before,.zg-glow{filter:none!important}
+ .gv-kugeln i,.gv-glanz,.lx-handy,.ip-rahmen,.bx-app{animation:none!important}
+ .ip-seite{animation:none!important}
+ .wow-perspektive .gx-stage,.ks-geraet,.zg-fenster,.mr-bild,.ip-rahmen,.glasv .gv-platte{transform:none!important;transition:none!important}
+ .wow-perspektive,.ks-geraet-rahmen,.glasv,.lx-b-gross .ip{perspective:none!important}
+ .wow-perspektive .gx-stage{will-change:auto!important}
+ .mr-bild{opacity:1!important}
+ .gx-view iframe,.gx-phone iframe{will-change:auto!important}
+ .gx-scan{display:none}
+ #preis .betrag{filter:none!important}
+}
+</style>
 </html>
