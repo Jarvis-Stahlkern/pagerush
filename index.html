@@ -524,6 +524,97 @@ footer{overflow:hidden}
 @media(min-width:901px){#beispiele .beispiele.zg-vier{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:26px}#beispiele .zg-vier .bsp .buehne{aspect-ratio:16/10.5}}
 .bsp .zg-mini{height:100%;--a:#8b5cf6;background:#07070b;color:#f4f4f7;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 .bsp .zg-mini .zg-held{--hero:radial-gradient(90% 120% at 85% 0%,rgba(139,92,246,.55),transparent 60%),radial-gradient(70% 90% at 0% 100%,rgba(77,124,255,.35),transparent 60%),#0b0b12}
+
+/* ===== BEISPIELE-Ebene: vier eigenständige Mini-Websites (Startup, Bau, Friseur, Restaurant) ===== */
+#beispiele .bsp .buehne{aspect-ratio:16/11.2}
+#beispiele .bsp .seite.bx-seite{inset:38px 0 0!important;padding:0!important;display:block!important;zoom:1!important;overflow:hidden;background:#000;container-type:inline-size}
+.bx{position:absolute;inset:0;overflow:hidden;font-family:var(--text);font-size:2.25cqw;line-height:1.35}
+.bx *{box-sizing:border-box}
+.bx>div{position:relative;height:100%}
+.bx-nav{display:flex;align-items:center;gap:3cqw;padding:2.6cqw 4cqw;position:relative;z-index:3;font-size:2cqw}
+.bx-nav b{margin-right:auto;font-size:2.7cqw;letter-spacing:-.01em}
+.bx-nav span{opacity:.7}
+.bx-nav u{text-decoration:none;font-weight:700;padding:1.3cqw 2.2cqw;border-radius:1.2cqw}
+/* 1 Startup */
+.bx-s{background:radial-gradient(70% 80% at 85% 0%,rgba(139,92,246,.35),transparent 60%),radial-gradient(60% 70% at 0% 100%,rgba(77,124,255,.22),transparent 60%),#07070b;color:#f4f4f7}
+.bx-s .bx-nav b{font-family:var(--display);font-weight:800}
+.bx-s .bx-nav u{background:#8b5cf6;color:#fff;box-shadow:0 0 3cqw -.5cqw #8b5cf6}
+.bx-s-main{display:grid;grid-template-columns:1.05fr 1fr;gap:3cqw;padding:2cqw 4cqw 0;align-items:center}
+.bx-s-tag{display:inline-block;font:600 1.7cqw/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#c9b6ff;padding:1cqw 1.6cqw;border-radius:99px;background:rgba(139,92,246,.14);box-shadow:inset 0 0 0 1px rgba(139,92,246,.4)}
+.bx-s h4{font:800 6.4cqw/1 var(--display);letter-spacing:-.04em;margin:2.2cqw 0 1.8cqw}
+.bx-s h4 em{font-style:normal;background:linear-gradient(90deg,#b79cff,#6ea0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bx-s p{margin:0 0 2.6cqw;opacity:.72;font-size:2cqw;max-width:30ch}
+.bx-s-mail{display:flex;align-items:center;max-width:36cqw;border-radius:1.4cqw;padding:.7cqw .7cqw .7cqw 2cqw;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);font-size:1.9cqw}
+.bx-s-mail em{font-style:normal;opacity:.5;margin-right:auto}
+.bx-s-mail u{text-decoration:none;font-weight:700;padding:1.2cqw 1.8cqw;border-radius:1cqw;background:#8b5cf6}
+.bx-app{position:relative;border-radius:2cqw;background:linear-gradient(180deg,#171726,#0e0e18);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 4cqw 8cqw -3cqw #000,0 0 8cqw -2cqw rgba(139,92,246,.6);padding:2cqw;transform:rotate(2deg)}
+.bx-app-k{display:flex;gap:.7cqw;margin-bottom:1.6cqw}.bx-app-k i{width:1.2cqw;height:1.2cqw;border-radius:50%;background:#2c2c3e}
+.bx-app h5{margin:0 0 .4cqw;font-size:1.7cqw;opacity:.6;font-weight:500}
+.bx-app strong{display:block;font:800 3.8cqw/1 var(--display);letter-spacing:-.03em;margin-bottom:1.6cqw}
+.bx-bars{display:flex;align-items:flex-end;gap:1cqw;height:11cqw}
+.bx-bars i{flex:1;border-radius:.8cqw .8cqw .2cqw .2cqw;background:linear-gradient(180deg,#a78bfa,#5b3fd0)}
+.bx-bars i:nth-child(odd){background:linear-gradient(180deg,#6ea0ff,#3b5fd0)}
+.bx-chip{position:absolute;right:-1.5cqw;bottom:-2.4cqw;display:flex;gap:1cqw;align-items:center;padding:1.3cqw 2cqw;border-radius:1.6cqw;background:#fff;color:#111;font-weight:700;font-size:1.8cqw;box-shadow:0 2cqw 5cqw -1cqw #000}
+.bx-chip::before{content:"✓";display:grid;place-items:center;width:3cqw;height:3cqw;border-radius:50%;background:#22c55e;color:#fff;font-size:1.8cqw}
+.bx-s-fuss{position:absolute;left:4cqw;right:4cqw;bottom:2.4cqw;display:flex;gap:3cqw;font-size:1.7cqw;opacity:.55}
+.bx-s-fuss span::before{content:"◆ ";color:#8b5cf6}
+/* 2 Bau */
+.bx-b{color:#fff;background:#0d1b3a}
+.bx-b svg{position:absolute;inset:0;width:100%;height:100%}
+.bx-b .bx-nav b{font-family:var(--display);font-weight:800;letter-spacing:.02em}
+.bx-b .bx-nav u{background:#fff;color:#0d1b3a}
+.bx-b-text{position:absolute;left:4cqw;bottom:15cqw;z-index:2;max-width:56cqw}
+.bx-b-text small{font:600 1.7cqw/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.bx-b h4{font:800 6.2cqw/.98 var(--display);letter-spacing:-.045em;margin:1.8cqw 0 2.2cqw;text-shadow:0 .5cqw 3cqw rgba(0,0,0,.35)}
+.bx-b-btn{display:inline-block;font-weight:700;font-size:2cqw;padding:1.7cqw 2.6cqw;border-radius:.6cqw;background:#ffb43a;color:#1a1206}
+.bx-b-zahlen{position:absolute;z-index:2;left:4cqw;right:4cqw;bottom:2.4cqw;display:grid;grid-template-columns:repeat(3,1fr);border-radius:1.4cqw;background:rgba(255,255,255,.94);color:#0d1b3a;box-shadow:0 2cqw 5cqw -1cqw rgba(0,0,0,.5)}
+.bx-b-zahlen div{padding:1.6cqw 2.2cqw;border-left:1px solid rgba(13,27,58,.12)}.bx-b-zahlen div:first-child{border:0}
+.bx-b-zahlen b{display:block;font:800 3.4cqw/1 var(--display);letter-spacing:-.03em;color:#1e6bff}
+.bx-b-zahlen span{font-size:1.7cqw;opacity:.7}
+/* 3 Friseur */
+.bx-f{background:#0c0a08;color:#f3ebdc;text-align:center}
+.bx-f .bx-nav{justify-content:space-between;letter-spacing:.2em;text-transform:uppercase;font-size:1.6cqw}
+.bx-f .bx-nav b{margin:0;font:400 3cqw/1 Georgia,"Times New Roman",serif;letter-spacing:.5em;color:#d4af5a;order:0}
+.bx-f-kopf{padding:3cqw 4cqw 0}
+.bx-f small{font:500 1.6cqw/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:#d4af5a}
+.bx-f h4{font:italic 400 8cqw/.95 Georgia,"Times New Roman",serif;letter-spacing:-.02em;margin:1.8cqw 0 2.4cqw}
+.bx-f h4 span{color:#d4af5a}
+.bx-f-btn{display:inline-block;font:600 1.7cqw/1 var(--text);letter-spacing:.2em;text-transform:uppercase;padding:1.6cqw 3cqw;border:1px solid #d4af5a;color:#d4af5a}
+.bx-f-galerie{position:absolute;left:4cqw;right:4cqw;bottom:0;display:flex;gap:2cqw;justify-content:center;align-items:flex-end}
+.bx-bogen{position:relative;flex:1;max-width:22cqw;border-radius:50cqw 50cqw 0 0;overflow:hidden;box-shadow:0 0 0 1px rgba(212,175,90,.35)}
+.bx-bogen:nth-child(1){height:19cqw;background:linear-gradient(180deg,#6b4a32,#2a1b12)}
+.bx-bogen:nth-child(2){height:25cqw;background:linear-gradient(180deg,#b88a4f,#4a3220)}
+.bx-bogen:nth-child(3){height:19cqw;background:linear-gradient(180deg,#8a5a44,#2d1a14)}
+.bx-bogen i{position:absolute;left:50%;transform:translateX(-50%)}
+.bx-bogen .k{top:26%;width:34%;aspect-ratio:1;border-radius:50%;background:#d8b08c}
+.bx-bogen .h{top:17%;width:46%;height:42%;border-radius:50% 50% 38% 38%;background:var(--hr);z-index:0}
+.bx-bogen .k{z-index:1}
+.bx-bogen .s{bottom:-18%;width:92%;aspect-ratio:1.5;border-radius:50% 50% 0 0;background:#1a1410;z-index:2}
+.bx-bogen:nth-child(1){--hr:#1b0f0a}.bx-bogen:nth-child(2){--hr:#d9a24a}.bx-bogen:nth-child(3){--hr:#7a2e1c}
+.bx-bogen:nth-child(1) .h,.bx-bogen:nth-child(3) .h{height:62%;border-radius:50% 50% 30% 30%}
+/* 4 Restaurant */
+.bx-r{display:grid;grid-template-columns:1fr 1.08fr;background:#fbf2e4;color:#2b1d12}
+.bx-r-bild{position:relative;background:radial-gradient(80% 70% at 30% 20%,#b5521f,#5a230c 70%);display:grid;place-items:center;overflow:hidden}
+.bx-r-bild::after{content:"Luce";position:absolute;left:3.5cqw;top:3cqw;font:italic 400 3.4cqw/1 Georgia,serif;color:#fff8ee;opacity:.9}
+.bx-teller{position:relative;width:33cqw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fffaf1 0 62%,#efe3cd 63% 70%,#fff8ee 71% 100%);box-shadow:0 3cqw 5cqw -1cqw rgba(0,0,0,.55),inset 0 0 0 .3cqw rgba(0,0,0,.06);display:grid;place-items:center}
+.bx-nest{position:relative;width:60%;aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(from 10deg,#f0c04d 0 7deg,#dba337 7deg 14deg);box-shadow:inset 0 0 2cqw rgba(120,70,0,.45);-webkit-mask:radial-gradient(circle,transparent 0 9%,#000 10%);mask:radial-gradient(circle,transparent 0 9%,#000 10%)}
+.bx-sosse{position:absolute;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#c53a22 0 55%,#a62b17 100%);box-shadow:0 .5cqw 1cqw rgba(0,0,0,.35)}
+.bx-bl{position:absolute;width:5.5cqw;height:3cqw;border-radius:100% 0;background:linear-gradient(135deg,#4fa14a,#2d6b2d)}
+.bx-bl.a{top:36%;left:36%;transform:rotate(-30deg)}.bx-bl.b{top:42%;left:46%;transform:rotate(40deg) scale(.85)}
+.bx-tm{position:absolute;width:3.2cqw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7a5c,#d23a22)}
+.bx-tm.a{top:30%;left:60%}.bx-tm.b{top:62%;left:34%;transform:scale(.8)}.bx-tm.c{top:56%;left:64%;transform:scale(.7)}
+.bx-r-text{padding:3cqw 4cqw;display:flex;flex-direction:column;justify-content:center}
+.bx-r-text small{font:600 1.6cqw/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#c9772b}
+.bx-r-text h4{font:800 5.4cqw/1 var(--display);letter-spacing:-.045em;margin:1.4cqw 0 2cqw}
+.bx-karte{list-style:none;margin:0 0 2.4cqw;padding:0;display:grid;gap:1.1cqw;font-size:1.95cqw}
+.bx-karte li{display:flex;align-items:baseline;gap:1cqw}
+.bx-karte li::after{content:"";order:1;flex:1;border-bottom:.3cqw dotted rgba(43,29,18,.35)}
+.bx-karte li span{order:2;font-weight:700}
+.bx-r-btn{align-self:flex-start;font-weight:700;font-size:1.9cqw;padding:1.5cqw 2.4cqw;border-radius:99px;background:#2b1d12;color:#fbf2e4}
+.bx-r-zeit{margin-top:1.6cqw;font-size:1.6cqw;opacity:.6}
+@media(max-width:560px){.bx{font-size:2.5cqw}.bx-s-fuss{display:none}}
+@media(prefers-reduced-motion:no-preference){.bx-app{animation:bxSchweb 7s ease-in-out infinite}.bx-bogen{transition:transform .5s}.bsp:hover .bx-bogen:nth-child(2){transform:translateY(-1.2cqw)}}
+@keyframes bxSchweb{50%{transform:rotate(1deg) translateY(-1cqw)}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1506,6 +1597,36 @@ if(pb){var b=document.createElement('button');b.type='button';var x=ZG[0].vorlag
 // Einblenden
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('da');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
 [].forEach.call(document.querySelectorAll('#fuerwen .zg-tabs,#fuerwen .zg-raster'),function(el){el.classList.add('wow-rein');io.observe(el)});
+})();
+
+/* BEISPIELE-Ebene: vier eigenständige Mini-Websites mit gezeichneten Beispielbildern */
+(function(){
+var r=document.getElementById('beispiele-raster');if(!r)return;
+[].forEach.call(r.querySelectorAll('.bsp:not(.bsp-dein)'),function(n){n.remove()});
+var K=function(url,inner,cap){var d=document.createElement('div');d.className='bsp';
+ d.innerHTML='<div class="buehne"><div class="leiste"><i></i><i></i><i></i><div class="url">'+url+'</div></div><div class="seite bx-seite"><div class="bx">'+inner+'</div></div></div><p>'+cap+'</p>';return d};
+var S='<div class="bx-s"><div class="bx-nav"><b>Nordlicht</b><span>Produkt</span><span>Preise</span><span>Team</span><u>Demo buchen</u></div>'+
+ '<div class="bx-s-main"><div><span class="bx-s-tag">KI-Software · Neu</span><h4>Angebote in <em>30 Sekunden.</em></h4><p>Die Software, die Handwerker vom Papierkram befreit.</p><div class="bx-s-mail"><em>deine@mail.de</em><u>Zur Warteliste</u></div></div>'+
+ '<div class="bx-app"><div class="bx-app-k"><i></i><i></i><i></i></div><h5>Angebot #2041</h5><strong>4.280 €</strong><div class="bx-bars"><i style="height:38%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:78%"></i><i style="height:64%"></i><i style="height:94%"></i></div><div class="bx-chip">Versendet</div></div></div>'+
+ '<div class="bx-s-fuss"><span>Ohne Einarbeitung</span><span>Server in Deutschland</span><span>Monatlich kündbar</span></div></div>';
+var B='<div class="bx-b"><svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="bxHim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1b3a"/><stop offset=".55" stop-color="#2b5fb8"/><stop offset="1" stop-color="#f2a65a"/></linearGradient><radialGradient id="bxSon" cx=".78" cy=".72" r=".5"><stop offset="0" stop-color="#ffd9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></radialGradient></defs>'+
+ '<rect width="600" height="420" fill="url(#bxHim)"/><rect width="600" height="420" fill="url(#bxSon)"/>'+
+ '<g fill="#14284f" opacity=".75"><rect x="20" y="250" width="50" height="170"/><rect x="78" y="220" width="40" height="200"/><rect x="450" y="240" width="60" height="180"/><rect x="520" y="270" width="70" height="150"/></g>'+
+ '<g stroke="#0a1530" stroke-width="3" fill="none"><path d="M380 420V120M380 120h120M500 120v30M380 120l-40 18M360 120v-24h40v24"/><path d="M380 170l-30 250M380 170l30 250" stroke-width="1.5" opacity=".6"/></g>'+
+ '<g fill="#0a1530"><path d="M230 420V285l95-62 95 62v135z"/><rect x="215" y="278" width="220" height="10"/></g>'+
+ '<g fill="#ffc65a"><rect x="262" y="320" width="26" height="34" rx="2"/><rect x="362" y="320" width="26" height="34" rx="2"/><rect x="312" y="350" width="26" height="70" rx="2" fill="#f2a65a"/></g>'+
+ '<rect y="400" width="600" height="20" fill="#08122a"/></svg>'+
+ '<div class="bx-nav"><b>Krämer Bau</b><span>Leistungen</span><span>Referenzen</span><u>Angebot</u></div>'+
+ '<div class="bx-b-text"><small>Meisterbetrieb · Esslingen</small><h4>Aus Plänen werden Häuser.</h4><span class="bx-b-btn">Kostenloses Angebot</span></div>'+
+ '<div class="bx-b-zahlen"><div><b>Seit 1998</b><span>Familienbetrieb</span></div><div><b>Festpreis</b><span>keine Überraschung</span></div><div><b>48 h</b><span>bis zum Angebot</span></div></div></div>';
+var Fz='<div class="bx-f"><div class="bx-nav"><span>Leistungen</span><b>MIRA</b><span>Termin</span></div>'+
+ '<div class="bx-f-kopf"><small>Friseur · Stuttgart</small><h4>Haar ist <span>Handwerk.</span></h4><span class="bx-f-btn">Termin buchen</span></div>'+
+ '<div class="bx-f-galerie"><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div></div></div>';
+var R='<div class="bx-r"><div class="bx-r-bild"><div class="bx-teller"><div class="bx-nest"></div><div class="bx-sosse" style="position:absolute;left:35%;top:35%"></div><i class="bx-bl a"></i><i class="bx-bl b"></i><i class="bx-tm a"></i><i class="bx-tm b"></i><i class="bx-tm c"></i></div></div>'+
+ '<div class="bx-r-text"><small>Seit 1994 · Ludwigsburg</small><h4>Pasta, wie sie sein soll.</h4><ul class="bx-karte"><li>Tagliatelle al ragù<span>14,50</span></li><li>Gnocchi Gorgonzola<span>13,90</span></li><li>Tiramisù della casa<span>6,80</span></li></ul><span class="bx-r-btn">Tisch reservieren</span><div class="bx-r-zeit">Di – So ab 17:30 Uhr</div></div></div>';
+var arr=[K('nordlicht-labs.de',S,'<b>Startup</b> · Dunkel, Produkt im Fokus'),K('kraemer-bau.de',B,'<b>Bau &amp; Handwerk</b> · Großes Bild, klare Zahlen'),K('salon-mira.de',Fz,'<b>Friseur</b> · Edel, ruhig, mit Galerie'),K('trattoria-luce.de',R,'<b>Restaurant</b> · Bild links, Karte rechts')];
+arr.reverse().forEach(function(n){r.insertBefore(n,r.firstChild)});
+r.classList.add('zg-vier');
 })();
 </script>
 </html>
