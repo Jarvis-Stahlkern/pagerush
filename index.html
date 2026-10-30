@@ -576,7 +576,7 @@ function siteHTML(d) {
  const hero = d.farbe ? `radial-gradient(120% 130% at 85% 0%, ${a}, ${dunkel ? "#0b0c10" : "#1b1d24"} 70%)` : S0.hero;
  const fontH = { warm: "Georgia,'Times New Roman',serif", edel: "'Didot','Bodoni MT',Georgia,serif", frisch: "'Helvetica Neue',Arial,sans-serif", modern: "'Arial Black','Helvetica Neue',Arial,sans-serif" }[d.stil] || "Georgia,serif";
  const h = esc(d.titel || fill(B.h)), sub = esc(d.untertitel || fill(B.sub));
- const an = d.anim || "sanft", bau = d.bau ? 1 : 0;
+ const an = d.anim || "sanft", bau = d.bau ? 1 : 0, ap = !!d.apple;
  const img = d.bilder || { logo: null, hero: [], galerie: [] };
  const heroBilder = img.hero || [], gal = img.galerie || [], ueberBild = gal[0] || heroBilder[1] || heroBilder[0];
  const leist = d.leistungen && d.leistungen.length ? d.leistungen.slice(0, 8).map((t, i) => [M.l[i % 4][0], typeof t === "string" ? t : t.t, typeof t === "string" ? "Kurz beschrieben – den Text schreibt unsere KI für dich." : (t.b || "")]) : M.l;
@@ -652,9 +652,41 @@ ${an === "schieben" ? ".r:nth-child(even){transform:translateX(90px)}" : ""}
 @media (max-width:900px){.kacheln,.gal{grid-template-columns:1fr 1fr}.zwei{grid-template-columns:1fr;gap:32px}.preise,.team,.zeiten{grid-template-columns:1fr}.nav ul{display:none}.burger{display:block}.sek{padding:80px 0}.hero{padding:100px 0 120px}}
 @media (max-width:520px){.kacheln{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r,.hero .wort{opacity:1;transform:none}}
-</style></head><body>${an === "keine" ? "" : '<div class="fortschritt"></div>'}
+${ap ? `body.ap{--bgc:#000;--fgc:#f5f5f7;--cardc:rgba(255,255,255,.06);--linec:rgba(255,255,255,.12);--hue:0;background:var(--bgc);color:var(--fgc);font-family:-apple-system,'SF Pro Display','Helvetica Neue',Arial,sans-serif;transition:background .9s ease,color .9s ease}
+body.ap.lt{--bgc:#fbfbfd;--fgc:#1d1d1f;--cardc:#fff;--linec:rgba(0,0,0,.08)}
+.ap h1,.ap h2,.ap h3{font-family:-apple-system,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-weight:700;letter-spacing:-.035em}
+.ap .sek,.ap .sek:nth-of-type(even){background:transparent;position:relative;z-index:1}
+.ap .kachel,.ap .preis,.ap .pers,.ap .zeiten div,.ap .form,.ap .karte{background:var(--cardc);box-shadow:0 0 0 1px var(--linec);transition:background .9s,box-shadow .9s,opacity .9s,transform .5s}
+.ap .pl li,.ap details{border-color:var(--linec)}
+.ap .nav{background:color-mix(in srgb,var(--bgc) 65%,transparent);border-color:var(--linec);transition:background .9s}
+.ap .nav a,.ap .logo{color:var(--fgc)}.ap .nav a:hover{color:#2997ff}
+.ap .welle{display:none}.ap .hero{background:transparent;color:#f5f5f7;position:relative;z-index:1}
+.ap .k{background:linear-gradient(90deg,#2997ff,#bf5af2);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ap .hero .k{opacity:1!important}
+.ap .hero h1{font-size:clamp(42px,7.4vw,92px);max-width:13ch}
+.ap .hero .wort{background:linear-gradient(110deg,#fff 10%,#8fc3ff 55%,#d4a4ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.08em}
+.ap .sek h2{background:linear-gradient(90deg,var(--fgc) 0,var(--fgc) 38%,#2997ff 68%,#bf5af2 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transition:background-position 1.6s cubic-bezier(.2,.7,.2,1) .2s}
+.ap .sek h2.in,.ap .sek .in h2{background-position:0 0}
+.ap .btn,.ap .form button{background:linear-gradient(135deg,#0a84ff,#5e5ce6 55%,#bf5af2);box-shadow:0 12px 40px -12px #5e5ce6}.ap .btn.l{background:transparent;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}
+.ap .ico{background:linear-gradient(135deg,#0a84ff33,#bf5af233)}.ap .mehr,.ap .preis b{color:#2997ff}.ap .pl li::before{color:#bf5af2}
+.ap .kachel::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(94,92,230,.35),transparent 65%);opacity:0;transition:opacity .35s;pointer-events:none}.ap .kachel:hover::before{opacity:1}
+.ap .kachel::after{background:#5e5ce6}
+.ap .form input,.ap .form textarea{background:color-mix(in srgb,var(--fgc) 8%,transparent);color:var(--fgc)}
+.ap footer{border-color:var(--linec);position:relative;z-index:1}
+.aur{position:absolute;inset:0;overflow:hidden;z-index:1;filter:hue-rotate(calc(var(--hue)*1deg));pointer-events:none}
+.aur i{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;animation:schweb 16s ease-in-out infinite alternate}
+.aur i:nth-child(1){width:60vw;height:60vw;max-width:760px;max-height:760px;background:#0a84ff;opacity:.55;left:-12%;top:-30%}
+.aur i:nth-child(2){width:55vw;height:55vw;max-width:700px;max-height:700px;background:#5e5ce6;opacity:.6;right:-10%;top:-18%;animation-delay:-5s}
+.aur i:nth-child(3){width:46vw;height:46vw;max-width:600px;max-height:600px;background:#bf5af2;opacity:.5;left:28%;bottom:-40%;animation-delay:-9s}
+.faeden{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;filter:hue-rotate(calc(var(--hue)*1deg)) drop-shadow(0 0 7px #5e5ce6);opacity:.9;transition:opacity .9s}
+body.ap.lt .faeden{opacity:.4}
+.faeden path{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:260 1300;animation:faden 11s linear infinite}
+.faeden path:nth-child(2){animation-duration:15s;animation-delay:-4s;stroke-width:1.2}.faeden path:nth-child(3){animation-duration:19s;animation-delay:-9s}.faeden path:nth-child(4){animation-duration:13s;animation-delay:-2s;stroke-width:1}
+@keyframes faden{to{stroke-dashoffset:-1560}}` : ""}
+</style></head><body${ap ? ' class="ap"' : ""}>${an === "keine" ? "" : '<div class="fortschritt"></div>'}
+${ap ? `<svg class="faeden" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg1" x1="0" x2="1"><stop offset="0" stop-color="#0a84ff"/><stop offset=".5" stop-color="#5e5ce6"/><stop offset="1" stop-color="#bf5af2"/></linearGradient></defs><path stroke="url(#fg1)" d="M-50,720 C250,520 420,860 720,600 S1180,260 1500,420"/><path stroke="url(#fg1)" d="M-50,200 C300,380 520,40 860,260 S1240,640 1500,540"/><path stroke="url(#fg1)" d="M-50,520 C200,300 540,700 800,420 S1200,120 1500,260"/><path stroke="url(#fg1)" d="M-50,860 C330,760 600,900 940,720 S1260,520 1500,700"/></svg>` : ""}
 <nav class="nav"><div class="w"><span class="logo">${logo}</span><ul>${nav.map(n => `<li><a href="#${n[0]}">${n[1]}</a></li>`).join("")}</ul><span class="burger">☰</span></div></nav>
-<header class="hero">${heroHTML}<div class="w"><p class="k" style="color:inherit;opacity:.85">${esc(d.firma)} · ${esc(d.ort)}</p><h1>${h.split(" ").map((w, j) => `<span class="wort" style="--j:${j}">${w}</span>`).join(" ")}</h1><p>${sub}</p><div class="bt"><a class="btn" href="#kontakt">${esc(B.btn)}</a><a class="btn l" href="#leistungen">Leistungen ansehen</a></div></div>
+<header class="hero">${ap ? '<div class="aur"><i></i><i></i><i></i></div>' : ""}${heroHTML}<div class="w"><p class="k" style="color:inherit;opacity:.85">${esc(d.firma)} · ${esc(d.ort)}</p><h1>${h.split(" ").map((w, j) => `<span class="wort" style="--j:${j}">${w}</span>`).join(" ")}</h1><p>${sub}</p><div class="bt"><a class="btn" href="#kontakt">${esc(B.btn)}</a><a class="btn l" href="#leistungen">Leistungen ansehen</a></div></div>
 ${heroBilder.length > 1 ? `<div class="punkte">${heroBilder.slice(0, 5).map((_, i) => `<i class="${i ? "" : "an"}"></i>`).join("")}</div>` : ""}
 <svg class="welle" viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,40 C360,90 1080,-10 1440,40 L1440,70 L0,70 Z" fill="${bg}"/></svg></header>
 ${teile.join("\n")}
@@ -672,7 +704,11 @@ if(!bau||matchMedia('(prefers-reduced-motion: reduce)').matches){normal();return
 sek.forEach(function(s){s.classList.add('skel')});var i=0;
 function weiter(){if(i>=sek.length){setTimeout(function(){scrollTo({top:0,behavior:'smooth'});normal();},700);return;}var s=sek[i++];scrollTo({top:Math.max(0,s.offsetTop-66),behavior:'smooth'});s.querySelectorAll('.r').forEach(function(x){x.classList.add('in')});setTimeout(function(){s.classList.remove('skel');setTimeout(weiter,650);},520);}
 setTimeout(weiter,1500);})();
-<\/script></body></html>`;
+<\/script>${ap ? `<script>(function(){var sek=[].slice.call(document.querySelectorAll('.sek')),b=document.body;sek.forEach(function(s,i){s.dataset.t=i%2?'dk':'lh'});
+function f(){var y=scrollY,h=document.documentElement.scrollHeight-innerHeight,m=innerHeight*.5,hell=false;sek.forEach(function(s){var r=s.getBoundingClientRect();if(r.top<m&&r.bottom>m&&s.dataset.t==='lh')hell=true;});b.classList.toggle('lt',hell);b.style.setProperty('--hue',h>0?Math.round(y/h*80):0);}
+addEventListener('scroll',f,{passive:true});f();
+document.addEventListener('mousemove',function(e){var k=e.target.closest&&e.target.closest('.kachel');if(k){var r=k.getBoundingClientRect();k.style.setProperty('--mx',(e.clientX-r.left)+'px');k.style.setProperty('--my',(e.clientY-r.top)+'px');}});})();<\/script>` : ""}
+</body></html>`;
 }
 // ---------- Builder-Logik ----------
 const B$ = { lv: $("lv"), frame: $("bFrame"), rahmen: $("bRahmen"), verlauf: $("bVerlauf"), status: $("bStatus"), statusT: $("bStatusText") };
@@ -760,6 +796,7 @@ function verstehen(t, erst) {
   const adr = t.match(/([A-ZÄÖÜ][\wäöüß\-]*(?:straße|strasse|str\.|weg|gasse|platz|allee|ring|damm)\s*\d+\s?[a-z]?)/i); if (adr) bd.adresse = adr[1];
   if (bd.firma === "Deine Firma" && bd.branche !== "allg") bd.firma = { baeckerei: "Bäckerei", friseur: "Salon", elektro: "Elektro", kfz: "Autowerkstatt" }[bd.branche] ? ({ baeckerei: "Bäckerei", friseur: "Salon", elektro: "Elektro", kfz: "Autowerkstatt" }[bd.branche] + " " + (bd.ort !== "deiner Stadt" ? bd.ort : "Muster")) : "Deine Firma";
  }
+ if (/apple|lovable|leuchtf|strahlend|farbwechsel|blau.{0,6}violett|purple|aurora/.test(s) && !ohne(/apple/)) { bd.apple = true; bd.dunkel = true; if (bd.anim === "sanft") bd.anim = "parallax"; done.push("Apple-Look (Schwarz mit Blau-Violett, Farbwechsel beim Scrollen, Leuchtfäden)"); }
  if (/dunk|schwarz|nacht|dark/.test(s) && !ohne(/dunk/)) { bd.dunkel = true; done.push("dunkles Design"); }
  if (/\bhell|heller|weiß|weiss|freundlich|light/.test(s)) { bd.dunkel = false; done.push("helles Design"); }
  for (const [k, v] of Object.entries(FARBEN)) if (new RegExp("(?:(?<![a-zäöüß])|(?<=dunkel|hell|neon|pastell))" + k.replace("ü", "(ü|ue)")).test(s)) { bd.farbe = v; done.push("Farbe " + k); break; }
