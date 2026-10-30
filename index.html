@@ -294,7 +294,7 @@ h2{background:linear-gradient(180deg,#fff 40%,#a3abbd);-webkit-background-clip:t
 /* ===== KINO-Ebene (scroll-gesteuerte Szenen) ===== */
 .wow-kopf{will-change:transform,opacity}
 /* Manifest: Wort für Wort */
-.kino-manifest{height:260vh;padding:0!important;position:relative}
+.kino-manifest{height:150vh;padding:0!important;position:relative}
 .km-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;overflow:hidden}
 .km-pin::before{content:"";position:absolute;left:50%;top:50%;width:80vw;height:60vh;transform:translate(-50%,-50%) scale(var(--kmg,.6));background:radial-gradient(closest-side,rgba(77,124,255,.16),rgba(242,194,114,.08) 50%,transparent);filter:blur(40px);pointer-events:none}
 .km-text{position:relative;font:800 clamp(30px,4.6vw,72px)/1.08 var(--display);letter-spacing:-.04em;margin:0;max-width:22ch}
@@ -302,7 +302,7 @@ h2{background:linear-gradient(180deg,#fff 40%,#a3abbd);-webkit-background-clip:t
 .km-text .w.an{color:#f2f3f7}
 .km-text .w.g.an{color:#f2c272;text-shadow:0 0 40px rgba(242,194,114,.45)}
 /* Bau-Story */
-.kino-story{height:420vh;padding:0!important;position:relative}
+.kino-story{height:250vh;padding:0!important;position:relative}
 .ks-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;overflow:hidden}
 .ks-raster{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,5vw,80px);align-items:center;width:100%}
 .ks-text h2{margin-bottom:34px}
@@ -365,7 +365,7 @@ h2{background:linear-gradient(180deg,#fff 40%,#a3abbd);-webkit-background-clip:t
 #preis .betrag small{-webkit-text-fill-color:var(--grau)}
 /* Mobil */
 @media (max-width:900px){
- .kino-story{height:380vh}
+ .kino-story{height:230vh}
  .ks-raster{grid-template-columns:1fr;gap:18px}
  .ks-text h2{font-size:28px!important;margin-bottom:12px}
  .ks-text .kicker{margin-bottom:6px}
@@ -375,7 +375,7 @@ h2{background:linear-gradient(180deg,#fff 40%,#a3abbd);-webkit-background-clip:t
  .ks-balken{margin-top:12px}
  .ks-geraet{aspect-ratio:4/4.2;transform:none}
  .l-hero{grid-template-columns:1fr}.l-bild{min-height:60px}
- .kino-manifest{height:220vh}
+ .kino-manifest{height:140vh}
  .bsp-dein{margin-top:8px}
 }
 </style>
@@ -1150,9 +1150,9 @@ function zeichne(){tick=false;var vh=innerHeight,y=scrollY;
  // Hero: Text schwebt weg, Aurora driftet
  if(kopf&&y<vh*1.4){var h=klemm(y/(vh*.8));kopf.style.transform='translateY('+(y*.35)+'px) scale('+(1-h*.08)+')';kopf.style.opacity=1-h*1.1;if(aur)aur.style.transform='translateY('+(y*.2)+'px)'}
  // Manifest
- if(kmW.length){var p=klemm(fort(km.closest('.kino-manifest'))*1.15),n=Math.round(p*kmW.length);kmW.forEach(function(w,i){w.classList.toggle('an',i<n)});km.closest('.km-pin').style.setProperty('--kmg',.6+p*.6)}
+ if(kmW.length){var p=klemm(fort(km.closest('.kino-manifest'))*1.7),n=Math.round(p*kmW.length);kmW.forEach(function(w,i){w.classList.toggle('an',i<n)});km.closest('.km-pin').style.setProperty('--kmg',.6+p*.6)}
  // Story
- if(story){var p=fort(story),st=p<.3?0:p<.68?1:2;
+ if(story){var p=klemm(fort(story)*1.3),st=p<.3?0:p<.68?1:2;
   li.forEach(function(l,i){l.classList.toggle('an',i===st)});story.style.setProperty('--ksp',p);
   var tp=klemm(p/.26);tipp.textContent=satz.slice(0,Math.round(tp*satz.length));
   var bau=klemm((p-.3)/.36);
@@ -1165,7 +1165,7 @@ function zeichne(){tick=false;var vh=innerHeight,y=scrollY;
   if(innerWidth>900){ger.style.setProperty('--ry',(-14+14*e)+'deg');ger.style.setProperty('--rx',(6-6*e)+'deg');ger.style.setProperty('--gs',.92+.08*e)}
   ger.style.setProperty('--gl',.35+.4*e)}
  // Beispiele quer
- if(quer&&qx&&innerWidth>900){var p=fort(quer),weite=qx.scrollWidth-innerWidth;qx.style.setProperty('--qx',(-p*Math.max(0,weite))+'px')}
+ if(quer&&qx&&innerWidth>900){var p=klemm(fort(quer)*1.12),weite=qx.scrollWidth-innerWidth;qx.style.setProperty('--qx',(-p*Math.max(0,weite))+'px')}
  // Preis
  if(betrag){var r=betrag.getBoundingClientRect(),q=klemm((vh-r.top)/(vh*.6));betrag.style.setProperty('--bz',1+(1-q)*.8);betrag.style.setProperty('--bb',((1-q)*14)+'px');betrag.style.setProperty('--bp',(q*100)+'%')}
 }
