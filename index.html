@@ -759,7 +759,7 @@ function verstehen(t, erst) {
  for (const [k, v] of Object.entries(FARBEN)) if (new RegExp("(?:(?<![a-zäöüß])|(?<=dunkel|hell|neon|pastell))" + k.replace("ü", "(ü|ue)")).test(s)) { bd.farbe = v; done.push("Farbe " + k); break; }
  const stilWort = [["edel",/edel|luxus|luxuri|elegant|premium|hochwertig/],["modern",/modern|tech|futur|cool/],["frisch",/frisch|clean|leicht|jung/],["warm",/warm|gemütlich|rustikal|natürlich/]];
  for (const [k, re] of stilWort) if (re.test(s)) { bd.stil = k; if (!/farbe|blau|rot|grün|gold|lila|orange|pink|türkis|braun|gelb|silber|petrol|mint|rosa|bordeaux|violett/.test(s)) bd.farbe = null; done.push("Stil " + k); break; }
- const abschn = [["preise",/preis/,"Preisliste"],["team",/team|mitarbeiter/,"Team-Bereich"],["zeiten",/öffnungszeit|oeffnungszeit|öffnungs|zeiten/,"Öffnungszeiten"],["faq",/faq|häufige fragen|fragen/,"FAQ"],["karte",/karte|anfahrt|standort|maps/,"Anfahrt"]];
+ const abschn = [["preise",/preis/,"Preisliste"],["team",/team|mitarbeiter/,"Team-Bereich"],["zeiten",/öffnungszeit|oeffnungszeit|öffnungs|(?<![a-zäöüß])zeiten/,"Öffnungszeiten"],["faq",/faq|häufige fragen|fragen/,"FAQ"],["karte",/karte|anfahrt|standort|maps/,"Anfahrt"]];
  for (const [k, re, name] of abschn) if (re.test(s)) { const weg = ohne(re); bd[k] = !weg; done.push(weg ? name + " entfernt" : name + " dazu"); }
  if (/bewertung|rezension|testimonial|sterne/.test(s)) done.push("Bewertungen: kommen später als echte Google-Bewertungen rein (keine erfundenen)");
  const anim = /reinschieb|schieben|slide|sliden|von der seite|seitlich/.test(s) ? "schieben" : /zoom|vergrößer/.test(s) ? "zoom" : /3d|kipp/.test(s) ? "kippen" : /parallax|tiefe/.test(s) ? "parallax" : /keine animation|ohne animation/.test(s) ? "keine" : /mehr anim|animierter|lebendig|mehr bewegung|animation|effekt|scroll|wenn ich slide|beim sliden/.test(s) ? (bd.anim === "sanft" ? "schieben" : bd.anim) : null;
@@ -783,6 +783,7 @@ function starten(text) {
  const eingebaut = done.filter(x => !x.startsWith("Bewertungen")); if (bd.anim !== "keine" && !eingebaut.some(x => x.startsWith("Animation"))) eingebaut.push("Scroll-Effekte: " + ANIMS[bd.anim]);
  erzeugen(`Fertig: Website für <b>${esc(bd.firma)}</b> in <b>${esc(bd.ort)}</b>${bd.branche !== "allg" ? "" : ""}.${eingebaut.length ? " Eingebaut: " + eingebaut.join(", ") + "." : ""}${bilder.length ? " Deine Fotos sind drin." : " Tipp: Lade deine Fotos und dein Logo mit 📎 hoch."}<br>Schreib mir einfach, was anders sein soll.`);
  $("lv").scrollIntoView({ behavior: "smooth", block: "start" });
+ if (bd.preise && /\d\s?(€|euro)/i.test(text)) setTimeout(() => kiWunsch("Trag in die Preisliste genau meine Preise aus der Beschreibung ein."), 4800);
 }
 const KI_URL = "https://2-31-5-96.sslip.io/pagerush-api/wunsch"; let kiAnzahl = 0;
 async function kiWunsch(t, hinweis) {
