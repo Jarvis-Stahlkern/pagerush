@@ -631,6 +631,26 @@ footer{overflow:hidden}
 @keyframes aurDreh{to{transform:rotate(360deg)}}
 @media(max-width:700px){.wow-aurora{filter:blur(50px) saturate(1.4)}.wow-aurora i:nth-child(1){width:110vw;height:100vw}.wow-aurora i:nth-child(2){width:100vw;height:90vw}}
 @media(prefers-reduced-motion:reduce){.wow-aurora::before,.wow-aurora::after{animation:none!important}}
+
+/* ===== FOTOS-Ebene: echte Fotos für Bau, Friseur, Restaurant ===== */
+.bx-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.bx-b{background:#0b1220}
+.bx-b-dunkel{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,20,.55) 0%,rgba(6,10,20,.05) 30%,rgba(6,10,20,.15) 55%,rgba(6,10,20,.82) 100%),linear-gradient(90deg,rgba(6,10,20,.55),transparent 60%)}
+.bx-b-karte{position:absolute;z-index:2;right:4cqw;top:13cqw;width:25cqw;border-radius:1.4cqw;overflow:hidden;background:rgba(255,255,255,.96);color:#0d1b3a;box-shadow:0 2cqw 5cqw -1cqw rgba(0,0,0,.6)}
+.bx-b-karte img{display:block;width:100%;height:14cqw;object-fit:cover}
+.bx-b-karte div{padding:1.3cqw 1.6cqw;font-size:1.6cqw;line-height:1.3}
+.bx-b-karte b{display:block;font-size:1.8cqw}
+.bx-b-karte span{opacity:.65}
+.bx-b-karte i{font-style:normal;display:inline-block;margin-bottom:.6cqw;font:700 1.3cqw/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#1e8a4c}
+.bx-b-karte i::before{content:"● "}
+.bx-bogen{background:#1a1410!important}
+.bx-bogen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:saturate(.92) contrast(1.04)}
+.bx-bogen:nth-child(1),.bx-bogen:nth-child(3){height:20cqw}.bx-bogen:nth-child(2){height:26cqw}
+.bx-r-bild{background:#1c2a52}
+.bx-r-bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bx-r-bild::after{z-index:1;text-shadow:0 .3cqw 1.5cqw rgba(0,0,0,.5)}
+.bx-r-bild::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%)}
+@media(max-width:560px){.bx-b-karte{display:none}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1625,22 +1645,17 @@ var S='<div class="bx-s"><div class="bx-nav"><b>Nordlicht</b><span>Produkt</span
  '<div class="bx-s-main"><div><span class="bx-s-tag">KI-Software · Neu</span><h4>Angebote in <em>30 Sekunden.</em></h4><p>Die Software, die Handwerker vom Papierkram befreit.</p><div class="bx-s-mail"><em>deine@mail.de</em><u>Zur Warteliste</u></div></div>'+
  '<div class="bx-app"><div class="bx-app-k"><i></i><i></i><i></i></div><h5>Angebot #2041</h5><strong>4.280 €</strong><div class="bx-bars"><i style="height:38%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:78%"></i><i style="height:64%"></i><i style="height:94%"></i></div><div class="bx-chip">Versendet</div></div></div>'+
  '<div class="bx-s-fuss"><span>Ohne Einarbeitung</span><span>Server in Deutschland</span><span>Monatlich kündbar</span></div></div>';
-var B='<div class="bx-b"><svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="bxHim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1b3a"/><stop offset=".55" stop-color="#2b5fb8"/><stop offset="1" stop-color="#f2a65a"/></linearGradient><radialGradient id="bxSon" cx=".78" cy=".72" r=".5"><stop offset="0" stop-color="#ffd9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></radialGradient></defs>'+
- '<rect width="600" height="420" fill="url(#bxHim)"/><rect width="600" height="420" fill="url(#bxSon)"/>'+
- '<g fill="#14284f" opacity=".75"><rect x="20" y="250" width="50" height="170"/><rect x="78" y="220" width="40" height="200"/><rect x="450" y="240" width="60" height="180"/><rect x="520" y="270" width="70" height="150"/></g>'+
- '<g stroke="#0a1530" stroke-width="3" fill="none"><path d="M380 420V120M380 120h120M500 120v30M380 120l-40 18M360 120v-24h40v24"/><path d="M380 170l-30 250M380 170l30 250" stroke-width="1.5" opacity=".6"/></g>'+
- '<g fill="#0a1530"><path d="M230 420V285l95-62 95 62v135z"/><rect x="215" y="278" width="220" height="10"/></g>'+
- '<g fill="#ffc65a"><rect x="262" y="320" width="26" height="34" rx="2"/><rect x="362" y="320" width="26" height="34" rx="2"/><rect x="312" y="350" width="26" height="70" rx="2" fill="#f2a65a"/></g>'+
- '<rect y="400" width="600" height="20" fill="#08122a"/></svg>'+
+var B='<div class="bx-b"><img class="bx-foto" src="bilder/bau-haus.jpg" alt="Modernes Einfamilienhaus am Abend" loading="lazy"><div class="bx-b-dunkel"></div>'+
  '<div class="bx-nav"><b>Krämer Bau</b><span>Leistungen</span><span>Referenzen</span><u>Angebot</u></div>'+
+ '<div class="bx-b-karte"><img src="bilder/bau-kran.jpg" alt="Rohbau mit Kränen" loading="lazy"><div><i>Live-Baustelle</i><b>Wohnpark Neckarblick</b><span>Rohbau · fertig 2027</span></div></div>'+
  '<div class="bx-b-text"><small>Meisterbetrieb · Esslingen</small><h4>Aus Plänen werden Häuser.</h4><span class="bx-b-btn">Kostenloses Angebot</span></div>'+
  '<div class="bx-b-zahlen"><div><b>Seit 1998</b><span>Familienbetrieb</span></div><div><b>Festpreis</b><span>keine Überraschung</span></div><div><b>48 h</b><span>bis zum Angebot</span></div></div></div>';
 var Fz='<div class="bx-f"><div class="bx-nav"><span>Leistungen</span><b>MIRA</b><span>Termin</span></div>'+
  '<div class="bx-f-kopf"><small>Friseur · Stuttgart</small><h4>Haar ist <span>Handwerk.</span></h4><span class="bx-f-btn">Termin buchen</span></div>'+
- '<div class="bx-f-galerie"><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div><div class="bx-bogen"><i class="h"></i><i class="k"></i><i class="s"></i></div></div></div>';
-var R='<div class="bx-r"><div class="bx-r-bild"><div class="bx-teller"><div class="bx-nest"></div><div class="bx-sosse" style="position:absolute;left:35%;top:35%"></div><i class="bx-bl a"></i><i class="bx-bl b"></i><i class="bx-tm a"></i><i class="bx-tm b"></i><i class="bx-tm c"></i></div></div>'+
- '<div class="bx-r-text"><small>Seit 1994 · Ludwigsburg</small><h4>Pasta, wie sie sein soll.</h4><ul class="bx-karte"><li>Tagliatelle al ragù<span>14,50</span></li><li>Gnocchi Gorgonzola<span>13,90</span></li><li>Tiramisù della casa<span>6,80</span></li></ul><span class="bx-r-btn">Tisch reservieren</span><div class="bx-r-zeit">Di – So ab 17:30 Uhr</div></div></div>';
-var arr=[K('nordlicht-labs.de',S,'<b>Startup</b> · Dunkel, Produkt im Fokus'),K('kraemer-bau.de',B,'<b>Bau &amp; Handwerk</b> · Großes Bild, klare Zahlen'),K('salon-mira.de',Fz,'<b>Friseur</b> · Edel, ruhig, mit Galerie'),K('trattoria-luce.de',R,'<b>Restaurant</b> · Bild links, Karte rechts')];
+ '<div class="bx-f-galerie"><div class="bx-bogen"><img src="bilder/mira-1.jpg" alt="Model mit welligem Langhaar" loading="lazy"></div><div class="bx-bogen"><img src="bilder/mira-2.jpg" alt="Model mit Herrenschnitt" loading="lazy"></div><div class="bx-bogen"><img src="bilder/mira-3.jpg" alt="Model mit rotem Langhaar" loading="lazy"></div></div></div>';
+var R='<div class="bx-r"><div class="bx-r-bild"><img src="bilder/luce-spaghetti.jpg" alt="Teller Spaghetti mit Tomatensoße und Basilikum" loading="lazy"></div>'+
+ '<div class="bx-r-text"><small>Seit 1994 · Ludwigsburg</small><h4>Pasta, wie sie sein soll.</h4><ul class="bx-karte"><li>Spaghetti al pomodoro<span>12,90</span></li><li>Tagliatelle al ragù<span>14,50</span></li><li>Tiramisù della casa<span>6,80</span></li></ul><span class="bx-r-btn">Tisch reservieren</span><div class="bx-r-zeit">Di – So ab 17:30 Uhr</div></div></div>';
+var arr=[K('nordlicht-labs.de',S,'<b>Startup</b> · Dunkel, Produkt im Fokus'),K('kraemer-bau.de',B,'<b>Bau &amp; Handwerk</b> · Echtes Projektfoto, Live-Baustelle'),K('salon-mira.de',Fz,'<b>Friseur</b> · Edel, mit Model-Galerie'),K('trattoria-luce.de',R,'<b>Restaurant</b> · Gericht im Bild, Karte rechts')];
 arr.reverse().forEach(function(n){r.insertBefore(n,r.firstChild)});
 r.classList.add('zg-vier');
 })();
