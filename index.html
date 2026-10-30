@@ -1449,7 +1449,11 @@ function siteHTML(d) {
  const h = esc(d.titel || fill(B.h)), sub = esc(d.untertitel || fill(B.sub));
  const an = d.anim || "sanft", bau = d.bau ? 1 : 0, ap = !!d.apple;
  const img = d.bilder || { logo: null, hero: [], galerie: [] };
- const heroBilder = img.hero || [], gal = img.galerie || [], ueberBild = gal[0] || heroBilder[1] || heroBilder[0];
+ const gal = img.galerie || [], eigeneHero = img.hero || [];
+ const STOCK = { bau: ["bau-haus.jpg", "bau-kran.jpg"], maler: ["bau-haus.jpg"], elektro: ["bau-kran.jpg"], garten: ["bau-haus.jpg"], umzug: ["handschlag.jpg"], immobilien: ["bau-haus.jpg"], baeckerei: ["baeck-brot.jpg", "baeck-croissant.jpg"], restaurant: ["luce-saal.jpg", "gastro-tisch.jpg"], friseur: ["mira-1.jpg", "mira-2.jpg"], kosmetik: ["mira-3.jpg"], praxis: ["praxis-behandlung.jpg", "physio-hand.jpg"], coach: ["coach-lena.jpg"], kanzlei: ["handschlag.jpg"], fitness: ["fitness.jpg"], allg: ["team-tisch.jpg", "start-team.jpg"] };
+ const basis = location.origin + location.pathname.replace(/[^/]*$/, "") + "bilder/";
+ const heroBilder = eigeneHero.length ? eigeneHero : (d.titelbild === false || d.layout === "schlicht" ? [] : (STOCK[d.branche] || STOCK.allg).map(f => basis + f));
+ const ueberBild = gal[0] || eigeneHero[1] || eigeneHero[0];
  const leist = d.leistungen && d.leistungen.length ? d.leistungen.slice(0, 8).map((t, i) => [(typeof t === "object" && t.ico) || (d.leistungen.length && d.branche !== "praxis" ? M.l[i % 4][0] : "✦"), typeof t === "string" ? t : t.t, typeof t === "string" ? "Kurz beschrieben – den Text schreibt unsere KI für dich." : (t.b || "")]) : M.l;
  const tel = d.tel || "0711 000 000", mail = d.mail || "info@" + slug(d.firma) + ".de", adr = d.adresse || "Musterstraße 1";
  const sek = (id, inhalt) => `<section id="${id}" class="sek">${inhalt}</section>`;
@@ -1473,8 +1477,9 @@ function siteHTML(d) {
  (d.extra || []).forEach(x => NAVN[x.id] = x.kicker || x.titel);
  const nav = teile.map(kid).filter(id => NAVN[id]).slice(0, 6).map(id => [id, NAVN[id]]); if (!nav.some(n => n[0] === "kontakt")) nav.push(["kontakt", "Kontakt"]);
  const lay = d.layout || ({ bau: "geteilt", elektro: "geteilt", kfz: "geteilt", maler: "geteilt", umzug: "geteilt", reinigung: "geteilt", entruempelung: "geteilt", garten: "geteilt", praxis: "mitte", kanzlei: "mitte", coach: "mitte", kosmetik: "mitte", fotograf: "schlicht", immobilien: "schlicht" })[d.branche] || "links";
- const topbar = (d.tel || d.mail || d.adresse) ? `<div class="topbar"><div class="w">${d.tel ? `<a href="tel:${esc(d.tel.replace(/[^+0-9]/g, ""))}">📞 ${esc(d.tel)}</a>` : ""}${d.mail ? `<a href="mailto:${esc(d.mail)}">✉️ ${esc(d.mail)}</a>` : ""}${d.adresse ? `<span>📍 ${esc(d.adresse)}${d.ort && d.ort !== "deiner Stadt" ? ", " + esc(d.ort) : ""}</span>` : ""}</div></div>` : "";
- const hkarte = lay === "geteilt" ? `<aside class="hkarte"><b>Direkt erreichbar</b><p>📞 ${esc(tel)}<br>✉️ ${esc(mail)}<br>📍 ${esc(adr)}${d.ort && d.ort !== "deiner Stadt" ? ", " + esc(d.ort) : ""}</p><ul>${leist.slice(0, 4).map(l => `<li>${l[0]} ${esc(l[1])}</li>`).join("")}</ul><a class="btn" href="#kontakt">${esc(B.btn)}</a></aside>` : "";
+ const kOben = d.kontaktOben !== false;
+ const topbar = kOben && (d.tel || d.mail || d.adresse) ? `<div class="topbar"><div class="w">${d.tel ? `<a href="tel:${esc(d.tel.replace(/[^+0-9]/g, ""))}">📞 ${esc(d.tel)}</a>` : ""}${d.mail ? `<a href="mailto:${esc(d.mail)}">✉️ ${esc(d.mail)}</a>` : ""}${d.adresse ? `<span>📍 ${esc(d.adresse)}${d.ort && d.ort !== "deiner Stadt" ? ", " + esc(d.ort) : ""}</span>` : ""}</div></div>` : "";
+ const hkarte = lay === "geteilt" && kOben ? `<aside class="hkarte"><b>Direkt erreichbar</b><p>📞 ${esc(tel)}<br>✉️ ${esc(mail)}<br>📍 ${esc(adr)}${d.ort && d.ort !== "deiner Stadt" ? ", " + esc(d.ort) : ""}</p><ul>${leist.slice(0, 4).map(l => `<li>${l[0]} ${esc(l[1])}</li>`).join("")}</ul><a class="btn" href="#kontakt">${esc(B.btn)}</a></aside>` : "";
  const start = { sanft: "translateY(70px) scale(.96)", schieben: "translateX(-120px) rotate(-2deg)", zoom: "scale(.7)", kippen: "perspective(900px) rotateX(40deg) translateY(70px)", parallax: "translateY(90px)", keine: "none" }[an];
  const heroHTML = heroBilder.length ? heroBilder.slice(0, 5).map((u, i) => `<div class="slide${i ? "" : " an"}${(img.heroR || [])[i] && img.heroR[i] < 1.25 ? " hoch" : ""}" style="background-image:url(${u});--u:url(${u})"></div>`).join("") + `<div class="schleier"></div>` : `<div class="blob b1"></div><div class="blob b2"></div>`;
  const logo = img.logo ? `<img src="${img.logo}" alt="${esc(d.firma)}">` : esc(d.firma);
