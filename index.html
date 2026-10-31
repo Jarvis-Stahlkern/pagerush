@@ -1058,7 +1058,8 @@ footer{overflow:hidden}
 <section class="kino-manifest" aria-label="Unser Versprechen"><div class="km-pin"><div class="wrap"><p class="km-text" id="kmText">Agenturen verkaufen dir Wochen. Wir liefern Minuten. Deine Firma verdient eine Website, die so gut ist wie deine Arbeit. Für 99&nbsp;€. Ohne Abo. Ohne Warten.</p></div></div></section>
 <!-- ================= DEMO ================= -->
 <style id="d3-css">
-.d3{position:relative;height:340vh;background:#05060a}
+.d3{position:relative;height:340vh;padding:0!important;background:var(--nacht)}
+.d3-pin::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,var(--nacht) 0,rgba(10,11,15,0) 24%,rgba(10,11,15,0) 78%,var(--nacht) 100%)}
 .d3-pin{position:sticky;left:0;right:0;top:0;height:100vh;contain:paint;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transform;backface-visibility:hidden}
 .d3-licht{position:absolute;inset:-20% -10%;pointer-events:none;background:conic-gradient(from 200deg at 50% -8%,transparent 0 38deg,rgba(77,124,255,.28) 50deg,rgba(255,255,255,.22) 56deg,transparent 68deg 360deg);mix-blend-mode:screen;transform:rotate(calc(-18deg + var(--p,0)*36deg));transform-origin:50% 0}
@@ -1080,6 +1081,7 @@ body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transf
 .p1{transform:translate(-175%,-125%) translateZ(calc(160px + var(--p,0)*160px)) rotateY(24deg)}
 .p2{transform:translate(20%,-172%) translateZ(calc(-60px + var(--p,0)*200px)) rotateY(-22deg)}
 .p3{transform:translate(-150%,60%) translateZ(calc(-120px + var(--p,0)*200px)) rotateY(18deg)}
+@media (min-width:701px){.d3-laptop{width:min(600px,60%)}.d3-platte{width:min(170px,17%)}.p1,.p2,.p3{margin:0}.p1{left:-1%;top:10%;transform:translateZ(calc(20px + var(--p,0)*110px)) rotateY(calc(30deg - var(--p,0)*16deg))}.p2{left:84%;top:-2%;transform:translateZ(calc(-80px + var(--p,0)*170px)) rotateY(calc(-26deg + var(--p,0)*12deg))}.p3{left:1%;top:62%;transform:translateZ(calc(-120px + var(--p,0)*190px)) rotateY(calc(24deg - var(--p,0)*12deg))}}
 .d3-orb{position:absolute;left:50%;top:50%;border-radius:50%;filter:blur(1px);transform:translateZ(var(--z,0px))}
 .o1{width:70px;height:70px;margin:-8% 0 0 46%;--z:calc(120px + var(--p,0)*80px);background:radial-gradient(circle at 38% 34%,#ffe3a3,#d99a45 60%,transparent 74%)}
 .o2{width:60px;height:60px;margin:18% 0 0 -52%;--z:calc(200px + var(--p,0)*100px);background:radial-gradient(circle at 38% 34%,#b7caff,#4d7cff 60%,transparent 74%)}
@@ -1087,7 +1089,7 @@ body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transf
 .d3-fuss{position:relative;z-index:6;width:min(520px,84vw);margin-top:6vh;text-align:center}
 .d3-balken{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.d3-balken b{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,#4d7cff,#f2c272,#fff4d6)}
 .d3-fuss p{margin:14px 0 0;font:500 clamp(15px,1.5vw,19px)/1.4 var(--text);color:#c9ceda;transition:opacity .3s}
-@media (max-width:700px){.d3{height:300vh}.d3-buehne{height:44vh}.d3-laptop{width:84%}.d3-handy{width:22%;margin-left:30%}.d3-platte{width:30%}.p1{transform:translate(-120%,-135%) translateZ(120px)}.p2{transform:translate(-5%,-190%) translateZ(60px)}.p3{display:none}.o1{width:48px;height:48px}.o2{width:36px;height:36px}.d3-welt{transform:rotateX(calc(14deg - var(--p,0)*14deg)) rotateY(calc(-40deg + var(--p,0)*40deg)) translateZ(calc(-200px + var(--p,0)*200px)) scale(calc(.8 + var(--p,0)*.2))}}
+@media (max-width:700px){.d3{height:300vh}.d3-buehne{height:44vh}.d3-laptop{width:78%}.d3-handy{width:20%;margin-left:22%}.d3-platte{width:27%;font-size:12px;border-radius:12px}.p1{transform:translate(-112%,-245%) translateZ(30px)}.p2{transform:translate(12%,-245%) translateZ(30px)}.p3{display:none}.o1{width:48px;height:48px}.o2{width:36px;height:36px}.d3-welt{transform:rotateX(calc(14deg - var(--p,0)*14deg)) rotateY(calc(-40deg + var(--p,0)*40deg)) translateZ(calc(-200px + var(--p,0)*200px)) scale(calc(.8 + var(--p,0)*.2))}}
 @media (prefers-reduced-motion:reduce){.d3{height:auto}.d3-pin{position:relative;height:auto;padding:80px 0}.d3-welt{transform:none}.d3-licht{transform:none}}
 </style>
 <section class="d3" id="d3" aria-label="Deine Seite in 3D"><div class="d3-pin"><div class="d3-licht" aria-hidden="true"></div><div class="d3-gitter" aria-hidden="true"></div>
