@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Salon Mira – Friseur & Beauty</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:"Instrument Serif";src:url(../../fonts/instrument-serif.ttf) format("truetype");font-display:swap}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(../../fonts/instrument-serif-italic.ttf) format("truetype");font-display:swap}
+@import url(../../fonts/fonts.css);
+:root{--noir:#0d0b0a;--noir2:#15120f;--elfen:#f4eee6;--sand:#cdbfae;--gold:#d6b47c;--gold2:#b89058;--linie:rgba(244,238,230,.12);
+ --serif:"Instrument Serif",Georgia,"Times New Roman",serif;--sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--noir);color:var(--elfen);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.w{max-width:1240px;margin:0 auto;padding:0 max(24px,env(safe-area-inset-left,0px))}
+.k{font:500 12px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+em{font-style:italic;color:var(--gold)}
+/* Kopf */
+.kopf{position:fixed;top:0;left:0;right:0;z-index:30;padding-top:env(safe-area-inset-top,0px);transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+.kopf.dicht{background:rgba(13,11,10,.86);border-color:var(--linie)}
+.kopf .w{display:flex;align-items:center;justify-content:space-between;height:76px}
+.marke{font:400 30px/1 var(--serif);letter-spacing:.06em}
+.kopf nav{display:flex;gap:34px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--sand)}
+.kopf nav a:hover{color:var(--elfen)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;padding:16px 24px;border:1px solid var(--gold);color:var(--elfen);border-radius:999px;transition:background .3s,color .3s}
+.btn:hover{background:var(--gold);color:var(--noir)}
+.btn.voll{background:var(--gold);color:var(--noir)}
+@media(max-width:860px){.kopf nav{display:none}.marke{font-size:26px}.kopf .btn{padding:12px 16px}}
+/* Held: Foto wächst beim Scrollen auf Vollbild */
+.held{position:relative;height:250vh}
+.held-buehne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.held-text{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;z-index:3;pointer-events:none}
+.held-text .w{width:100%}
+.held h1{font-size:clamp(58px,10.5vw,170px);line-height:.9;max-width:7.5ch}
+.held h1 span{display:block;overflow:hidden}
+.held h1 span i{display:block;font-style:normal;transform:translateY(105%);animation:hoch 1.3s cubic-bezier(.2,.8,.1,1) forwards}
+.held h1 span:nth-child(2) i{animation-delay:.12s;font-style:italic;color:var(--gold)}
+@keyframes hoch{to{transform:none}}
+.held .unter{margin-top:30px;max-width:30ch;color:var(--sand);opacity:0;animation:auf 1.2s .6s forwards}
+@keyframes auf{to{opacity:1}}
+.held-bild{position:absolute;z-index:1;top:50%;right:6vw;width:min(36vw,520px);aspect-ratio:3/4;transform:translateY(-50%);border-radius:260px 260px 18px 18px;overflow:hidden;will-change:transform,border-radius}
+.held-bild img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);will-change:transform}
+.held-schleier{position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(13,11,10,.85),rgba(13,11,10,.2) 60%,rgba(13,11,10,.45));opacity:0;pointer-events:none}
+.held-zwei{position:absolute;z-index:4;left:0;right:0;bottom:12vh;opacity:0;transform:translateY(30px)}
+.held-zwei h2{font-size:clamp(44px,6.6vw,104px);line-height:.95;max-width:12ch}
+.scrollhinweis{position:absolute;z-index:4;left:50%;bottom:28px;transform:translateX(-50%);font:500 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--sand);display:flex;flex-direction:column;align-items:center;gap:12px}
+.scrollhinweis i{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:linie 1.8s ease-in-out infinite}
+@keyframes linie{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:860px){.held-bild{right:auto;left:50%;width:78vw;top:58%;transform:translate(-50%,-50%)}.held-text{align-items:flex-start;padding-top:110px}.held h1{font-size:clamp(52px,15vw,90px)}.held .unter{display:none}}
+
+/* Film-Held (Grok-Video, beim Scrollen gesteuert) */
+.held{height:420vh}
+.film{position:absolute;inset:0;width:100%;height:100%;display:block;background:#e9e6e2}
+.film-hell{position:absolute;inset:0;background:linear-gradient(90deg,rgba(240,236,231,0) 34%,rgba(240,236,231,.7) 58%,rgba(240,236,231,.88));pointer-events:none}
+.ht{position:absolute;right:4vw;top:50%;width:min(40vw,600px);transform:translateY(-40%);opacity:0;transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.1,1);color:#1b1612;pointer-events:none}
+.ht.an{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.ht .k{color:#7d5a2a;margin:0 0 22px}
+.ht h1{font-size:clamp(90px,13vw,220px);line-height:.85;letter-spacing:-.02em}
+.ht h2{font-size:clamp(52px,6.8vw,112px);line-height:.92}
+.ht em{color:#a47b3f}
+.ht .unter{margin:22px 0 0;color:#5d5249;font-size:18px;opacity:1;animation:none}
+.btn.dunkel{margin-top:30px;border-color:#1b1612;color:#1b1612}.btn.dunkel:hover{background:#1b1612;color:#f4eee6}
+.scrollhinweis{color:#5d5249}
+.ladebalken{position:absolute;left:50%;bottom:10px;width:120px;margin-left:-60px;height:2px;background:rgba(0,0,0,.08);transition:opacity .6s}
+.ladebalken i{display:block;height:100%;width:0;background:#a47b3f}
+.ladebalken.weg{opacity:0}
+.kopf:not(.dicht) .marke,.kopf:not(.dicht) nav,.kopf:not(.dicht) .btn{color:#1b1612;border-color:#1b1612}
+@media(max-width:860px){.scrollhinweis{display:none}.film-hell{background:linear-gradient(0deg,rgba(240,236,231,.92) 18%,rgba(240,236,231,0) 55%)}
+ .ht{left:24px;right:24px;width:auto;top:auto;bottom:11vh;transform:translateY(20px)}.ht.an{transform:none}
+ .ht h1{font-size:clamp(76px,22vw,120px)}.ht h2{font-size:clamp(44px,12vw,64px)}.held{height:360vh}}
+/* Satz, der beim Scrollen aufleuchtet */
+.satz{padding:22vh 0}
+.satz p{font:400 clamp(30px,4.4vw,64px)/1.15 var(--serif);max-width:20ch;margin:0}
+.satz p .wo{opacity:.14;transition:opacity .4s}
+.satz p .wo.an{opacity:1}
+/* Karte */
+.karte{padding:12vh 0 18vh;position:relative}
+.karte-kopf{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:60px;flex-wrap:wrap}
+.karte-kopf h2{font-size:clamp(56px,8vw,128px);line-height:.9}
+.karte-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.karte-tabs button{appearance:none;cursor:pointer;background:none;border:1px solid var(--linie);color:var(--sand);font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:13px 18px;border-radius:999px;transition:all .3s}
+.karte-tabs button[aria-pressed="true"]{border-color:var(--gold);color:var(--noir);background:var(--gold)}
+.posten{list-style:none;margin:0;padding:0;border-top:1px solid var(--linie)}
+.posten li{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--linie);transition:padding .4s,background .4s;cursor:default;opacity:0;transform:translateY(16px);animation:rein .7s forwards}
+.posten li:hover{padding-left:18px;background:linear-gradient(90deg,rgba(214,180,124,.08),transparent)}
+.posten b{font:400 clamp(26px,2.8vw,40px)/1.1 var(--serif)}
+.posten small{display:block;color:var(--sand);font-size:15px;margin-top:6px}
+.posten span{font:400 clamp(22px,2.2vw,30px)/1 var(--serif);color:var(--gold);white-space:nowrap}
+@keyframes rein{to{opacity:1;transform:none}}
+.vorschau-bild{position:fixed;z-index:20;width:240px;aspect-ratio:3/4;border-radius:120px 120px 12px 12px;overflow:hidden;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.8);transition:opacity .35s,transform .35s;left:0;top:0}
+.vorschau-bild.an{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.vorschau-bild img{width:100%;height:100%;object-fit:cover}
+@media(hover:none){.vorschau-bild{display:none}}
+/* Team: seitlich durch scrollen */
+.team{position:relative;height:330vh}
+.team-buehne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.team-kopf{margin-bottom:40px}
+.team-kopf h2{font-size:clamp(46px,6vw,96px);line-height:.95}
+.band{display:flex;gap:28px;padding-left:max(24px,calc((100vw - 1240px)/2 + 24px));will-change:transform}
+.person{flex:none;width:min(360px,70vw)}
+.person .bild{aspect-ratio:3/4;border-radius:200px 200px 14px 14px;overflow:hidden;background:var(--noir2)}
+.person img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.2,.8,.1,1)}
+.person:hover img{transform:scale(1)}
+.person h3{font-size:32px;margin-top:18px}
+.person p{margin:2px 0 0;color:var(--sand);font-size:14px;letter-spacing:.14em;text-transform:uppercase}
+/* Zahlen */
+.fakten{padding:16vh 0;border-top:1px solid var(--linie);border-bottom:1px solid var(--linie)}
+.fakten .w{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.fakt b{display:block;font:400 clamp(56px,7vw,110px)/1 var(--serif);color:var(--gold)}
+.fakt span{color:var(--sand);letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+@media(max-width:760px){.fakten .w{grid-template-columns:1fr;gap:50px}}
+/* Termin */
+.termin{padding:18vh 0}
+.termin .w{display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:start}
+.termin h2{font-size:clamp(50px,6.4vw,104px);line-height:.92}
+.termin .text p{color:var(--sand);max-width:36ch}
+.kal{border:1px solid var(--linie);border-radius:22px;padding:28px;background:linear-gradient(160deg,#17130f,#100e0c)}
+.kal-kopf{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font:400 26px/1 var(--serif)}
+.kal-kopf button{appearance:none;background:none;border:1px solid var(--linie);color:var(--elfen);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:16px}
+.tage{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.tage .wt{font-size:11px;letter-spacing:.2em;color:var(--sand);padding:6px 0}
+.tage button{appearance:none;aspect-ratio:1;border:0;border-radius:50%;background:none;color:var(--elfen);font:500 15px/1 var(--sans);cursor:pointer;transition:all .25s}
+.tage button:hover:not(:disabled){background:rgba(214,180,124,.15)}
+.tage button[aria-pressed="true"]{background:var(--gold);color:var(--noir)}
+.tage button:disabled{color:rgba(244,238,230,.2);cursor:default}
+.zeiten{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;min-height:44px}
+.zeiten button{appearance:none;border:1px solid var(--linie);background:none;color:var(--elfen);padding:11px 15px;border-radius:999px;font:500 14px/1 var(--sans);cursor:pointer}
+.zeiten button[aria-pressed="true"]{border-color:var(--gold);background:var(--gold);color:var(--noir)}
+.kal .btn{margin-top:24px;width:100%;justify-content:center}
+.kal-info{margin-top:12px;font-size:13px;color:var(--sand);min-height:20px}
+@media(max-width:900px){.termin .w{grid-template-columns:1fr;gap:40px}}
+/* Fuß */
+.fuss{padding:12vh 0 calc(60px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--linie)}
+.fuss .w{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+.fuss .gross{font:400 clamp(60px,10vw,160px)/.85 var(--serif)}
+.fuss p{color:var(--sand);margin:0 0 8px}
+@media(max-width:860px){.fuss .w{grid-template-columns:1fr}}
+/* Reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1.1s cubic-bezier(.2,.8,.1,1),transform 1.1s cubic-bezier(.2,.8,.1,1)}
+.rv.an{opacity:1;transform:none}
+/* Pagerush-Leiste */
+.pr-leiste{position:fixed;z-index:40;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(10,11,15,.92);border:1px solid rgba(242,194,114,.35);font:500 13px/1 var(--sans);color:#e9e6f0;box-shadow:0 20px 50px -20px rgba(0,0,0,.8);white-space:nowrap}
+.pr-leiste b{color:#f2c272}
+.pr-leiste a{background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206;padding:11px 16px;border-radius:999px;font-weight:700}
+@media(max-width:520px){.pr-leiste span{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.posten li{opacity:1;transform:none}.held h1 span i{transform:none}.held .unter{opacity:1}}
+</style>
+</head>
+<body>
+<header class="kopf" id="kopf"><div class="w">
+ <a class="marke" href="#" data-feld="name">MIRA</a>
+ <nav><a href="#karte">Leistungen</a><a href="#team">Team</a><a href="#termin">Termin</a></nav>
+ <a class="btn" href="#termin">Termin buchen</a>
+</div></header>
+
+<section class="held" id="held">
+ <div class="held-buehne">
+  <canvas class="film" id="film" aria-label="Salon-Film"></canvas>
+  <div class="film-hell"></div>
+  <div class="ht ht1 an"><p class="k">Friseur &amp; Beauty · Stuttgart</p><h1 data-feld="name">Mira</h1><p class="unter">Salon für Schnitt, Farbe &amp; Pflege</p></div>
+  <div class="ht ht2"><h2>Schönheit,<br><em>die bleibt.</em></h2></div>
+  <div class="ht ht3"><h2>Ein Salon.<br><em>Eine Handschrift.</em></h2><a class="btn dunkel" href="#termin">Termin buchen</a></div>
+  <div class="scrollhinweis" id="hHinweis">Scrollen<i></i></div>
+  <div class="ladebalken" id="lade"><i></i></div>
+ </div>
+</section>
+
+<section class="satz w"><p id="satz">Wir hören zu, bevor wir schneiden. Wir beraten ehrlich, arbeiten präzise und nehmen uns die Zeit, die gutes Haar verdient.</p></section>
+
+<section class="karte" id="karte"><div class="w">
+ <div class="karte-kopf rv"><div><p class="k" style="margin:0 0 18px">Leistungen &amp; Preise</p><h2>Die <em>Karte</em></h2></div>
+  <div class="karte-tabs" role="group" aria-label="Kategorie" id="tabs"></div></div>
+ <ul class="posten" id="posten"></ul>
+</div></section>
+<div class="vorschau-bild" id="vBild"><img alt="" id="vImg"></div>
+
+<section class="team" id="team">
+ <div class="team-buehne">
+  <div class="w team-kopf"><p class="k" style="margin:0 0 18px">Die Menschen</p><h2>Hände mit <em>Gefühl.</em></h2></div>
+  <div class="band" id="band"></div>
+ </div>
+</section>
+
+<section class="fakten"><div class="w">
+ <div class="fakt rv"><b>Mo–Sa</b><span>Geöffnet für dich</span></div>
+ <div class="fakt rv" style="transition-delay:.1s"><b>30 Sek.</b><span>Online-Termin buchen</span></div>
+ <div class="fakt rv" style="transition-delay:.2s"><b>1:1</b><span>Persönliche Beratung</span></div>
+</div></section>
+
+<section class="termin" id="termin"><div class="w">
+ <div class="text rv"><p class="k" style="margin:0 0 18px">Termin</p><h2>Deine Zeit.<br><em>Dein Platz.</em></h2><p style="margin-top:26px">Wähle einen Tag und eine Uhrzeit. Wir bestätigen deinen Termin schnell per Mail oder Telefon.</p></div>
+ <div class="kal rv" style="transition-delay:.15s">
+  <div class="kal-kopf"><button type="button" id="kZur" aria-label="Vorheriger Monat">‹</button><span id="kMon"></span><button type="button" id="kVor" aria-label="Nächster Monat">›</button></div>
+  <div class="tage" id="kTage"></div>
+  <div class="zeiten" id="kZeiten"></div>
+  <button class="btn voll" type="button" id="kBuchen">Termin anfragen</button>
+  <p class="kal-info" id="kInfo"></p>
+ </div>
+</div></section>
+
+<footer class="fuss"><div class="w">
+ <div><div class="gross" data-feld="name">MIRA</div></div>
+ <div><p class="k" style="margin:0 0 16px">Besuch</p><p data-feld="adresse">Königstraße 1<br>70173 Stuttgart</p></div>
+ <div><p class="k" style="margin:0 0 16px">Kontakt</p><p data-feld="tel">0711 000 000</p><p>Impressum · Datenschutz</p></div>
+</div></footer>
+
+<div class="pr-leiste"><span>Vorlage <b>Beauty</b> von Pagerush</span><a href="../../#demo">Diese Vorlage nehmen</a></div>
+
+<script>
+// Inhalte (die Pagerush-KI füllt diese Daten später automatisch für jeden Kunden)
+const DATEN = {
+ karte: {
+  "Damen": [["Schnitt & Styling", "Waschen, Beratung, Schnitt, Föhnen", "ab 59 €", "team1.webp"], ["Glossing", "Glanz und Farbauffrischung", "ab 39 €", "team3.webp"], ["Hochsteckfrisur", "Für Hochzeit und besondere Anlässe", "ab 79 €", "team4.webp"]],
+  "Herren": [["Herrenschnitt", "Beratung, Schnitt, Styling", "ab 32 €", "team2.webp"], ["Bart & Kontur", "Formen, Trimmen, Pflege", "ab 19 €", "team2.webp"]],
+  "Farbe": [["Balayage", "Handgemalte, natürliche Verläufe", "ab 149 €", "team1.webp"], ["Coloration", "Ansatz oder komplett", "ab 69 €", "team3.webp"], ["Strähnen", "Folie oder Freihand", "ab 89 €", "team4.webp"]],
+  "Pflege": [["Haarkur Deluxe", "Tiefenpflege mit Kopfmassage", "ab 29 €", "team5.webp"], ["Kopfmassage", "20 Minuten Ruhe", "ab 24 €", "team5.webp"]]
+ },
+ team: [["Mira", "Inhaberin · Farbe", "team1.webp"], ["Daniel", "Herren & Bart", "team2.webp"], ["Lea", "Schnitt & Styling", "team3.webp"], ["Sophie", "Hochzeit & Events", "team4.webp"], ["Anna", "Pflege & Beauty", "team5.webp"]]
+};
+const $ = id => document.getElementById(id), ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+// Karte
+const kats = Object.keys(DATEN.karte); let kat = kats[0];
+$('tabs').innerHTML = kats.map(k => `<button type="button" aria-pressed="${k === kat}">${k}</button>`).join('');
+function karte() {
+ $('posten').innerHTML = DATEN.karte[kat].map((p, i) => `<li style="animation-delay:${i * .07}s" data-bild="${p[3]}"><div><b>${p[0]}</b><small>${p[1]}</small></div><span>${p[2]}</span></li>`).join('');
+ $('posten').querySelectorAll('li').forEach(li => { li.onmouseenter = () => { $('vImg').src = li.dataset.bild; $('vBild').classList.add('an'); }; li.onmouseleave = () => $('vBild').classList.remove('an'); });
+}
+$('tabs').querySelectorAll('button').forEach(b => b.onclick = () => { kat = b.textContent; $('tabs').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); karte(); });
+karte();
+let mx = 0, my = 0, vx = 0, vy = 0;
+addEventListener('mousemove', e => { mx = e.clientX + 150; my = e.clientY; }, { passive: true });
+(function folgen() { vx += (mx - vx) * .14; vy += (my - vy) * .14; $('vBild').style.left = vx + 'px'; $('vBild').style.top = vy + 'px'; requestAnimationFrame(folgen); })();
+
+// Team
+$('band').innerHTML = DATEN.team.map(t => `<div class="person"><div class="bild"><img src="${t[2]}" alt="${t[0]}" loading="lazy"></div><h3>${t[0]}</h3><p>${t[1]}</p></div>`).join('');
+
+// Satz Wort für Wort
+const sz = $('satz'); sz.innerHTML = sz.textContent.split(' ').map(w => `<span class="wo">${w}</span>`).join(' ');
+const worte = [...sz.querySelectorAll('.wo')];
+
+// Kalender
+const MON = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+const heute = new Date(); heute.setHours(0, 0, 0, 0); let ansicht = new Date(heute.getFullYear(), heute.getMonth() + (new Date(heute.getFullYear(), heute.getMonth() + 1, 0).getDate() - heute.getDate() < 7 ? 1 : 0), 1), tag = null, zeit = null;
+function kalender() {
+ $('kMon').textContent = MON[ansicht.getMonth()] + ' ' + ansicht.getFullYear();
+ const erst = (ansicht.getDay() + 6) % 7, n = new Date(ansicht.getFullYear(), ansicht.getMonth() + 1, 0).getDate();
+ let h = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map(d => `<span class="wt">${d}</span>`).join('') + '<span></span>'.repeat(erst);
+ for (let d = 1; d <= n; d++) { const dt = new Date(ansicht.getFullYear(), ansicht.getMonth(), d); const zu = dt < heute || dt.getDay() === 0;
+  h += `<button type="button" ${zu ? 'disabled' : ''} aria-pressed="${tag && +tag === +dt}" data-d="${d}">${d}</button>`; }
+ $('kTage').innerHTML = h;
+ $('kTage').querySelectorAll('button:not(:disabled)').forEach(b => b.onclick = () => { tag = new Date(ansicht.getFullYear(), ansicht.getMonth(), +b.dataset.d); zeit = null; kalender(); zeiten(); });
+}
+function zeiten() {
+ if (!tag) { $('kZeiten').innerHTML = ''; return; } const sa = tag.getDay() === 6; const z = sa ? ['09:00', '10:30', '12:00', '13:30'] : ['09:00', '10:30', '12:00', '14:00', '15:30', '17:00', '18:30'];
+ $('kZeiten').innerHTML = z.map(t => `<button type="button" aria-pressed="${t === zeit}">${t}</button>`).join('');
+ $('kZeiten').querySelectorAll('button').forEach(b => b.onclick = () => { zeit = b.textContent; zeiten(); });
+}
+$('kZur').onclick = () => { const v = new Date(ansicht.getFullYear(), ansicht.getMonth() - 1, 1); if (v >= new Date(heute.getFullYear(), heute.getMonth(), 1)) { ansicht = v; kalender(); } };
+$('kVor').onclick = () => { ansicht = new Date(ansicht.getFullYear(), ansicht.getMonth() + 1, 1); kalender(); };
+$('kBuchen').onclick = () => { $('kInfo').textContent = !tag ? 'Bitte zuerst einen Tag wählen.' : !zeit ? 'Bitte noch eine Uhrzeit wählen.' : `Angefragt: ${tag.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' })}, ${zeit} Uhr (Vorschau).`; };
+kalender();
+
+// Reveal
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .15 });
+document.querySelectorAll('.rv').forEach(x => io.observe(x));
+
+
+// Film-Player: Einzelbilder des Videos, passend zu Gerät (quer/hoch)
+const FN = 120, cv = $('film'), cx2 = cv.getContext('2d'), HT = [...document.querySelectorAll('.ht')];
+let filmArt = innerWidth < innerHeight ? 'hoch' : 'quer', fb = [], filmZiel = 0, filmJetzt = -1, fGeladen = 0;
+function filmLaden() { fb = new Array(FN); fGeladen = 0; const ord = [0]; for (let st = 32; st >= 1; st = st >> 1) for (let i = 0; i < FN; i += st) if (!ord.includes(i)) ord.push(i);
+ let k = 0; const art = filmArt; const weiter = () => { if (k >= ord.length || art !== filmArt) return; const i = ord[k++]; const im = new Image();
+  im.onload = () => { fb[i] = im; fGeladen++; $('lade').firstChild.style.width = (fGeladen / FN * 100) + '%'; if (fGeladen === FN) $('lade').classList.add('weg'); if (filmJetzt < 0 || Math.abs(i - filmZiel) < 3) filmMalen(true); weiter(); };
+  im.onerror = weiter; im.src = `film/${art}/f${String(i).padStart(3, '0')}.webp`; }; for (let n = 0; n < 6; n++) weiter(); }
+function filmGroesse() { const d = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(cv.clientWidth * d); cv.height = Math.round(cv.clientHeight * d); filmMalen(true); }
+function filmMalen(zw) { let i = filmZiel; if (!fb[i]) { for (let d = 1; d < FN; d++) { if (fb[i - d]) { i -= d; break; } if (fb[i + d]) { i += d; break; } } } const im = fb[i]; if (!im || (i === filmJetzt && !zw)) return; filmJetzt = i;
+ const sk = Math.max(cv.width / im.width, cv.height / im.height), w = im.width * sk, h = im.height * sk; cx2.drawImage(im, filmArt === 'quer' ? -cv.width * .12 : (cv.width - w) / 2, (cv.height - h) / 2, w, h); }
+addEventListener('resize', () => { const a = innerWidth < innerHeight ? 'hoch' : 'quer'; if (a !== filmArt) { filmArt = a; filmLaden(); } filmGroesse(); });
+filmLaden(); filmGroesse();
+// Scroll-Szenen
+const held = $('held'), team = $('team'), band = $('band'), kopf = $('kopf');
+let tick = false;
+function szene() {
+ tick = false; const vh = innerHeight, vw = innerWidth, y = scrollY, mobil = vw < 860;
+ kopf.classList.toggle('dicht', y > held.offsetHeight - vh * .9);
+ // Held: Film nach Scrollstand
+ const r = held.getBoundingClientRect(), p = ruhig ? 0 : kl(-r.top, 0, r.height - vh);
+ filmZiel = Math.round(p * (FN - 1)); filmMalen();
+ const st = p < .3 ? 0 : p < .62 ? 1 : 2; HT.forEach((t, i) => t.classList.toggle('an', i === st));
+ $('hHinweis').style.opacity = 1 - kl(p, 0, .06);
+ // Satz
+ const sr = sz.getBoundingClientRect(), sp = kl(vh * .85 - sr.top, 0, sr.height + vh * .35); const an = Math.round(sp * worte.length);
+ worte.forEach((w, i) => w.classList.toggle('an', ruhig || i < an));
+ // Team seitlich
+ const tr = team.getBoundingClientRect(), tp = kl(-tr.top, 0, tr.height - vh), weit = Math.max(0, band.scrollWidth - vw + 48);
+ band.style.transform = `translateX(${-weit * tp}px)`;
+}
+addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(szene); } }, { passive: true });
+addEventListener('resize', szene); szene();
+</script>
+</body>
+</html>
