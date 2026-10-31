@@ -1,0 +1,127 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pagerush – Showroom Vorschau</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="fonts/fonts.css"><style>
+@font-face{font-family:"Instrument Serif";src:url(fonts/instrument-serif.ttf) format("truetype");font-display:swap}
+:root{--nacht:#0a0b0f;--weiss:#f2f3f7;--grau:#9aa0b2;--blitz:#f2c272;--display:"Unbounded","Arial Black",sans-serif;--text:"Instrument Sans","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--nacht);color:var(--weiss);font:17px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}.kicker{font:500 12.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blitz);margin:0 0 16px}
+.platz{height:70vh;display:grid;place-items:center;text-align:center;color:var(--grau)}.platz b{display:block;color:#fff;font:800 clamp(30px,5vw,64px)/1.05 var(--display)}
+/* Pagerush Kino-Showroom (Claude 31.10.) */
+.ks{position:relative;height:520vh;background:radial-gradient(120% 70% at 50% 40%,#151325 0%,#0a0b0f 60%)}
+.ks-buehne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.ks-text{position:absolute;left:0;right:0;top:6vh;text-align:center;padding:0 24px;z-index:5;pointer-events:none}
+.ks-text .ks-z{position:absolute;left:0;right:0;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.1,1)}
+.ks-text .ks-z.an{opacity:1;transform:none}
+.ks-text .kicker{margin:0 0 14px}
+.ks-text h2{margin:0;font:800 clamp(30px,4.4vw,64px)/1.02 var(--display);letter-spacing:-.03em;color:#fff}
+.ks-text h2 span{background:linear-gradient(180deg,#fff2cf,#e3a24f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ks-geraete{position:relative;width:min(1000px,82vw,calc(100vh * 1.04));margin-top:21vh;perspective:1600px}
+.ks-laptop{position:relative;transform-origin:50% 100%;will-change:transform}
+.ks-deckel{position:relative;border-radius:18px 18px 6px 6px;padding:1.4% 1.4% 2.6%;background:linear-gradient(180deg,#2a2c34,#16171c);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 60px 140px -40px rgba(0,0,0,.9),0 0 120px -30px rgba(120,100,255,.35)}
+.ks-schirm{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#000}
+.ks-schirm canvas,.ks-schirm .ks-bild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ks-schirm .ks-bild{opacity:0;will-change:opacity,transform}
+.ks-leiste{position:absolute;left:0;right:0;top:0;height:7%;z-index:3;display:flex;align-items:center;gap:6px;padding:0 2.2%;background:rgba(12,12,16,.55)}
+.ks-leiste i{width:.8%;aspect-ratio:1;border-radius:50%;background:#ff5f57}.ks-leiste i+i{background:#febc2e}.ks-leiste i+i+i{background:#28c840}
+.ks-leiste span{margin-left:2%;flex:1;max-width:38%;height:56%;border-radius:999px;background:rgba(255,255,255,.1);font:500 clamp(8px,.9vw,12px)/1 var(--mono);color:rgba(255,255,255,.75);display:flex;align-items:center;padding:0 2%}
+.ks-ueber{position:absolute;inset:7% 0 0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:0 7%;color:#1b1612;pointer-events:none}
+.ks-ueber b{font:400 clamp(26px,5.2vw,74px)/.9 "Instrument Serif",Georgia,serif;transition:opacity .5s}
+.ks-ueber small{font:500 clamp(8px,.8vw,11px)/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:#8a6532;margin-bottom:10px}
+.ks-ueber.dunkel{color:#f1e9dc;align-items:center;text-align:center}.ks-ueber.dunkel small{color:#c9a45c}
+.ks-unterteil{height:14px;margin:0 -6%;border-radius:0 0 22px 22px;background:linear-gradient(180deg,#3a3c45,#1d1e24);box-shadow:0 30px 60px -20px rgba(0,0,0,.9)}
+.ks-handy{position:absolute;right:-5%;bottom:-6%;width:21%;aspect-ratio:9/19.5;border-radius:28px;padding:1.2%;background:#16171c;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -20px rgba(0,0,0,.9);will-change:transform;z-index:6}
+.ks-handy .ks-schirm{aspect-ratio:auto;height:100%;border-radius:22px}
+.ks-chips{position:absolute;left:0;right:0;bottom:6vh;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:0 20px;z-index:5}
+.ks-chips a{font:600 13px/1 var(--text);color:#cfd3de;padding:11px 16px;border-radius:999px;background:rgba(18,20,27,.8);box-shadow:inset 0 0 0 1px rgba(235,238,250,.12);text-decoration:none;transition:all .3s}
+.ks-chips a.an{color:#1a1206;background:linear-gradient(180deg,#f7d595,#e2a24f);box-shadow:none}
+@media(max-width:760px){.ks{height:440vh}.ks-geraete{width:92vw;margin-top:8vh}.ks-handy{width:30%;right:-2%;bottom:-14%}.ks-text{top:12vh}}
+/* Galerie */
+.kg{padding:120px 0 140px}
+.kg h2{margin:0 0 14px;font:800 clamp(30px,4vw,56px)/1.05 var(--display);letter-spacing:-.03em}
+.kg .intro{color:var(--grau);max-width:56ch;margin:0 0 44px}
+.kg-raster{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.kg-karte{position:relative;display:block;border-radius:22px;overflow:hidden;aspect-ratio:4/5;text-decoration:none;color:#fff;background:#111;box-shadow:0 0 0 1px rgba(255,255,255,.08);transform:translateZ(0);transition:transform .5s cubic-bezier(.2,.8,.1,1),box-shadow .5s}
+.kg-karte:hover{transform:translateY(-8px);box-shadow:0 0 0 1px rgba(242,194,114,.5),0 40px 80px -30px rgba(0,0,0,.9)}
+.kg-karte img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.8,.1,1)}
+.kg-karte:hover img{transform:scale(1.07)}
+.kg-karte::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.82),transparent 55%)}
+.kg-info{position:absolute;z-index:2;left:22px;right:22px;bottom:20px}
+.kg-info small{font:500 11px/1 var(--mono);letter-spacing:.25em;text-transform:uppercase;color:#f2c272}
+.kg-info b{display:block;font:400 40px/1 "Instrument Serif",Georgia,serif;margin:10px 0 6px}
+.kg-info span{font-size:14px;color:#d7d9e2}
+.kg-info em{display:inline-block;margin-top:14px;font-style:normal;font-weight:700;font-size:13px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.12)}
+.kg-karte:hover .kg-info em{background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206}
+.kg-karte.bald{pointer-events:none}.kg-karte.bald .kg-info em{background:rgba(255,255,255,.08);color:#aaa}
+@media(max-width:900px){.kg-raster{grid-template-columns:1fr 1fr}}@media(max-width:560px){.kg-raster{grid-template-columns:1fr}.kg-karte{aspect-ratio:4/4.4}}
+@media(prefers-reduced-motion:reduce){.ks{height:auto}.ks-buehne{position:relative;height:auto;padding:80px 0}}
+</style></head><body>
+<div class="platz"><div><b>Pagerush</b>(hier steht später dein Startbereich) – scroll runter</div></div>
+<!-- ===== Kino-Showroom (Claude 31.10.) ===== -->
+<section class="ks" id="showroom" aria-label="Vorlagen in Bewegung">
+ <div class="ks-buehne">
+  <div class="ks-text">
+   <div class="ks-z an"><p class="kicker">Premium-Vorlagen</p><h2>Websites, die man<br><span>fühlt.</span></h2></div>
+   <div class="ks-z"><p class="kicker">Vorlage Beauty</p><h2>Der Film läuft<br><span>mit deinem Scrollen.</span></h2></div>
+   <div class="ks-z"><p class="kicker">Vorlage Gourmet</p><h2>Eine Kamerafahrt<br><span>durch dein Restaurant.</span></h2></div>
+   <div class="ks-z"><p class="kicker">Deine Fotos</p><h2>Deine Bilder.<br><span>Unsere Effekte.</span></h2></div>
+  </div>
+  <div class="ks-geraete">
+   <div class="ks-laptop" id="ksLaptop">
+    <div class="ks-deckel"><div class="ks-schirm" id="ksSchirm">
+     <canvas id="ksFilm"></canvas>
+     <img class="ks-bild" src="kino/gourmet/s1.webp" alt=""><img class="ks-bild" src="kino/gourmet/s3.webp" alt=""><img class="ks-bild" src="kino/gourmet/s4.webp" alt="">
+     <div class="ks-leiste"><i></i><i></i><i></i><span id="ksUrl">salon-mira.de</span></div>
+     <div class="ks-ueber" id="ksUeber"><small>Friseur &amp; Beauty</small><b>Mira</b></div>
+    </div></div>
+    <div class="ks-unterteil"></div>
+   </div>
+   <div class="ks-handy" id="ksHandy"><div class="ks-schirm"><canvas id="ksFilmH"></canvas></div></div>
+  </div>
+  <div class="ks-chips"><a href="kino/beauty/" class="an">Beauty</a><a href="kino/gourmet/">Gourmet</a><a href="#vorlagen-kino">Alle Vorlagen</a></div>
+ </div>
+</section>
+<section class="kg wrap" id="vorlagen-kino">
+ <p class="kicker">Vorlagen</p><h2>Wähle deinen Auftritt.</h2>
+ <p class="intro">Jede Vorlage ist fertig gestaltet – mit Film, Effekten und allen Bereichen. Du tauschst nur Texte und Fotos, den Rest macht Pagerush.</p>
+ <div class="kg-raster">
+  <a class="kg-karte" href="kino/beauty/"><img src="kino/beauty/film/quer/f060.webp" alt="Vorlage Beauty" loading="lazy"><div class="kg-info"><small>Friseur · Beauty · Kosmetik</small><b>Beauty</b><span>Scroll-Film, Preiskarte, Team, Termin-Kalender</span><br><em>Live ansehen →</em></div></a>
+  <a class="kg-karte" href="kino/gourmet/"><img src="kino/gourmet/s4.webp" alt="Vorlage Gourmet" loading="lazy"><div class="kg-info"><small>Restaurant · Bar · Café</small><b>Gourmet</b><span>Kamerafahrt, Speisekarte, Reservierung</span><br><em>Live ansehen →</em></div></a>
+  <a class="kg-karte bald" href="#"><img src="kino/gourmet/s2.webp" alt="" loading="lazy" style="filter:grayscale(.6) brightness(.6)"><div class="kg-info"><small>Burger · Getränke · Villa</small><b>Bald mehr</b><span>Neue Vorlagen kommen jede Woche</span><br><em>In Arbeit</em></div></a>
+ </div>
+</section>
+
+<script>// Kino-Showroom: Laptop + Handy spielen die Vorlagen beim Scrollen ab
+(() => {
+ const sek = document.getElementById('showroom'); if (!sek) return;
+ const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+ const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches, N = 120;
+ const cq = $('ksFilm'), ch = $('ksFilmH'), xq = cq.getContext('2d'), xh = ch.getContext('2d');
+ const Z = [...sek.querySelectorAll('.ks-z')], CH = [...sek.querySelectorAll('.ks-chips a')], BI = [...sek.querySelectorAll('.ks-bild')], ue = $('ksUeber');
+ const fq = [], fh = []; let ziel = 0, gestartet = false;
+ function laden() { if (gestartet) return; gestartet = true; const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < N; i += s) if (!ord.includes(i)) ord.push(i);
+  let k = 0; const w = () => { if (k >= ord.length) return; const i = ord[k++], n = String(i).padStart(3, '0'), a = new Image(), b = new Image(); let f = 0;
+   const ok = () => { if (++f === 2) { malen(true); w(); } }; a.onload = () => { fq[i] = a; ok(); }; b.onload = () => { fh[i] = b; ok(); }; a.onerror = b.onerror = ok;
+   a.src = `kino/beauty/film/quer/f${n}.webp`; b.src = `kino/beauty/film/hoch/f${n}.webp`; }; for (let n = 0; n < 4; n++) w(); }
+ new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { laden(); o.disconnect(); } }, { rootMargin: '600px' }).observe(sek);
+ function bild(arr, i) { if (arr[i]) return arr[i]; for (let d = 1; d < N; d++) { if (arr[i - d]) return arr[i - d]; if (arr[i + d]) return arr[i + d]; } return null; }
+ let jetzt = -1;
+ function malen(zw) { if (ziel === jetzt && !zw) return; jetzt = ziel; for (const [c, x, arr, vx] of [[cq, xq, fq, .3], [ch, xh, fh, .5]]) { const im = bild(arr, ziel); if (!im) continue;
+   const s = Math.max(c.width / im.width, c.height / im.height), w = im.width * s, h = im.height * s; x.drawImage(im, (c.width - w) * vx, (c.height - h) / 2, w, h); } }
+ function groesse() { const d = Math.min(2, devicePixelRatio || 1); for (const c of [cq, ch]) { c.width = Math.round(c.clientWidth * d); c.height = Math.round(c.clientHeight * d); } malen(true); }
+ let tick = false;
+ function lauf() { tick = false; const vh = innerHeight, r = sek.getBoundingClientRect(), p = ruhig ? .3 : kl(-r.top, 0, r.height - vh);
+  // Laptop klappt auf und kommt nach vorn
+  const auf = ez(kl(p, 0, .16)); $('ksLaptop').style.transform = `rotateX(${(1 - auf) * 28}deg) scale(${.86 + .14 * auf})`;
+  $('ksHandy').style.transform = `translateY(${(1 - ez(kl(p, .05, .22))) * 120}px) rotate(${(1 - auf) * 6}deg)`; $('ksHandy').style.opacity = kl(p, .05, .18) * (1 - kl(p, .53, .6));
+  // Abschnitte: 0 Intro | 1 Beauty-Film | 2 Gourmet-Fahrt | 3 Fotos
+  const st = p < .16 ? 0 : p < .55 ? 1 : p < .85 ? 2 : 3; Z.forEach((z, i) => z.classList.toggle('an', i === st));
+  CH.forEach((c, i) => c.classList.toggle('an', (st <= 1 && i === 0) || (st >= 2 && i === 1)));
+  ziel = Math.round(kl(p, .1, .58) * (N - 1)); malen(false);
+  $('ksUrl').textContent = st >= 2 ? 'lecrin-restaurant.de' : 'salon-mira.de';
+  const g = kl(p, .55, .85), gIdx = g * 3; BI.forEach((b, i) => { const l = gIdx - i; const o = i === 0 ? kl(p, .55, .6) * (1 - kl(l, .7, 1)) : kl(l, -.3, 0) * (1 - kl(l, .7, 1)); b.style.opacity = st >= 2 ? (i === 2 && l > .7 ? 1 : o) : 0; b.style.transform = `scale(${1 + .25 * kl(l, 0, 1)})`; });
+  ue.classList.toggle('dunkel', st >= 2); ue.innerHTML = st >= 2 ? '<small>Restaurant</small><b>L\'Écrin</b>' : '<small>Friseur &amp; Beauty</small><b>Mira</b>';
+  ue.style.opacity = st === 1 && p > .3 && p < .52 ? 0 : 1;
+ }
+ addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(lauf); } }, { passive: true });
+ addEventListener('resize', () => { groesse(); lauf(); }); groesse(); lauf();
+})();
+</script></body></html>

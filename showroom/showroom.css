@@ -1,0 +1,48 @@
+/* Pagerush Kino-Showroom (Claude 31.10.) */
+.ks{position:relative;height:520vh;background:radial-gradient(120% 70% at 50% 40%,#151325 0%,#0a0b0f 60%)}
+.ks-buehne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.ks-text{position:absolute;left:0;right:0;top:6vh;text-align:center;padding:0 24px;z-index:5;pointer-events:none}
+.ks-text .ks-z{position:absolute;left:0;right:0;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.1,1)}
+.ks-text .ks-z.an{opacity:1;transform:none}
+.ks-text .kicker{margin:0 0 14px}
+.ks-text h2{margin:0;font:800 clamp(30px,4.4vw,64px)/1.02 var(--display);letter-spacing:-.03em;color:#fff}
+.ks-text h2 span{background:linear-gradient(180deg,#fff2cf,#e3a24f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ks-geraete{position:relative;width:min(1000px,82vw,calc(100vh * 1.04));margin-top:21vh;perspective:1600px}
+.ks-laptop{position:relative;transform-origin:50% 100%;will-change:transform}
+.ks-deckel{position:relative;border-radius:18px 18px 6px 6px;padding:1.4% 1.4% 2.6%;background:linear-gradient(180deg,#2a2c34,#16171c);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 60px 140px -40px rgba(0,0,0,.9),0 0 120px -30px rgba(120,100,255,.35)}
+.ks-schirm{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#000}
+.ks-schirm canvas,.ks-schirm .ks-bild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ks-schirm .ks-bild{opacity:0;will-change:opacity,transform}
+.ks-leiste{position:absolute;left:0;right:0;top:0;height:7%;z-index:3;display:flex;align-items:center;gap:6px;padding:0 2.2%;background:rgba(12,12,16,.55)}
+.ks-leiste i{width:.8%;aspect-ratio:1;border-radius:50%;background:#ff5f57}.ks-leiste i+i{background:#febc2e}.ks-leiste i+i+i{background:#28c840}
+.ks-leiste span{margin-left:2%;flex:1;max-width:38%;height:56%;border-radius:999px;background:rgba(255,255,255,.1);font:500 clamp(8px,.9vw,12px)/1 var(--mono);color:rgba(255,255,255,.75);display:flex;align-items:center;padding:0 2%}
+.ks-ueber{position:absolute;inset:7% 0 0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:0 7%;color:#1b1612;pointer-events:none}
+.ks-ueber b{font:400 clamp(26px,5.2vw,74px)/.9 "Instrument Serif",Georgia,serif;transition:opacity .5s}
+.ks-ueber small{font:500 clamp(8px,.8vw,11px)/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:#8a6532;margin-bottom:10px}
+.ks-ueber.dunkel{color:#f1e9dc;align-items:center;text-align:center}.ks-ueber.dunkel small{color:#c9a45c}
+.ks-unterteil{height:14px;margin:0 -6%;border-radius:0 0 22px 22px;background:linear-gradient(180deg,#3a3c45,#1d1e24);box-shadow:0 30px 60px -20px rgba(0,0,0,.9)}
+.ks-handy{position:absolute;right:-5%;bottom:-6%;width:21%;aspect-ratio:9/19.5;border-radius:28px;padding:1.2%;background:#16171c;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -20px rgba(0,0,0,.9);will-change:transform;z-index:6}
+.ks-handy .ks-schirm{aspect-ratio:auto;height:100%;border-radius:22px}
+.ks-chips{position:absolute;left:0;right:0;bottom:6vh;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:0 20px;z-index:5}
+.ks-chips a{font:600 13px/1 var(--text);color:#cfd3de;padding:11px 16px;border-radius:999px;background:rgba(18,20,27,.8);box-shadow:inset 0 0 0 1px rgba(235,238,250,.12);text-decoration:none;transition:all .3s}
+.ks-chips a.an{color:#1a1206;background:linear-gradient(180deg,#f7d595,#e2a24f);box-shadow:none}
+@media(max-width:760px){.ks{height:440vh}.ks-geraete{width:92vw;margin-top:8vh}.ks-handy{width:30%;right:-2%;bottom:-14%}.ks-text{top:12vh}}
+/* Galerie */
+.kg{padding:120px 0 140px}
+.kg h2{margin:0 0 14px;font:800 clamp(30px,4vw,56px)/1.05 var(--display);letter-spacing:-.03em}
+.kg .intro{color:var(--grau);max-width:56ch;margin:0 0 44px}
+.kg-raster{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.kg-karte{position:relative;display:block;border-radius:22px;overflow:hidden;aspect-ratio:4/5;text-decoration:none;color:#fff;background:#111;box-shadow:0 0 0 1px rgba(255,255,255,.08);transform:translateZ(0);transition:transform .5s cubic-bezier(.2,.8,.1,1),box-shadow .5s}
+.kg-karte:hover{transform:translateY(-8px);box-shadow:0 0 0 1px rgba(242,194,114,.5),0 40px 80px -30px rgba(0,0,0,.9)}
+.kg-karte img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.8,.1,1)}
+.kg-karte:hover img{transform:scale(1.07)}
+.kg-karte::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.82),transparent 55%)}
+.kg-info{position:absolute;z-index:2;left:22px;right:22px;bottom:20px}
+.kg-info small{font:500 11px/1 var(--mono);letter-spacing:.25em;text-transform:uppercase;color:#f2c272}
+.kg-info b{display:block;font:400 40px/1 "Instrument Serif",Georgia,serif;margin:10px 0 6px}
+.kg-info span{font-size:14px;color:#d7d9e2}
+.kg-info em{display:inline-block;margin-top:14px;font-style:normal;font-weight:700;font-size:13px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.12)}
+.kg-karte:hover .kg-info em{background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206}
+.kg-karte.bald{pointer-events:none}.kg-karte.bald .kg-info em{background:rgba(255,255,255,.08);color:#aaa}
+@media(max-width:900px){.kg-raster{grid-template-columns:1fr 1fr}}@media(max-width:560px){.kg-raster{grid-template-columns:1fr}.kg-karte{aspect-ratio:4/4.4}}
+@media(prefers-reduced-motion:reduce){.ks{height:auto}.ks-buehne{position:relative;height:auto;padding:80px 0}}
