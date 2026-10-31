@@ -1791,6 +1791,7 @@ function starten(text) {
  setTimeout(() => kiWunsch("NEUBAU: Baue die komplette Website genau nach dieser Beschreibung des Kunden (Texte, Leistungen, passende Abschnitte, Farben und Design-Wünsche): " + text), 400);
 }
 const KI_URL = "https://2-31-5-96.sslip.io/pagerush-api/wunsch"; let kiAnzahl = 0;
+try { if (!sessionStorage.getItem("pr_besuch")) { sessionStorage.setItem("pr_besuch", "1"); fetch("https://2-31-5-96.sslip.io/pagerush-api/besuch", { method: "POST", keepalive: true, headers: { "content-type": "application/json" }, body: JSON.stringify({ seite: location.pathname }) }).catch(function () {}); } } catch (_) {}
 async function kiWunsch(t, hinweis) {
  const fallback = () => /^NEUBAU:/.test(t) ? (B$.status.hidden = true, sag("Die KI ist gerade nicht erreichbar – du siehst eine Grundversion. Schreib deinen Wunsch gleich nochmal, dann baue ich alles nach deiner Beschreibung.")) : sag(`Notiert ✓ – <b>„${esc(t.slice(0, 80))}“</b> kommt in deine fertige Website. ${hinweis ? "<br>" + hinweis + "." : ""}<br><small>Sofort sichtbar in der Vorschau: Farben, hell/dunkel, Stil, Abschnitte, Animation, Überschrift, Leistungen, Fotos.</small>`);
  if (kiAnzahl >= 12) return fallback();
