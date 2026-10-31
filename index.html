@@ -17,6 +17,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--nacht);color:var(--weiss);font-family:var(--text);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{overflow-x:hidden;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--nacht)}
 a{color:inherit}
 .wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
@@ -1484,7 +1485,7 @@ function siteHTML(d) {
  const heroHTML = heroBilder.length ? `<div class="hbox" style="--hr:${Math.min(1.9, Math.max(.8, eigeneHero.length ? ((img.heroR || [])[0] || 1.6) : 1.5))}">` + heroBilder.slice(0, 5).map((u, i) => `<div class="slide${i ? "" : " an"}${(img.heroR || [])[i] && img.heroR[i] < 1.25 ? " hoch" : ""}" style="background-image:url(${u});--u:url(${u})"></div>`).join("") + `<div class="schleier"></div>${heroBilder.length > 1 ? `<div class="punkte">${heroBilder.slice(0, 5).map((_, i) => `<i class="${i ? "" : "an"}"></i>`).join("")}</div>` : ""}</div>` : `<div class="blob b1"></div><div class="blob b2"></div>`;
  const logo = img.logo ? `<img src="${img.logo}" alt="${esc(d.firma)}">` : esc(d.firma);
  return `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.firma)}</title><style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:${bg};color:${fg};font:16px/1.6 'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}body{margin:0;background:${bg};color:${fg};font:16px/1.6 'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3{font-family:${fontH};line-height:1.1;margin:0;letter-spacing:-.01em}h2{font-size:clamp(28px,4vw,44px);margin-bottom:28px}
 .w{max-width:1120px;margin:0 auto;padding:0 24px}.schmal{max-width:760px}.k{font:700 12px/1 Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${a};margin:0 0 14px}
 .nav{position:sticky;top:0;z-index:9;background:${dunkel ? "rgba(10,11,14,.75)" : "rgba(255,255,255,.82)"};backdrop-filter:blur(12px);border-bottom:1px solid ${line}}
