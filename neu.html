@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pagerush – Deine Website in Minuten. Für 99 €.</title>
+<meta name="description" content="Pagerush baut deine Website mit KI in wenigen Minuten – mit Film, Effekten und allem drin. Einmalig 99 €, kein Abo.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+@font-face{font-family:"Instrument Serif";src:url(fonts/instrument-serif.ttf) format("truetype");font-display:swap}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(fonts/instrument-serif-italic.ttf) format("truetype");font-display:swap}
+:root{--weiss:#f2f3f7;--grau:#9aa0b2;--gold:#f2c272;--gold2:#e2a24f;--linie:rgba(235,238,250,.1);
+ --display:"Unbounded","Arial Black",sans-serif;--text:"Instrument Sans","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--serif:"Instrument Serif",Georgia,serif;
+ --a:#0a0b14;--b:#1b1640;--c:#3a2a12}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#07080c;color:var(--weiss);font:400 17px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.w{max-width:1200px;margin:0 auto;padding:0 max(22px,env(safe-area-inset-left,0px))}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 16px}
+.gold{background:linear-gradient(180deg,#fff2cf,#e3a24f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.knopf{display:inline-flex;align-items:center;gap:10px;font:700 15px/1 var(--text);padding:16px 24px;border-radius:14px;background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206;box-shadow:0 0 0 1px rgba(242,194,114,.4),0 14px 50px -12px rgba(226,162,79,.7);transition:transform .25s}
+.knopf:hover{transform:translateY(-2px)}
+.knopf.leer{background:transparent;color:var(--weiss);box-shadow:inset 0 0 0 1px var(--linie)}
+/* Hintergrund, der sich über die ganze Seite entwickelt */
+.welt{position:fixed;inset:0;z-index:-1;background:radial-gradient(90% 70% at var(--x1,30%) var(--y1,20%),var(--b),transparent 60%),radial-gradient(70% 60% at var(--x2,80%) var(--y2,80%),var(--c),transparent 60%),var(--a)}
+.funken{position:fixed;inset:0;z-index:-1;pointer-events:none}
+/* Kopf */
+.kopf{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+.kopf.dicht{background:rgba(7,8,12,.82);border-color:var(--linie)}
+.kopf .w{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.kopf img{height:40px;width:auto}
+.kopf nav{display:flex;gap:26px;font-size:15px;color:var(--grau)}.kopf nav a:hover{color:#fff}
+@media(max-width:860px){.kopf nav{display:none}.kopf img{height:30px}.kopf .knopf{padding:12px 14px;font-size:14px}}
+/* Fortschrittsleiste */
+.fort{position:fixed;left:0;top:0;height:2px;z-index:60;background:linear-gradient(90deg,var(--gold2),var(--gold));width:0}
+/* KAPITEL 1: Blitz -> Laptop -> Website baut sich -> Film -> rein in den Bildschirm */
+.k1{position:relative;height:900vh}
+.k1-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.k1-t{position:absolute;left:0;right:0;text-align:center;padding:0 22px;z-index:20;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.1,1);pointer-events:none}
+.k1-t.an{opacity:1;transform:none;pointer-events:auto}
+.k1-t h1,.k1-t h2{margin:0;font:800 clamp(38px,6.4vw,104px)/.98 var(--display);letter-spacing:-.04em}
+.k1-t h2{font-size:clamp(32px,4.6vw,72px)}
+.k1-t p{color:#c9cdda;max-width:52ch;margin:16px auto 0;font-size:clamp(16px,1.4vw,19px)}
+.k1-t .zeile{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.oben{top:10vh}.mitte{top:50%;transform:translateY(-40%)}.mitte.an{transform:translateY(-50%)}.unten{bottom:9vh}
+.blitz{position:absolute;left:50%;top:36%;width:min(40vw,520px,60vh);transform:translate(-50%,-50%);z-index:5;will-change:transform,opacity}
+.blitz img{width:100%;height:auto;display:block;border-radius:24px}
+.blitz-glow{position:absolute;inset:-40%;background:radial-gradient(closest-side,rgba(242,194,114,.45),transparent 70%);opacity:0}
+.geraet{position:absolute;left:50%;top:60%;width:min(940px,80vw,calc(100vh * .95));transform:translate(-50%,-50%);perspective:1800px;z-index:8;will-change:transform,opacity}
+.lap{transform-origin:50% 100%;will-change:transform}
+.deckel{border-radius:18px 18px 6px 6px;padding:1.3% 1.3% 2.4%;background:linear-gradient(180deg,#2b2d36,#15161b);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 70px 160px -40px rgba(0,0,0,.95),0 0 140px -40px rgba(140,110,255,.45)}
+.schirm{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#0d0e14}
+.schirm canvas{position:absolute;inset:0;width:100%;height:100%}
+.unterteil{height:14px;margin:0 -6%;border-radius:0 0 22px 22px;background:linear-gradient(180deg,#3a3c45,#1d1e24)}
+/* Bau-Animation im Bildschirm */
+.bau{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;background:#f4f1ec;color:#1b1612;transition:opacity .5s}
+.bau-leiste{height:7%;display:flex;align-items:center;gap:6px;padding:0 2%;background:#e7e2da}
+.bau-leiste i{width:1%;aspect-ratio:1;border-radius:50%;background:#ff5f57}.bau-leiste i+i{background:#febc2e}.bau-leiste i+i+i{background:#28c840}
+.bau-leiste span{margin-left:2%;width:36%;height:55%;border-radius:999px;background:#fff;font:500 clamp(7px,.85vw,12px)/1 var(--mono);display:flex;align-items:center;padding:0 2%;color:#6b625a}
+.bau-in{flex:1;padding:4% 6%;display:grid;grid-template-columns:1.1fr 1fr;gap:5%;align-items:center}
+.bb{background:#ddd5ca;border-radius:6px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.8,.1,1)}
+.bb.da{transform:none}
+.bau-txt{display:flex;flex-direction:column;gap:6%}
+.bau-h{font:400 clamp(18px,4.4vw,64px)/.9 var(--serif);opacity:0;transition:opacity .5s}.bau-h.da{opacity:1}
+.bau-bild{aspect-ratio:3/4;border-radius:120px 120px 10px 10px;background:linear-gradient(160deg,#d8cfc4,#bfb2a3);overflow:hidden;position:relative}
+.bau-bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}.bau-bild img.da{opacity:1}
+.prompt{position:absolute;left:50%;top:13%;transform:translateX(-50%);z-index:4;width:min(78%,640px);display:flex;align-items:center;gap:10px;padding:1.6% 2%;border-radius:999px;background:rgba(14,15,22,.92);box-shadow:0 0 0 1px rgba(242,194,114,.45),0 20px 40px -10px rgba(0,0,0,.6);font:500 clamp(9px,1.25vw,17px)/1.2 var(--text);color:#fff;transition:opacity .4s}
+.prompt b{color:var(--gold);font-family:var(--mono);font-size:.8em}
+.prompt .cur{display:inline-block;width:2px;height:1em;background:var(--gold);animation:blink 1s steps(1) infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.handy{position:absolute;right:-6%;bottom:-8%;width:21%;aspect-ratio:9/19.5;border-radius:26px;padding:1.2%;background:#16171c;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -20px rgba(0,0,0,.9);z-index:9}
+.handy .schirm{aspect-ratio:auto;height:100%;border-radius:20px}
+.voll{position:absolute;inset:0;z-index:12;opacity:0;pointer-events:none;background:#000}
+.voll canvas,.voll img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.voll img{opacity:0}
+.voll::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 45%)}
+.punkte{position:absolute;right:22px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:10px}
+.punkte i{width:2px;height:22px;background:rgba(255,255,255,.2);transition:background .3s}.punkte i.an{background:var(--gold)}
+@media(max-width:760px){.geraet{width:96vw;top:50%}.blitz{top:30%}.handy{width:30%;right:-3%;bottom:-16%}.blitz{width:72vw}.punkte{display:none}}
+/* KAPITEL 2: Vorlagen-Wand in 3D */
+.k2{position:relative;height:300vh}
+.k2-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;perspective:1400px}
+.wand{display:grid;grid-template-columns:repeat(3,min(30vw,340px));gap:22px;transform-style:preserve-3d;will-change:transform}
+.wk{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -30px rgba(0,0,0,.9);will-change:transform,opacity}
+.wk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wk::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent 55%)}
+.wk div{position:absolute;z-index:2;left:18px;bottom:16px;right:18px}
+.wk small{font:500 10px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.wk b{display:block;font:400 34px/1 var(--serif);margin-top:8px}
+.wk em{display:inline-block;margin-top:10px;font-style:normal;font-size:12px;font-weight:700;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.14)}
+a.wk:hover em{background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206}
+.k2-t{position:absolute;top:9vh;left:0;right:0;text-align:center;z-index:5;padding:0 22px}
+.k2-t h2{margin:0;font:800 clamp(30px,4.4vw,64px)/1 var(--display);letter-spacing:-.03em}
+@media(max-width:760px){.wand{grid-template-columns:repeat(2,42vw);gap:12px}.wk:nth-child(n+5){display:none}.wk b{font-size:24px}}
+/* KAPITEL 3: Vergleich mit zählenden Zahlen */
+.k3{padding:22vh 0}
+.k3 h2{font:800 clamp(34px,5vw,76px)/1 var(--display);letter-spacing:-.04em;margin:0 0 60px;max-width:14ch}
+.vgl{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.vk{padding:40px;border-radius:26px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px var(--linie)}
+.vk.wir{background:linear-gradient(160deg,rgba(242,194,114,.12),rgba(255,255,255,.02));box-shadow:inset 0 0 0 1px rgba(242,194,114,.35)}
+.vk h3{margin:0 0 24px;font:500 13px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grau)}.vk.wir h3{color:var(--gold)}
+.zahl{font:800 clamp(48px,7vw,104px)/1 var(--display);letter-spacing:-.04em}
+.balken{height:10px;border-radius:5px;background:rgba(255,255,255,.08);margin:22px 0 8px;overflow:hidden}
+.balken i{display:block;height:100%;width:0;border-radius:5px;background:#5b6070;transition:width 1.6s cubic-bezier(.2,.8,.1,1)}.vk.wir .balken i{background:linear-gradient(90deg,var(--gold2),var(--gold))}
+.vk p{color:var(--grau);margin:0}
+@media(max-width:760px){.vgl{grid-template-columns:1fr}}
+/* KAPITEL 4: Ablauf mit Linie, die sich beim Scrollen zeichnet */
+.k4{padding:12vh 0 18vh;position:relative}
+.k4 h2{font:800 clamp(34px,5vw,76px)/1 var(--display);letter-spacing:-.04em;margin:0 0 70px}
+.schritte{position:relative;padding-left:70px}
+.schritte .linie{position:absolute;left:23px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.08)}
+.schritte .linie i{display:block;width:100%;height:0;background:linear-gradient(var(--gold),var(--gold2))}
+.st{position:relative;padding:0 0 70px;opacity:.25;transition:opacity .6s}
+.st.an{opacity:1}
+.st::before{content:attr(data-n);position:absolute;left:-70px;top:-4px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:700 16px/1 var(--mono);background:#12131a;box-shadow:inset 0 0 0 1px var(--linie);color:var(--grau);transition:all .5s}
+.st.an::before{background:linear-gradient(180deg,#f7d595,#e2a24f);color:#1a1206;box-shadow:0 0 30px rgba(242,194,114,.5)}
+.st h3{margin:0 0 10px;font:800 clamp(22px,2.6vw,36px)/1.1 var(--display);letter-spacing:-.02em}
+.st p{margin:0;color:var(--grau);max-width:52ch}
+/* KAPITEL 5: Preis */
+.k5{min-height:100vh;display:grid;place-items:center;text-align:center;padding:16vh 22px;position:relative;overflow:hidden}
+.preis{font:800 clamp(110px,22vw,320px)/.85 var(--display);letter-spacing:-.06em;will-change:transform}
+.k5 p{color:#c9cdda;font-size:clamp(17px,1.6vw,22px);margin:22px auto 34px;max-width:40ch}
+.k5 .haken{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:28px;color:var(--grau);font-size:15px}
+.fuss{padding:60px 0 calc(40px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--linie);color:var(--grau);font-size:14px}
+.fuss .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.fuss a{margin-left:18px}
+.rv{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.2,.8,.1,1),transform 1s cubic-bezier(.2,.8,.1,1)}.rv.an{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="welt" id="welt"></div>
+<canvas class="funken" id="funken"></canvas>
+<div class="fort" id="fort"></div>
+<header class="kopf" id="kopf"><div class="w">
+ <a href="#"><img src="neu/logo.webp" alt="Pagerush" width="989" height="200"></a>
+ <nav><a href="#vorlagen">Vorlagen</a><a href="#vergleich">Warum Pagerush</a><a href="#ablauf">So geht's</a><a href="#preis">Preis</a></nav>
+ <a class="knopf" href="index.html#demo">Website bauen</a>
+</div></header>
+
+<!-- KAPITEL 1 -->
+<section class="k1" id="k1"><div class="k1-b">
+ <div class="blitz" id="blitz"><div class="blitz-glow" id="glow"></div><img src="neu/marke.webp" alt="Pagerush"></div>
+ <div class="k1-t unten an" id="t0"><p class="kicker">KI-Websites · einmalig 99 €</p><h1>Deine Website.<br><span class="gold">In Minuten.</span></h1><p>Du erzählst, was du machst. Pagerush baut daraus eine Website mit Film, Effekten und allem drin.</p><div class="zeile"><a class="knopf" href="index.html#demo">Jetzt kostenlos testen</a><a class="knopf leer" href="#vorlagen">Vorlagen ansehen</a></div></div>
+ <div class="k1-t oben" id="t1"><p class="kicker">Schritt 1</p><h2>Du schreibst einen Satz.</h2></div>
+ <div class="k1-t oben" id="t2"><p class="kicker">Schritt 2</p><h2>Die KI baut. <span class="gold">Live.</span></h2></div>
+ <div class="k1-t oben" id="t3"><p class="kicker">Mit Film</p><h2>Deine Seite <span class="gold">bewegt sich.</span></h2></div>
+ <div class="k1-t unten" id="t4"><p class="kicker">Vorlage Beauty</p><h2>Auf jedem Gerät.<br><span class="gold">Gestochen scharf.</span></h2></div>
+ <div class="k1-t unten" id="t5"><p class="kicker">Vorlage Gourmet</p><h2>Jede Branche.<br><span class="gold">Ein eigener Stil.</span></h2></div>
+ <div class="geraet" id="geraet"><div class="lap" id="lap">
+  <div class="deckel"><div class="schirm" id="schirm">
+   <canvas id="cq"></canvas>
+   <div class="bau" id="bau"><div class="bau-leiste"><i></i><i></i><i></i><span>salon-mira.de</span></div>
+    <div class="bau-in"><div class="bau-txt"><div class="bb" style="height:6%;width:40%"></div><div class="bau-h">Schönheit,<br>die bleibt.</div><div class="bb" style="height:5%;width:80%"></div><div class="bb" style="height:5%;width:60%"></div><div class="bb" style="height:9%;width:36%;border-radius:999px;background:#1b1612"></div></div>
+     <div class="bau-bild"><img src="kino/beauty/film/hoch/f119.webp" alt=""></div></div></div>
+   <div class="prompt" id="prompt"><b>KI</b><span id="ptext"></span><i class="cur"></i></div>
+  </div></div><div class="unterteil"></div></div>
+  <div class="handy" id="handy"><div class="schirm"><canvas id="ch"></canvas></div></div>
+ </div>
+ <div class="voll" id="voll"><canvas id="cv"></canvas><img src="kino/gourmet/s1.webp" alt=""><img src="kino/gourmet/s3.webp" alt=""><img src="kino/gourmet/s4.webp" alt=""></div>
+ <div class="punkte" id="punkte"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div></section>
+
+<!-- KAPITEL 2 -->
+<section class="k2" id="vorlagen"><div class="k2-b">
+ <div class="k2-t"><p class="kicker">Vorlagen</p><h2>Wähle deinen <span class="gold">Auftritt.</span></h2></div>
+ <div class="wand" id="wand">
+  <a class="wk" href="kino/beauty/"><img src="kino/beauty/film/quer/f060.webp" alt="" loading="lazy"><div><small>Friseur · Beauty</small><b>Beauty</b><em>Live ansehen →</em></div></a>
+  <a class="wk" href="kino/gourmet/"><img src="kino/gourmet/s4.webp" alt="" loading="lazy"><div><small>Restaurant · Bar</small><b>Gourmet</b><em>Live ansehen →</em></div></a>
+  <a class="wk" href="index.html#demo"><img src="kino/gourmet/s1.webp" alt="" loading="lazy" style="filter:saturate(.3) brightness(.7)"><div><small>Deine Idee</small><b>Frei bauen</b><em>Mit KI starten →</em></div></a>
+  <div class="wk"><img src="kino/beauty/film/quer/f010.webp" alt="" loading="lazy" style="filter:grayscale(1) brightness(.45)"><div><small>Bald</small><b>Burger</b></div></div>
+  <div class="wk"><img src="kino/gourmet/s2.webp" alt="" loading="lazy" style="filter:grayscale(1) brightness(.45)"><div><small>Bald</small><b>Villa</b></div></div>
+  <div class="wk"><img src="kino/gourmet/s3.webp" alt="" loading="lazy" style="filter:grayscale(1) brightness(.45)"><div><small>Bald</small><b>Getränk</b></div></div>
+ </div>
+</div></section>
+
+<!-- KAPITEL 3 -->
+<section class="k3 w" id="vergleich">
+ <p class="kicker rv">Warum Pagerush</p><h2 class="rv">Agentur-Look. <span class="gold">Ohne Agentur-Preis.</span></h2>
+ <div class="vgl">
+  <div class="vk rv"><h3>Typische Agentur</h3><div class="zahl"><span data-zahl="3500">0</span> €</div><div class="balken"><i data-w="100"></i></div><p>dazu 4 – 8 Wochen Wartezeit und oft ein monatliches Abo</p></div>
+  <div class="vk wir rv"><h3>Pagerush</h3><div class="zahl gold"><span data-zahl="99">0</span> €</div><div class="balken"><i data-w="3"></i></div><p>einmalig – Vorschau in Minuten, kein Abo, die Seite gehört dir</p></div>
+ </div>
+</section>
+
+<!-- KAPITEL 4 -->
+<section class="k4 w" id="ablauf">
+ <p class="kicker rv">So geht's</p><h2 class="rv">In drei Schritten <span class="gold">online.</span></h2>
+ <div class="schritte" id="schritte"><div class="linie"><i id="linie"></i></div>
+  <div class="st" data-n="1"><h3>Beschreiben oder Vorlage wählen</h3><p>Ein Satz reicht: was du machst, wo, welcher Stil. Oder du nimmst eine Premium-Vorlage.</p></div>
+  <div class="st" data-n="2"><h3>Ansehen und anpassen</h3><p>Die Vorschau ist sofort da – am PC und am Handy. Texte, Farben, Fotos änderst du einfach per Chat.</p></div>
+  <div class="st" data-n="3"><h3>Veröffentlichen</h3><p>Einmal 99 € zahlen, Domain verbinden, fertig. Deine Seite ist live und gehört dir.</p></div>
+ </div>
+</section>
+
+<!-- KAPITEL 5 -->
+<section class="k5" id="preis"><div>
+ <p class="kicker rv">Preis</p><div class="preis gold" id="preisZahl">99 €</div>
+ <p class="rv">Einmal zahlen. Für immer deine Website. Kein Abo, keine versteckten Kosten.</p>
+ <a class="knopf rv" href="index.html#demo">Jetzt kostenlos testen</a>
+ <div class="haken rv"><span>✓ Vorschau kostenlos</span><span>✓ Fertig in Minuten</span><span>✓ PC &amp; Handy</span><span>✓ Kein Abo</span></div>
+</div></section>
+
+<footer class="fuss"><div class="w"><span>Ein Angebot der STAHLKERN GmbH · Esslingen am Neckar</span><span><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a></span></div></footer>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2, mix = (a, b, t) => a + (b - a) * t;
+const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// --- Filmbilder (Beauty) für Laptop, Handy und Vollbild
+const N = 120, fq = [], fh = []; let ziel = 0;
+(function laden() { const ord = [0, 119]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < N; i += s) if (!ord.includes(i)) ord.push(i);
+ let k = 0; const w = () => { if (k >= ord.length) return; const i = ord[k++], n = String(i).padStart(3, '0'); let f = 0; const a = new Image(), b = new Image();
+  const ok = () => { if (++f === 2) { malen(true); w(); } }; a.onload = () => { fq[i] = a; ok(); }; b.onload = () => { fh[i] = b; ok(); }; a.onerror = b.onerror = ok;
+  a.src = `kino/beauty/film/quer/f${n}.webp`; b.src = `kino/beauty/film/hoch/f${n}.webp`; }; for (let n = 0; n < 4; n++) w(); })();
+const hochkant = () => innerHeight > innerWidth;
+const C = [[$('cq'), fq, .3], [$('ch'), fh, .5], [$('cv'), fq, .3]].map(([c, arr, vx]) => ({ c, x: c.getContext('2d'), arr, vx }));
+function bild(arr, i) { if (arr[i]) return arr[i]; for (let d = 1; d < N; d++) { if (arr[i - d]) return arr[i - d]; if (arr[i + d]) return arr[i + d]; } return null; }
+let jetzt = -1;
+function malen(zw) { if (ziel === jetzt && !zw) return; jetzt = ziel; for (const o of C) { if (!o.c.width) continue; const im = bild(o.c.id === 'cv' && hochkant() ? fh : o.arr, ziel); if (!im) continue; const s = Math.max(o.c.width / im.width, o.c.height / im.height), w = im.width * s, h = im.height * s; o.x.drawImage(im, (o.c.width - w) * (o.c.id === 'cv' && hochkant() ? .5 : o.vx), (o.c.height - h) / 2, w, h); } }
+function groesse() { const d = Math.min(2, devicePixelRatio || 1); for (const o of C) { o.c.width = Math.round(o.c.clientWidth * d); o.c.height = Math.round(o.c.clientHeight * d); } malen(true); fk.width = innerWidth; fk.height = innerHeight; }
+// --- Funken im Hintergrund (leicht, ohne Filter)
+const fk = $('funken'), fx = fk.getContext('2d'), FU = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.6 + .3, v: Math.random() * .4 + .1, a: Math.random() }));
+let scrollV = 0, letzt = 0;
+function funken() { fx.clearRect(0, 0, fk.width, fk.height); for (const f of FU) { f.y -= (f.v * .0006) + scrollV * .00004 * f.v; if (f.y < -0.02) { f.y = 1.02; f.x = Math.random(); } fx.globalAlpha = .25 + .5 * Math.abs(Math.sin(f.a += .01)); fx.fillStyle = '#f2c272'; fx.beginPath(); fx.arc(f.x * fk.width, f.y * fk.height, f.r, 0, 7); fx.fill(); } scrollV *= .92; if (!ruhig) requestAnimationFrame(funken); }
+// --- Prompt-Text tippt sich
+const PT = 'Friseursalon in Stuttgart, edel, mit Preisen und Online-Termin';
+// --- Hintergrund-Farben je Kapitel
+const FARBEN = [[[10, 11, 20], [27, 22, 64], [58, 42, 18]], [[8, 9, 16], [40, 28, 80], [30, 22, 12]], [[12, 10, 8], [70, 48, 20], [24, 20, 40]], [[7, 8, 12], [22, 26, 60], [50, 36, 14]], [[10, 8, 6], [80, 56, 20], [40, 26, 70]]];
+function welt(p) { const n = FARBEN.length - 1, f = p * n, i = Math.min(n - 1, Math.floor(f)), t = f - i; const rgb = k => `rgb(${FARBEN[i][k].map((v, j) => Math.round(mix(v, FARBEN[i + 1][k][j], t))).join(',')})`;
+ const s = $('welt').style; s.setProperty('--a', rgb(0)); s.setProperty('--b', rgb(1)); s.setProperty('--c', rgb(2)); s.setProperty('--x1', (30 + 40 * Math.sin(p * 6)) + '%'); s.setProperty('--y1', (20 + 30 * Math.cos(p * 4)) + '%'); s.setProperty('--x2', (70 - 30 * Math.sin(p * 5)) + '%'); }
+const T = [0, 1, 2, 3, 4, 5].map(i => $('t' + i)), PK = [...$('punkte').children], BB = [...document.querySelectorAll('.bb')], BH = document.querySelector('.bau-h'), BI = document.querySelector('.bau-bild img'), VI = [...$('voll').querySelectorAll('img')];
+let tick = false;
+function lauf() {
+ tick = false; const vh = innerHeight, y = scrollY, gesamt = document.documentElement.scrollHeight - vh, pg = gesamt > 0 ? y / gesamt : 0;
+ scrollV += Math.abs(y - letzt); letzt = y; $('fort').style.width = (pg * 100) + '%'; welt(pg); $('kopf').classList.toggle('dicht', y > 40);
+ // Kapitel 1
+ const r = $('k1').getBoundingClientRect(), p = ruhig ? .5 : kl(-r.top, 0, r.height - vh);
+ // Phasen: 0-.1 Blitz | .1-.2 Laptop | .2-.34 Prompt | .34-.48 Bau | .48-.66 Film | .66-.78 rein ins Bild | .78-1 Gourmet-Fahrt
+ const b1 = kl(p, .04, .14); $('blitz').style.opacity = 1 - kl(p, .1, .16); $('blitz').style.transform = `translate(-50%,-50%) scale(${1 + b1 * .6}) rotate(${b1 * -6}deg)`; $('glow').style.opacity = Math.sin(Math.PI * kl(p, 0, .16));
+ const g = ez(kl(p, .1, .2)); $('geraet').style.opacity = kl(p, .1, .16); $('lap').style.transform = `rotateX(${(1 - g) * 70}deg) scale(${.8 + .2 * g})`;
+ $('handy').style.transform = `translateY(${(1 - ez(kl(p, .48, .58))) * 140}%)`; $('handy').style.opacity = kl(p, .48, .55);
+ const pr = kl(p, .2, .32); $('prompt').style.opacity = kl(p, .19, .22) * (1 - kl(p, .36, .4)); $('ptext').textContent = PT.slice(0, Math.round(pr * PT.length));
+ const bau = kl(p, .34, .46); BB.forEach((b, i) => b.classList.toggle('da', bau > i / BB.length)); BH.classList.toggle('da', bau > .2); BI.classList.toggle('da', bau > .5);
+ $('bau').style.opacity = 1 - kl(p, .46, .5); $('bau').style.pointerEvents = 'none';
+ ziel = Math.round(kl(p, .48, .78) * (N - 1)); malen(false);
+ // rein in den Bildschirm: Laptop wächst, Vollbild übernimmt
+ const rein = ez(kl(p, .66, .76)); $('geraet').style.transform = `translate(-50%,-50%) scale(${1 + rein * 1.6})`; const vo = kl(p, .72, .77); $('voll').style.opacity = vo;
+ const gf = kl(p, .78, 1) * 3; VI.forEach((im, i) => { const l = gf - i; im.style.opacity = kl(l, -.4, 0) * (1 - kl(l, .75, 1)) + (i === 2 && l > .75 ? 1 : 0); im.style.transform = `scale(${1 + .3 * kl(l, -.4, 1)})`; });
+ const ph = p < .1 ? 0 : p < .32 ? 1 : p < .48 ? 2 : p < .66 ? 3 : p < .8 ? 4 : 5; T.forEach((t, i) => t.classList.toggle('an', i === ph)); PK.forEach((k, i) => k.classList.toggle('an', i === ph));
+ // Kapitel 2: Wand kippt aus der Tiefe nach vorn, Karten fächern auf
+ const r2 = $('vorlagen').getBoundingClientRect(), p2 = kl(-r2.top, -vh * .3, r2.height - vh); const w2 = ez(kl(p2, 0, .6));
+ $('wand').style.transform = `translateZ(${(1 - w2) * -900}px) rotateX(${(1 - w2) * 40}deg) rotateY(${mix(-12, 6, p2)}deg)`;
+ [...$('wand').children].forEach((k, i) => { const v = ez(kl(p2, i * .06, .4 + i * .06)); k.style.opacity = v; k.style.transform = `translateY(${(1 - v) * 120}px) translateZ(${(i % 3 - 1) * 40 * (1 - p2)}px)`; });
+ // Kapitel 4: Linie zeichnet sich
+ const sr = $('schritte').getBoundingClientRect(), sp = kl(vh * .7 - sr.top, 0, sr.height); $('linie').style.height = (sp * 100) + '%';
+ [...$('schritte').querySelectorAll('.st')].forEach((s, i, a) => s.classList.toggle('an', sp > i / a.length + .02));
+ // Kapitel 5: Preis wächst
+ const r5 = $('preis').getBoundingClientRect(), p5 = kl(vh - r5.top, 0, vh); $('preisZahl').style.transform = `scale(${.6 + .4 * ez(p5)})`;
+}
+// Zahlen zählen hoch + Reveal
+const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('an'); io.unobserve(e.target);
+ e.target.querySelectorAll('[data-zahl]').forEach(z => { const ziel2 = +z.dataset.zahl, t0 = performance.now(); (function z1(t) { const v = ez(Math.min(1, (t - t0) / 1600)); z.textContent = Math.round(ziel2 * v).toLocaleString('de-DE'); if (v < 1) requestAnimationFrame(z1); })(t0); });
+ e.target.querySelectorAll('[data-w]').forEach(b => b.style.width = b.dataset.w + '%'); }), { threshold: .25 });
+document.querySelectorAll('.rv').forEach(x => io.observe(x));
+addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(lauf); } }, { passive: true });
+addEventListener('resize', () => { groesse(); lauf(); });
+groesse(); lauf(); funken();
+})();
+</script>
+</body>
+</html>
