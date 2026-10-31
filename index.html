@@ -1081,7 +1081,7 @@ body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transf
 .p1{transform:translate(-175%,-125%) translateZ(calc(160px + var(--p,0)*160px)) rotateY(24deg)}
 .p2{transform:translate(20%,-172%) translateZ(calc(-60px + var(--p,0)*200px)) rotateY(-22deg)}
 .p3{transform:translate(-150%,60%) translateZ(calc(-120px + var(--p,0)*200px)) rotateY(18deg)}
-@media (min-width:701px){.d3-laptop{width:min(600px,60%)}.d3-platte{width:min(170px,17%)}.p1,.p2,.p3{margin:0}.p1{left:-1%;top:10%;transform:translateZ(calc(20px + var(--p,0)*110px)) rotateY(calc(30deg - var(--p,0)*16deg))}.p2{left:84%;top:-2%;transform:translateZ(calc(-80px + var(--p,0)*170px)) rotateY(calc(-26deg + var(--p,0)*12deg))}.p3{left:1%;top:62%;transform:translateZ(calc(-120px + var(--p,0)*190px)) rotateY(calc(24deg - var(--p,0)*12deg))}}
+@media (min-width:701px){.d3-pin{padding-top:64px;box-sizing:border-box}.d3-laptop{width:min(600px,60%)}.d3-platte{width:min(170px,17%)}.p1,.p2,.p3{margin:0}.p1{left:-1%;top:10%;transform:translateZ(calc(20px + var(--p,0)*110px)) rotateY(calc(30deg - var(--p,0)*16deg))}.p2{left:84%;top:-2%;transform:translateZ(calc(-80px + var(--p,0)*170px)) rotateY(calc(-26deg + var(--p,0)*12deg))}.p3{left:1%;top:62%;transform:translateZ(calc(-120px + var(--p,0)*190px)) rotateY(calc(24deg - var(--p,0)*12deg))}}
 .d3-orb{position:absolute;left:50%;top:50%;border-radius:50%;filter:blur(1px);transform:translateZ(var(--z,0px))}
 .o1{width:70px;height:70px;margin:-8% 0 0 46%;--z:calc(120px + var(--p,0)*80px);background:radial-gradient(circle at 38% 34%,#ffe3a3,#d99a45 60%,transparent 74%)}
 .o2{width:60px;height:60px;margin:18% 0 0 -52%;--z:calc(200px + var(--p,0)*100px);background:radial-gradient(circle at 38% 34%,#b7caff,#4d7cff 60%,transparent 74%)}
@@ -1096,8 +1096,8 @@ body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transf
 <div class="d3-kopf"><p class="d3-k">Scroll dich durch deine Website</p><h2 class="d3-h" id="d3H">Echte Tiefe.</h2></div>
 <div class="d3-buehne" id="d3B"><div class="d3-welt" id="d3W">
 <div class="d3-platte p1" id="d3P1"><span>Leistungen</span></div><div class="d3-platte p2" id="d3P2"><span>Preise</span></div><div class="d3-platte p3" id="d3P3"><span>Kontakt</span></div>
-<div class="d3-laptop"><div class="d3-schirm"><iframe src="demos/nordlicht.html" title="Beispiel-Website" loading="lazy" tabindex="-1" scrolling="no"></iframe><i class="d3-glas"></i></div><div class="d3-basis"></div></div>
-<div class="d3-handy"><iframe src="demos/mira.html" title="Beispiel-Website auf dem Handy" loading="lazy" tabindex="-1" scrolling="no"></iframe></div>
+<div class="d3-laptop"><div class="d3-schirm"><iframe src="demos/nordlicht.html" title="Beispiel-Website" loading="eager" tabindex="-1" scrolling="no"></iframe><i class="d3-glas"></i></div><div class="d3-basis"></div></div>
+<div class="d3-handy"><iframe src="demos/mira.html" title="Beispiel-Website auf dem Handy" loading="eager" tabindex="-1" scrolling="no"></iframe></div>
 <i class="d3-orb o1"></i><i class="d3-orb o2"></i><i class="d3-orb o3"></i></div></div>
 <div class="d3-fuss"><div class="d3-balken"><b id="d3Bar"></b></div><p id="d3T">Eine Beschreibung. Eine Minute. Deine Website.</p></div></div></section>
 <script id="d3-js">
