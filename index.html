@@ -1059,8 +1059,8 @@ footer{overflow:hidden}
 <!-- ================= DEMO ================= -->
 <style id="d3-css">
 .d3{position:relative;height:340vh;background:#05060a}
-.d3-pin{position:absolute;left:0;right:0;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.d3-pin.fix{position:fixed}.d3-pin.end{top:auto;bottom:0}
+.d3-pin{position:sticky;left:0;right:0;top:0;height:100vh;contain:paint;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body{overflow-x:clip}.d3-welt,.d3-laptop,.d3-handy,.d3-platte{will-change:transform;backface-visibility:hidden}
 .d3-licht{position:absolute;inset:-20% -10%;pointer-events:none;background:conic-gradient(from 200deg at 50% -8%,transparent 0 38deg,rgba(77,124,255,.28) 50deg,rgba(255,255,255,.22) 56deg,transparent 68deg 360deg);mix-blend-mode:screen;transform:rotate(calc(-18deg + var(--p,0)*36deg));transform-origin:50% 0}
 .d3-gitter{position:absolute;left:-50%;right:-50%;bottom:-8%;height:62%;pointer-events:none;background:linear-gradient(rgba(242,194,114,.22) 1px,transparent 1px) 0 0/100% 56px,linear-gradient(90deg,rgba(242,194,114,.22) 1px,transparent 1px) 0 0/56px 100%;transform:perspective(500px) rotateX(68deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(0deg,#000,transparent 85%);mask-image:linear-gradient(0deg,#000,transparent 85%);background-position:0 calc(var(--p,0)*560px),0 0}
 .d3-kopf{position:relative;z-index:4;text-align:center;padding:0 20px;margin-bottom:2vh}
@@ -1088,7 +1088,7 @@ footer{overflow:hidden}
 .d3-balken{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.d3-balken b{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,#4d7cff,#f2c272,#fff4d6)}
 .d3-fuss p{margin:14px 0 0;font:500 clamp(15px,1.5vw,19px)/1.4 var(--text);color:#c9ceda;transition:opacity .3s}
 @media (max-width:700px){.d3{height:300vh}.d3-buehne{height:44vh}.d3-laptop{width:84%}.d3-handy{width:22%;margin-left:30%}.d3-platte{width:30%}.p1{transform:translate(-120%,-135%) translateZ(120px)}.p2{transform:translate(-5%,-190%) translateZ(60px)}.p3{display:none}.o1{width:48px;height:48px}.o2{width:36px;height:36px}.d3-welt{transform:rotateX(calc(14deg - var(--p,0)*14deg)) rotateY(calc(-40deg + var(--p,0)*40deg)) translateZ(calc(-200px + var(--p,0)*200px)) scale(calc(.8 + var(--p,0)*.2))}}
-@media (prefers-reduced-motion:reduce){.d3{height:auto}.d3-pin,.d3-pin.fix,.d3-pin.end{position:relative;height:auto;padding:80px 0}.d3-welt{transform:none}.d3-licht{transform:none}}
+@media (prefers-reduced-motion:reduce){.d3{height:auto}.d3-pin{position:relative;height:auto;padding:80px 0}.d3-welt{transform:none}.d3-licht{transform:none}}
 </style>
 <section class="d3" id="d3" aria-label="Deine Seite in 3D"><div class="d3-pin"><div class="d3-licht" aria-hidden="true"></div><div class="d3-gitter" aria-hidden="true"></div>
 <div class="d3-kopf"><p class="d3-k">Scroll dich durch deine Website</p><h2 class="d3-h" id="d3H">Echte Tiefe.</h2></div>
@@ -1100,9 +1100,9 @@ footer{overflow:hidden}
 <div class="d3-fuss"><div class="d3-balken"><b id="d3Bar"></b></div><p id="d3T">Eine Beschreibung. Eine Minute. Deine Website.</p></div></div></section>
 <script id="d3-js">
 (function(){var sec=document.getElementById('d3');if(!sec)return;var W=document.getElementById('d3W'),H=document.getElementById('d3H'),T=document.getElementById('d3T'),pin=sec.querySelector('.d3-pin'),fr=sec.querySelectorAll('iframe');
-var S=[[0,'Echte Tiefe.','Eine Beschreibung. Eine Minute. Deine Website.'],[.3,'Jede Seite lebt.','Leistungen, Preise, Kontakt – alles schwebt an seinem Platz.'],[.62,'Auch auf dem Handy.','Dieselbe Seite, perfekt skaliert auf Handy, Tablet und PC.'],[.9,'Fertig für 99 €.','Kein Abo. Kein Warten. Online in Minuten.']],cur=-1,tick=false,sicht=true;
+var S=[[0,'Echte Tiefe.','Eine Beschreibung. Eine Minute. Deine Website.'],[.3,'Jede Seite lebt.','Leistungen, Preise, Kontakt – alles schwebt an seinem Platz.'],[.62,'Auch auf dem Handy.','Dieselbe Seite, perfekt skaliert auf Handy, Tablet und PC.'],[.9,'Fertig für 99 €.','Kein Abo. Kein Warten. Online in Minuten.']],cur=-1,tick=false,sicht=true,glatt=0;
 function fit(){fr.forEach(function(f){var P=f.parentNode,cs=getComputedStyle(P),pl=parseFloat(cs.paddingLeft)||0,pt=parseFloat(cs.paddingTop)||0,pr=parseFloat(cs.paddingRight)||0,pb=parseFloat(cs.paddingBottom)||0,w=P.clientWidth-pl-pr,h=P.clientHeight-pt-pb,b=P.classList.contains('d3-handy')?390:1280,k=w/b;f.style.position='absolute';f.style.left=pl+'px';f.style.top=pt+'px';f.style.width=b+'px';f.style.height=(h/k)+'px';f.style.transform='scale('+k+')';f.style.transformOrigin='0 0'})}
-function z(){tick=false;var r=sec.getBoundingClientRect(),weg=r.height-innerHeight,p=weg>0?Math.min(1,Math.max(0,-r.top/weg)):1;sec.style.setProperty('--p',p.toFixed(4));pin.classList.toggle('fix',r.top<=0&&r.bottom>innerHeight);pin.classList.toggle('end',r.bottom<=innerHeight);var i=0;S.forEach(function(x,k){if(p>=x[0])i=k});if(i!==cur){cur=i;H.classList.add('w');setTimeout(function(){H.textContent=S[i][1];T.textContent=S[i][2];H.classList.remove('w')},220)}}
+function z(){tick=false;var r=sec.getBoundingClientRect(),weg=r.height-innerHeight,ziel=weg>0?Math.min(1,Math.max(0,-r.top/weg)):1;glatt+=(ziel-glatt)*.18;if(Math.abs(ziel-glatt)<.0004)glatt=ziel;var p=glatt;sec.style.setProperty('--p',p.toFixed(4));if(glatt!==ziel)an();var i=0;S.forEach(function(x,k){if(p>=x[0])i=k});if(i!==cur){cur=i;H.classList.add('w');setTimeout(function(){H.textContent=S[i][1];T.textContent=S[i][2];H.classList.remove('w')},220)}}
 function an(){if(!tick){tick=true;requestAnimationFrame(z)}}
 addEventListener('scroll',an,{passive:true});addEventListener('resize',function(){fit();an()});
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){sicht=e[0].isIntersecting;if(sicht)an()}).observe(sec);
