@@ -216,6 +216,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--weiss)}
 #bVoll{background:#171a23}
 .brahmen{position:relative;height:620px;background:#1a1d26;display:flex;justify-content:center;overflow:hidden}
 .brahmen iframe{border:0;background:#fff;transform-origin:top left;position:absolute;left:0;top:0;transition:width .4s,height .4s}
+.brahmen .lbreit{height:1px;pointer-events:none}.brahmen.lupe{overflow:auto;touch-action:none;justify-content:flex-start}.brahmen.lupe iframe{pointer-events:none;transition:none}
 .brahmen.schmal iframe{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 20px 60px rgba(0,0,0,.5);border-radius:14px}
 .bstatus{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:3;display:flex;align-items:center;gap:9px;font:500 13px/1 var(--mono);color:var(--blitz);background:rgba(10,11,15,.9);padding:11px 14px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(242,194,114,.3);white-space:nowrap}
 .bstatus svg{animation:puls 1s ease-in-out infinite}
@@ -224,9 +225,9 @@ footer a{text-decoration:none}footer a:hover{color:var(--weiss)}
 .vollbild{position:fixed;inset:0;z-index:50;background:#06070a;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 .vleiste{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font:500 13px var(--mono);color:var(--grau)}
 .vollbild .vrahmen{flex:1;position:relative;overflow:hidden;background:#06070a}.vollbild iframe{position:absolute;left:0;top:0;border:0;background:#fff;transform-origin:top left}
-@media (max-width:980px){.builder{grid-template-columns:1fr}.brahmen{height:clamp(520px,78svh,900px)}.geraete .ger[hidden]{display:none}}
+@media (max-width:980px){.builder{grid-template-columns:1fr}.brahmen{height:clamp(520px,78svh,900px)}}#bLupe[hidden]{display:none}
 @media (max-width:700px){.bleiste{flex-wrap:wrap}.bvorschau{border-radius:14px}.bfuss{justify-content:center;text-align:center}.bfuss .knopf{width:100%;justify-content:center}.bwunsch input{font-size:16px}}
-@media (max-width:480px){.bleiste .url{display:none}.zwei{grid-template-columns:1fr}}
+@media (max-width:480px){.bleiste .url{display:none}.bleiste .ger{padding:8px 8px}.zwei{grid-template-columns:1fr}}
 
 .marke-reveal{padding:40px 0 0}.mr-bild{border-radius:26px;overflow:hidden;box-shadow:0 0 0 1px var(--linie),0 50px 140px -40px rgba(242,194,114,.35);transform:perspective(1200px) rotateX(8deg) scale(.94);opacity:.4;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity 1.2s}
 .mr-bild.in{transform:none;opacity:1}.mr-bild img{display:block;width:100%;height:auto}
@@ -1096,9 +1097,10 @@ footer{overflow:hidden}
        <button type="button" class="ger" data-w="390" aria-pressed="false">Handy</button>
       </div>
       <div class="url" id="bUrl">deine-firma.de</div>
+      <button type="button" class="ger" id="bLupe" hidden aria-pressed="false" title="Vergrößern zum Lesen">🔍 Lupe</button>
       <button type="button" class="ger" id="bVoll">⤢ Groß</button>
      </div>
-     <div class="brahmen" id="bRahmen"><iframe id="bFrame" title="Vorschau deiner Website" sandbox="allow-scripts"></iframe>
+     <div class="brahmen" id="bRahmen"><iframe id="bFrame" title="Vorschau deiner Website" sandbox="allow-scripts"></iframe><div class="lbreit" id="bLupeBreit"></div>
       <div class="bstatus" id="bStatus" hidden><svg width="18" height="18"><use href="#cursor"/></svg><span id="bStatusText">KI baut …</span></div></div>
      <div class="bfuss"><span>Vorschau kostenlos · Veröffentlichen einmalig 99 €</span><a class="knopf" href="#bestellen" id="bVeroeff"><svg width="16" height="16"><use href="#cursor"/></svg>Veröffentlichen · 99 €</a></div>
     </div>
@@ -1690,13 +1692,17 @@ function zeigeBilder() {
  $("pBilder").innerHTML = html; $("eBilder").innerHTML = html;
  document.querySelectorAll(".bild-chip select").forEach(s => s.onchange = () => { const b = bilder[+s.dataset.i]; if (s.value === "logo") bilder.forEach(x => { if (x.rolle === "logo") x.rolle = "galerie"; }); b.rolle = s.value; zeigeBilder(); if (B$.lv.dataset.modus === "editor") erzeugen("Bild ist jetzt: <b>" + s.selectedOptions[0].text + "</b>.", false); });
 }
+let lupe = false;
 function passen() {
- geraeteAnpassen(); const W = B$.rahmen.clientWidth, H = B$.rahmen.clientHeight; if (!W) return; const w = breite;
- const pad = w < 1000 ? (W < 520 ? 8 : 24) : 0, sc = Math.min(1, (W - pad * 2) / w), f = B$.frame;
- f.style.width = w + "px"; f.style.height = ((H - pad * 2) / sc) + "px"; f.style.transform = `scale(${sc})`; f.style.left = ((W - w * sc) / 2) + "px"; f.style.top = pad + "px";
- B$.rahmen.classList.toggle("schmal", w < 1000);
+ const W = B$.rahmen.clientWidth, H = B$.rahmen.clientHeight; if (!W) return; const w = breite;
+ const pad = w < 1000 ? (W < 520 ? 8 : 24) : 0, fit = Math.min(1, (W - pad * 2) / w), f = B$.frame;
+ const klein = fit < 0.62; $("bLupe").hidden = !klein; if (!klein) lupe = false; $("bLupe").setAttribute("aria-pressed", String(lupe));
+ const sc = lupe ? 0.62 : fit, x0 = lupe ? pad : Math.max(pad, (W - w * sc) / 2);
+ f.style.width = w + "px"; f.style.height = ((H - pad * 2) / sc) + "px"; f.style.transform = `scale(${sc})`; f.style.left = x0 + "px"; f.style.top = pad + "px";
+ B$.rahmen.classList.toggle("schmal", w < 1000); B$.rahmen.classList.toggle("lupe", lupe);
+ $("bLupeBreit").style.width = lupe ? (w * sc + pad * 2) + "px" : "0";
+ if (!lupe) B$.rahmen.scrollLeft = 0;
 }
-function geraeteAnpassen() { const kl = innerWidth < 700, bt = document.querySelectorAll(".geraete .ger"); bt.forEach(b => { if (b.dataset.w !== "390") b.hidden = kl; }); if (kl && breite !== 390) { breite = 390; bt.forEach(x => x.setAttribute("aria-pressed", String(x.dataset.w === "390"))); } }
 addEventListener("resize", passen);
 let bauLauf = 0;
 async function erzeugen(text, bau = true) {
@@ -1888,6 +1894,11 @@ $("eDatei").addEventListener("change", async e => { const n = await hochladen(e.
 $("bWunsch").addEventListener("submit", e => { e.preventDefault(); const t = $("b-wunsch").value.trim(); if (!t) return; $("b-wunsch").value = ""; wunsch(t); });
 $("bNeu").onclick = () => { B$.lv.dataset.modus = "start"; $("pText").value = alleTexte.join("\n\n") || beschreibung; $("pText").focus(); };
 document.querySelectorAll(".geraete .ger").forEach(b => b.onclick = () => { breite = +b.dataset.w; document.querySelectorAll(".geraete .ger").forEach(x => x.setAttribute("aria-pressed", String(x === b))); passen(); vPassen(); });
+$("bLupe").onclick = () => { lupe = !lupe; passen(); };
+{ let p0 = null; const R = B$.rahmen; R.addEventListener("pointerdown", e => { if (lupe) { p0 = [e.clientX, e.clientY]; R.setPointerCapture(e.pointerId); } });
+ R.addEventListener("pointermove", e => { if (!lupe || !p0) return; const dx = e.clientX - p0[0], dy = e.clientY - p0[1]; p0 = [e.clientX, e.clientY]; R.scrollLeft -= dx; try { B$.frame.contentWindow.scrollBy(0, -dy / 0.62); } catch (_) {} });
+ const los = () => p0 = null; R.addEventListener("pointerup", los); R.addEventListener("pointercancel", los);
+ R.addEventListener("wheel", e => { if (!lupe) return; e.preventDefault(); R.scrollLeft += e.deltaX; try { B$.frame.contentWindow.scrollBy(0, e.deltaY); } catch (_) {} }, { passive: false }); }
 $("bVoll").onclick = () => { $("vFrame").srcdoc = siteHTML({ ...bd, bilder: bilderDaten(), bau: false }); $("vUrl").textContent = slug(bd.firma) + ".de · Vorschau"; $("bVollbild").hidden = false; document.body.style.overflow = "hidden"; vPassen(); };
 function vPassen() { const R = $("vRahmen"), f = $("vFrame"); if ($("bVollbild").hidden || !R.clientWidth) return; const W = R.clientWidth, H = R.clientHeight, w = breite >= 1000 ? Math.max(W, breite) : breite, sc = Math.min(1, W / w); f.style.width = w + "px"; f.style.height = (H / sc) + "px"; f.style.transform = `scale(${sc})`; f.style.left = Math.max(0, (W - w * sc) / 2) + "px"; f.style.top = "0px"; }
 addEventListener("resize", vPassen);
