@@ -224,7 +224,8 @@ footer a{text-decoration:none}footer a:hover{color:var(--weiss)}
 .vollbild{position:fixed;inset:0;z-index:50;background:#06070a;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 .vleiste{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font:500 13px var(--mono);color:var(--grau)}
 .vollbild .vrahmen{flex:1;position:relative;overflow:hidden;background:#06070a}.vollbild iframe{position:absolute;left:0;top:0;border:0;background:#fff;transform-origin:top left}
-@media (max-width:980px){.builder{grid-template-columns:1fr}.brahmen{height:560px}}
+@media (max-width:980px){.builder{grid-template-columns:1fr}.brahmen{height:clamp(520px,78svh,900px)}.geraete .ger[hidden]{display:none}}
+@media (max-width:700px){.bleiste{flex-wrap:wrap}.bvorschau{border-radius:14px}.bfuss{justify-content:center;text-align:center}.bfuss .knopf{width:100%;justify-content:center}.bwunsch input{font-size:16px}}
 @media (max-width:480px){.bleiste .url{display:none}.zwei{grid-template-columns:1fr}}
 
 .marke-reveal{padding:40px 0 0}.mr-bild{border-radius:26px;overflow:hidden;box-shadow:0 0 0 1px var(--linie),0 50px 140px -40px rgba(242,194,114,.35);transform:perspective(1200px) rotateX(8deg) scale(.94);opacity:.4;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity 1.2s}
@@ -1690,11 +1691,12 @@ function zeigeBilder() {
  document.querySelectorAll(".bild-chip select").forEach(s => s.onchange = () => { const b = bilder[+s.dataset.i]; if (s.value === "logo") bilder.forEach(x => { if (x.rolle === "logo") x.rolle = "galerie"; }); b.rolle = s.value; zeigeBilder(); if (B$.lv.dataset.modus === "editor") erzeugen("Bild ist jetzt: <b>" + s.selectedOptions[0].text + "</b>.", false); });
 }
 function passen() {
- const W = B$.rahmen.clientWidth, H = B$.rahmen.clientHeight; if (!W) return; const w = breite;
- const pad = w < 1000 ? 24 : 0, sc = Math.min(1, (W - pad * 2) / w), f = B$.frame;
+ geraeteAnpassen(); const W = B$.rahmen.clientWidth, H = B$.rahmen.clientHeight; if (!W) return; const w = breite;
+ const pad = w < 1000 ? (W < 520 ? 8 : 24) : 0, sc = Math.min(1, (W - pad * 2) / w), f = B$.frame;
  f.style.width = w + "px"; f.style.height = ((H - pad * 2) / sc) + "px"; f.style.transform = `scale(${sc})`; f.style.left = ((W - w * sc) / 2) + "px"; f.style.top = pad + "px";
  B$.rahmen.classList.toggle("schmal", w < 1000);
 }
+function geraeteAnpassen() { const kl = innerWidth < 700, bt = document.querySelectorAll(".geraete .ger"); bt.forEach(b => { if (b.dataset.w !== "390") b.hidden = kl; }); if (kl && breite !== 390) { breite = 390; bt.forEach(x => x.setAttribute("aria-pressed", String(x.dataset.w === "390"))); } }
 addEventListener("resize", passen);
 let bauLauf = 0;
 async function erzeugen(text, bau = true) {
