@@ -1071,11 +1071,11 @@ footer{overflow:hidden}
 .d3-welt{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(calc(18deg - var(--p,0)*18deg)) rotateY(calc(-62deg + var(--p,0)*62deg)) translateZ(calc(-380px + var(--p,0)*380px)) scale(calc(.78 + var(--p,0)*.22))}
 .d3-laptop{position:absolute;left:50%;top:50%;width:min(640px,66%);aspect-ratio:16/10.4;transform:translate(-50%,-50%);transform-style:preserve-3d}
 .d3-schirm{position:absolute;inset:0 0 6%;border-radius:12px 12px 4px 4px;background:#0b0c10;padding:2.2%;box-shadow:inset 0 0 0 1.5px #3a3d48,0 50px 100px -30px rgba(0,0,0,.95),0 0 120px -30px rgba(77,124,255,.65);overflow:hidden}
-.d3-schirm iframe{width:100%;height:100%;border:0;border-radius:4px;background:#fff;pointer-events:none;transform-origin:0 0}
+.d3-schirm iframe{border:0;border-radius:4px;background:#fff;pointer-events:none;transform-origin:0 0}
 .d3-glas{position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.2),transparent 35%);pointer-events:none}
 .d3-basis{position:absolute;left:-6%;right:-6%;bottom:0;height:6%;border-radius:2px 2px 14px 14px;background:linear-gradient(180deg,#8d909b,#3b3e48);box-shadow:0 20px 40px -10px rgba(0,0,0,.8)}
 .d3-handy{position:absolute;left:50%;top:50%;width:min(132px,14%);aspect-ratio:9/19;margin:0 0 0 28%;border-radius:22px;padding:6px;background:linear-gradient(145deg,#4b505e,#14161d 60%,#2b2f3a);box-shadow:0 0 0 1px rgba(255,255,255,.16),0 40px 70px -20px rgba(0,0,0,.95),0 0 60px -15px rgba(242,194,114,.55);transform:translateY(-50%) translateZ(calc(40px + var(--p,0)*50px)) rotateY(-12deg);overflow:hidden}
-.d3-handy iframe{width:100%;height:100%;border:0;border-radius:17px;background:#fff;pointer-events:none}
+.d3-handy iframe{border:0;border-radius:17px;background:#fff;pointer-events:none}
 .d3-platte{position:absolute;left:50%;top:50%;width:min(210px,24%);aspect-ratio:1.5;display:grid;place-items:center;border-radius:18px;font:700 clamp(13px,1.4vw,18px)/1 var(--display);color:#fff;background:linear-gradient(145deg,rgba(255,255,255,.28),rgba(255,255,255,.04));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 30px 60px -20px rgba(0,0,0,.8),0 0 50px -10px rgba(77,124,255,.6)}
 .p1{transform:translate(-175%,-125%) translateZ(calc(160px + var(--p,0)*160px)) rotateY(24deg)}
 .p2{transform:translate(20%,-172%) translateZ(calc(-60px + var(--p,0)*200px)) rotateY(-22deg)}
@@ -1101,7 +1101,7 @@ footer{overflow:hidden}
 <script id="d3-js">
 (function(){var sec=document.getElementById('d3');if(!sec)return;var W=document.getElementById('d3W'),H=document.getElementById('d3H'),T=document.getElementById('d3T'),pin=sec.querySelector('.d3-pin'),fr=sec.querySelectorAll('iframe');
 var S=[[0,'Echte Tiefe.','Eine Beschreibung. Eine Minute. Deine Website.'],[.3,'Jede Seite lebt.','Leistungen, Preise, Kontakt – alles schwebt an seinem Platz.'],[.62,'Auch auf dem Handy.','Dieselbe Seite, perfekt skaliert auf Handy, Tablet und PC.'],[.9,'Fertig für 99 €.','Kein Abo. Kein Warten. Online in Minuten.']],cur=-1,tick=false,sicht=true;
-function fit(){fr.forEach(function(f){var w=f.parentNode.clientWidth,tel=f.parentNode.classList.contains('d3-handy'),b=tel?390:1280;f.style.width=b+'px';f.style.height=(tel?f.parentNode.clientHeight/(w/b):f.parentNode.clientHeight/(w/b))+'px';f.style.transform='scale('+(w/b)+')';f.style.transformOrigin='0 0'})}
+function fit(){fr.forEach(function(f){var P=f.parentNode,cs=getComputedStyle(P),pl=parseFloat(cs.paddingLeft)||0,pt=parseFloat(cs.paddingTop)||0,pr=parseFloat(cs.paddingRight)||0,pb=parseFloat(cs.paddingBottom)||0,w=P.clientWidth-pl-pr,h=P.clientHeight-pt-pb,b=P.classList.contains('d3-handy')?390:1280,k=w/b;f.style.position='absolute';f.style.left=pl+'px';f.style.top=pt+'px';f.style.width=b+'px';f.style.height=(h/k)+'px';f.style.transform='scale('+k+')';f.style.transformOrigin='0 0'})}
 function z(){tick=false;var r=sec.getBoundingClientRect(),weg=r.height-innerHeight,p=weg>0?Math.min(1,Math.max(0,-r.top/weg)):1;sec.style.setProperty('--p',p.toFixed(4));pin.classList.toggle('fix',r.top<=0&&r.bottom>innerHeight);pin.classList.toggle('end',r.bottom<=innerHeight);var i=0;S.forEach(function(x,k){if(p>=x[0])i=k});if(i!==cur){cur=i;H.classList.add('w');setTimeout(function(){H.textContent=S[i][1];T.textContent=S[i][2];H.classList.remove('w')},220)}}
 function an(){if(!tick){tick=true;requestAnimationFrame(z)}}
 addEventListener('scroll',an,{passive:true});addEventListener('resize',function(){fit();an()});
