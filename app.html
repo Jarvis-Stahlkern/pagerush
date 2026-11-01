@@ -62,7 +62,12 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 .frame{background:#000;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -20px #000;transition:width .3s;height:100%;border:1px solid var(--ln)}
 .frame iframe{width:100%;height:100%;border:0;background:#fff}
 .drop{border:1px dashed #7c5cff88;border-radius:11px;padding:10px;text-align:center;font-size:13px;color:var(--mu);margin:0 14px 10px;cursor:pointer}
-@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.grid{grid-template-columns:1fr}.dev{display:none}.ed{grid-template-columns:1fr;grid-template-rows:54px 46vh 1fr}.chat{order:3;border:0}.edbar .seg{display:none}}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.grid{grid-template-columns:1fr}.dev{display:none}.ed{grid-template-columns:minmax(0,1fr);grid-template-rows:54px minmax(0,1fr) auto}.chat,.stage{min-width:0}.stage{padding:6px}.chat{order:3;border:0;border-top:1px solid var(--ln);max-height:46vh}.msgs{max-height:13vh;padding:8px 12px}.m{font-size:13px;padding:7px 10px}.edbar .seg{display:none}.edbar{grid-column:1;gap:6px;padding:0 8px}.edbar .nm{min-width:0}#edName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}#pub{padding:7px 9px;font-size:12px}#save{display:none}.stage{order:2}}
+.slotsw{padding:0 14px 8px}.sl{font-size:12px;color:var(--mu);margin-bottom:6px}
+.slots{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.slots button{flex:0 0 auto;width:64px;height:48px;border-radius:9px;border:1px solid var(--ln);background:#0c0b18;padding:0;overflow:hidden;position:relative;color:var(--tx)}
+.slots button:hover{border-color:var(--ak)}.slots img{width:100%;height:100%;object-fit:cover;display:block}.slots button b{display:block;font-size:16px}.slots button span{font-size:10px;display:block}
+.chips{flex-wrap:nowrap;overflow-x:auto}.chips button{flex:0 0 auto}
+.send{background:var(--p1)}.send input{min-width:0;font-size:16px}
 </style></head><body>
 
 <div class="app" id="app">
@@ -128,7 +133,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
   <button class="btn g sm" id="save">Speichern</button><button class="btn sm" id="pub">Veröffentlichen · 99 €</button></div>
  <div class="chat"><div class="msgs" id="msgs"></div>
   <div class="chips" id="chips"><button>Farbe Gold</button><button>Farbe Blau</button><button>Farbe Rot</button><button>Farbe Grün</button></div>
-  <div class="drop" id="drop">＋ Eigenes Foto hochladen (ersetzt das Bild, auf das du klickst)</div><input type="file" id="file" accept="image/*" class="hide">
+  <div class="slotsw"><div class="sl">Bilder zum Ersetzen (antippen, Foto wählen)</div><div class="slots" id="slots"></div></div><input type="file" id="file" accept="image/*" class="hide">
   <div class="send"><input class="in" id="cin" placeholder="Schreib, was geändert werden soll …"><button class="btn sm" id="csend">Senden</button></div></div>
  <div class="stage"><div class="frame" id="frame" style="width:100%"><iframe id="fr"></iframe></div></div>
 </div>
@@ -156,12 +161,13 @@ function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.map(t=>tplCard
  $("#tplN").innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join("");
  $$("#tplN .tpl").forEach(c=>c.classList.toggle("sel",c.dataset.t==sel));
  $$("#tplN .tpl").forEach(c=>c.style.outline=c.dataset.t==sel?"2px solid #7c5cff":"");
- const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${TPL.find(t=>t.id==p.t).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span></div>`).join("")||'<p style="color:var(--mu);margin-bottom:10px">Noch keine Website.</p><button class="btn sm" data-v="ki">＋ Website mit KI erstellen</button>';
+ const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${TPL.find(t=>t.id==p.t).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span><button class="btn g sm" data-del="${p.id}" style="margin-left:8px">Löschen</button></div>`).join("")||'<p style="color:var(--mu);margin-bottom:10px">Noch keine Website.</p><button class="btn sm" data-v="ki">＋ Website mit KI erstellen</button>';
  $("#liste").innerHTML=rows;$("#mini").innerHTML=rows}
 function view(v){$$("section").forEach(s=>s.classList.add("hide"));$("#v-"+v).classList.remove("hide");$$(".nav").forEach(n=>n.classList.toggle("on",n.dataset.v==v));$("#titel").textContent=({dash:"Dashboard",neu:"Neue Website",meine:"Meine Websites",vor:"Vorlagen",ki:"KI-Assistent",dom:"Domains & E-Mail",set:"Einstellungen"})[v]}
 document.addEventListener("click",e=>{
  const v=e.target.closest("[data-v]");if(v){e.preventDefault();view(v.dataset.v);return}
  const t=e.target.closest(".tpl");if(t&&!t.querySelector(".soon")){const id=t.dataset.t;if(t.parentElement.id=="tplN"){sel=id;fill()}else{sel=id;view("neu");fill()}return}
+ const dl=e.target.closest("[data-del]");if(dl){if(confirm("Diese Website wirklich löschen?")){P=P.filter(p=>p.id!=dl.dataset.del);store();fill()}return}
  const r=e.target.closest(".row[data-id]");if(r)open(P.find(p=>p.id==r.dataset.id))});
 $("#dashGo").onclick=()=>{$("#nText").value=$("#dashW").value;view("neu")};
 // Start-Text von der Startseite
@@ -173,43 +179,53 @@ $("#mkBtn").onclick=()=>{const p={id:"p"+Date.now(),name:$("#nFirma").value.trim
 const fr=$("#fr");
 function say(t,u){const d=document.createElement("div");d.className="m"+(u?" u":"");d.innerHTML=t;$("#msgs").appendChild(d);$("#msgs").scrollTop=1e9}
 function open(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");
- $("#msgs").innerHTML="";say("Hallo! Das ist deine Vorlage. <b>Klick direkt auf einen Text</b> und tipp ihn um. Oder schreib mir hier, z. B. „Farbe Gold“ oder „Name: Salon Mira“.");
- fr.onload=()=>{apply();if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.src=TPL.find(t=>t.id==p.t).u}
+ if(!Array.isArray(cur.ed.tx)||(cur.ed.tx[0]&&cur.ed.tx[0].s)){cur.ed.tx=[];cur.ed.im=[]}
+ $("#msgs").innerHTML="";say("Hallo! Schreib mir unten, was du ändern willst. Oder tipp direkt in der Vorschau auf einen Text. Eigene Fotos setzt du über die Bilder-Leiste ein.");
+ fr.onload=()=>{apply();setTimeout(()=>{const d=doc();d&&slots(d)},1800);if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.src=TPL.find(t=>t.id==p.t).u}
 function doc(){try{return fr.contentDocument}catch(_){return null}}
+const NOT="SCRIPT STYLE BUTTON INPUT TEXTAREA SELECT OPTION A NOSCRIPT CANVAS IMG SVG PATH LABEL BR".split(" ");
+function leaves(d){return [...d.body.querySelectorAll("*")].filter(el=>!el.children.length&&!NOT.includes(el.tagName.toUpperCase())&&el.textContent.trim().length>1&&!/^[\d\s.:,\/€-]+$/.test(el.textContent.trim())&&!el.closest("form,nav,header,button,a,[class*=pr-]"))}
+function heroSet(d,url){const c=d.querySelector("canvas.film,canvas#film");if(!c)return;c.style.display="none";let h=d.getElementById("pr-hero");if(!h){h=d.createElement("div");h.id="pr-hero";h.style.cssText="position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform";c.parentElement.insertBefore(h,c);const w=d.defaultView;w.addEventListener("scroll",()=>{const p=Math.min(1,w.scrollY/(w.innerHeight*2.2));h.style.transform="scale("+(1+.18*p)+")"},{passive:true})}h.style.backgroundImage="url("+url+")"}
 function apply(){const d=doc();if(!d)return;
  if(cur.ed.css){let s=d.getElementById("pr-ed");if(!s){s=d.createElement("style");s.id="pr-ed";d.head.appendChild(s)}s.textContent=cur.ed.css}
- (cur.ed.tx||[]).forEach(o=>{const el=d.querySelectorAll(o.s)[o.i];if(el)el.textContent=o.v});
- (cur.ed.im||[]).forEach(o=>{const el=d.querySelectorAll("img")[o.i];if(el){el.removeAttribute("srcset");el.src=o.v}});
- const st=d.createElement("style");st.textContent="[data-pr-e]:hover{outline:2px dashed #7c5cff;outline-offset:3px;cursor:text}[data-pr-e]:focus{outline:2px solid #7c5cff;outline-offset:3px}img:hover{outline:2px dashed #7c5cff;outline-offset:-2px}";d.head.appendChild(st);
- const sels="h1,h2,h3,p,.btn,button,a,li,span";d.querySelectorAll("h1,h2,h3,p").forEach((el,i)=>{if(el.closest("form,nav,header"))return;if(el.children.length>3)return;el.dataset.prE=1;el.contentEditable="true";el.addEventListener("input",()=>{const l=[...d.querySelectorAll("h1,h2,h3,p")];const k=l.indexOf(el);cur.ed.tx=(cur.ed.tx||[]).filter(o=>!(o.s=="h1,h2,h3,p"&&o.i==k));cur.ed.tx.push({s:"h1,h2,h3,p",i:k,v:el.textContent});store()})});
- d.addEventListener("click",e=>{const im=e.target.closest("img");if(im){lastEl=[...d.querySelectorAll("img")].indexOf(im);say("Bild ausgewählt. Klick unten auf „Eigenes Foto hochladen“.")}},true)}
+ const st=d.createElement("style");st.textContent="[data-pr-e]:hover{outline:2px dashed #7c5cff;outline-offset:3px;cursor:text}[data-pr-e]:focus{outline:2px solid #7c5cff;outline-offset:3px}.pr-leiste{display:none!important}";d.head.appendChild(st);
+ const L=leaves(d);L.forEach(el=>{const o=el.textContent.trim();const e=(cur.ed.tx||[]).find(x=>x.o==o);if(e){el.textContent=e.v;el.dataset.prO=o}else el.dataset.prO=o;
+  el.dataset.prE=1;el.contentEditable="true";el.addEventListener("input",()=>{const k=el.dataset.prO;cur.ed.tx=(cur.ed.tx||[]).filter(x=>x.o!=k);cur.ed.tx.push({o:k,v:el.textContent});store()})});
+ imgApply(d);if(cur.ed.hero)heroSet(d,cur.ed.hero)}
+function imgApply(d){const M={};(cur.ed.im||[]).forEach(o=>M[o.k]=o.v);d.querySelectorAll("img").forEach(im=>{const k=im.dataset.prK||(im.dataset.prK=im.getAttribute("src")||"");if(M[k]){im.removeAttribute("srcset");im.src=M[k]}})}
+let pickK=null;
+function slots(d){const box=$("#slots");const seen=new Set();let h="";
+ if(d.querySelector("canvas.film,canvas#film"))h+=`<button data-k="hero" title="Titelbild"><b>🎬</b><span>Titelbild</span></button>`;
+ d.querySelectorAll("img").forEach(im=>{const k=im.dataset.prK||(im.dataset.prK=im.getAttribute("src")||"");if(!k||seen.has(k)||k.startsWith("data:")&&false)return;seen.add(k);h+=`<button data-k="${k.replace(/"/g,"")}"><img src="${im.currentSrc||im.src}" alt=""></button>`});
+ box.innerHTML=h||"<small>Keine Bilder gefunden</small>"}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
 function cmd(t,ki){const l=t.toLowerCase();let m;
  if(!ki&&(m=l.match(/farbe\s+(\w+)/))){const c=COL[m[1]];if(!c)return say("Diese Farbe kenne ich noch nicht. Probier: Gold, Blau, Rot, Grün, Lila, Rosa, Orange.");
   cur.ed.css=`:root{--gold:${c}!important;--akzent:${c}!important;--ak:${c}!important;--c:${c}!important}`;apply();store();return say("Farbe geändert ✓")}
- if(!ki&&(m=t.match(/(?:name|überschrift|titel)\s*:\s*(.+)/i))){const d=doc(),h=d&&d.querySelector("h1");if(h){h.textContent=m[1];const l2=[...d.querySelectorAll("h1,h2,h3,p")];cur.ed.tx=(cur.ed.tx||[]).filter(o=>o.i!=l2.indexOf(h));cur.ed.tx.push({s:"h1,h2,h3,p",i:l2.indexOf(h),v:m[1]});store();return say("Überschrift geändert ✓")}}
  if(!TOK){say("Melde dich kurz an, dann kann die KI deine Wünsche umsetzen.");lgAuf();return}
- const d=doc();if(!d)return;const list=[...d.querySelectorAll("h1,h2,h3,p")];
- const texte=list.map((el,i)=>({i,v:el.textContent.trim().slice(0,200)})).filter(o=>o.v&&!list[o.i].closest("form,nav,header")).slice(0,90);
+ const d=doc();if(!d)return;const list=leaves(d);
+ const texte=list.map((el,i)=>({i,v:el.textContent.trim().slice(0,200)})).slice(0,90);
  say("<small>Moment, ich arbeite daran …</small>");
  fetch(API+"bearbeiten",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({wunsch:t,texte})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
   if(!ok)return say(j.fehler||"Das hat nicht geklappt.");
-  (j.texte||[]).forEach(o=>{const el=list[o.i];if(el){el.textContent=o.v;cur.ed.tx=(cur.ed.tx||[]).filter(x=>!(x.s=="h1,h2,h3,p"&&x.i==o.i));cur.ed.tx.push({s:"h1,h2,h3,p",i:o.i,v:o.v})}});
-  if(j.farbe){cur.ed.css=`:root{--gold:${j.farbe}!important;--akzent:${j.farbe}!important;--ak:${j.farbe}!important;--c:${j.farbe}!important}`;apply()}
+  (j.texte||[]).forEach(o=>{const el=list[o.i];if(!el)return;const k=el.dataset.prO||el.textContent.trim();el.dataset.prO=k;el.textContent=o.v;cur.ed.tx=(cur.ed.tx||[]).filter(x=>x.o!=k);cur.ed.tx.push({o:k,v:o.v})});
+  if(j.farbe){cur.ed.css=`:root{--gold:${j.farbe}!important;--akzent:${j.farbe}!important;--ak:${j.farbe}!important;--c:${j.farbe}!important}`;const s2=d.getElementById("pr-ed")||d.head.appendChild(Object.assign(d.createElement("style"),{id:"pr-ed"}));s2.textContent=cur.ed.css}
   store();say(j.antwort||"Erledigt ✓")}).catch(()=>say("Keine Verbindung. Bitte nochmal."))}
 $("#csend").onclick=()=>{const v=$("#cin").value.trim();if(!v)return;say(v.replace(/</g,"&lt;"),1);$("#cin").value="";cmd(v)};
 $("#cin").onkeydown=e=>{if(e.key=="Enter")$("#csend").click()};
 $$("#chips button").forEach(b=>b.onclick=()=>{say(b.textContent,1);cmd(b.textContent)});
-$("#drop").onclick=()=>{if(lastEl==null)return say("Klick zuerst im Vorschaufenster auf das Bild, das du ersetzen willst.");$("#file").click()};
-$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,1600/im.width);c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);const url=c.toDataURL("image/jpeg",.85);cur.ed.im=(cur.ed.im||[]).filter(o=>o.i!=lastEl);cur.ed.im.push({i:lastEl,v:url});apply();try{store()}catch(_){}say("Foto eingesetzt ✓")};im.src=r.result};r.readAsDataURL(f)};
+$("#slots").onclick=e=>{const b=e.target.closest("button");if(!b)return;pickK=b.dataset.k;$("#file").value="";$("#file").click()};
+$("#file").onchange=e=>{const f=e.target.files[0];if(!f||pickK==null)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,1500/im.width);c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);const url=c.toDataURL("image/jpeg",.82),d=doc();
+ if(pickK=="hero"){cur.ed.hero=url;d&&heroSet(d,url)}else{cur.ed.im=(cur.ed.im||[]).filter(o=>o.k!=pickK);cur.ed.im.push({k:pickK,v:url});d&&imgApply(d)}
+ store();d&&slots(d);say("Foto eingesetzt ✓")};im.src=r.result};r.readAsDataURL(f)};
 $("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;$$("#seg button").forEach(x=>x.classList.toggle("on",x==b));$("#frame").style.width=b.dataset.w};
 $("#back").onclick=()=>{$("#ed").classList.add("hide");fr.src="about:blank";fill();view("meine")};
 $("#save").onclick=()=>{store();say(TOK?"Gespeichert ✓ in deinem Konto":"Gespeichert ✓ (nur in diesem Browser. Melde dich an, um überall zugreifen zu können.)")};
-function kTplFill(){$("#kTpl").innerHTML=TPL.filter(t=>!t.soon).map(t=>`<button data-t="${t.id}" class="${t.id==sel?"on":""}">${t.n}</button>`).join("")}
-kTplFill();$("#kTpl").onclick=e=>{const b=e.target.closest("button");if(!b)return;sel=b.dataset.t;kTplFill()};
+var kSel="auto";function kTplFill(){$("#kTpl").innerHTML=`<button data-t="auto" class="${kSel=="auto"?"on":""}">Automatisch</button>`+TPL.filter(t=>!t.soon).map(t=>`<button data-t="${t.id}" class="${t.id==kSel?"on":""}">${t.n}</button>`).join("")}
+kTplFill();$("#kTpl").onclick=e=>{const b=e.target.closest("button");if(!b)return;kSel=b.dataset.t;kTplFill()};
 $("#kGo").onclick=()=>{const txt=$("#kText").value.trim();if(!txt){$("#kText").focus();return}
  if(!TOK){lgAuf();return}
- const p={id:"p"+Date.now(),name:$("#kFirma").value.trim()||"Meine Website",t:sel,txt,pub:0,ed:{}};P.unshift(p);store();fill();open(p)};
+ const p={id:"p"+Date.now(),name:$("#kFirma").value.trim()||"Meine Website",t:(kSel=="auto"?(/restaurant|essen|küche|gourmet|café|cafe|bistro|speise|koch|pizza|bar\b|gastro/i.test(txt+" "+$("#kFirma").value)?"gourmet":"beauty"):kSel),txt,pub:0,ed:{}};P.unshift(p);store();fill();open(p)};
 function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(MAIL||"P")[0].toUpperCase()}
 let stufe=0;
 function lgZu(){$("#lg").classList.add("hide")}
