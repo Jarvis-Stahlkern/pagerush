@@ -60,6 +60,19 @@ em{font-style:italic}
 .start button{appearance:none;border:0;cursor:pointer;background:var(--weiss);color:var(--schwarz);font:500 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:0 26px;transition:background .3s}
 .start button:hover{background:var(--gold)}
 @media(max-width:760px){.start{flex-direction:column;border:0;background:none;backdrop-filter:none;gap:10px}.start input{border:1px solid rgba(244,242,238,.35);background:rgba(11,11,12,.6);padding:16px 18px;font-size:16px}.start button{padding:16px}}
+/* 00a Flug: Wolken > Gebäude > Büro > Laptop */
+.flug{position:relative;height:640vh}
+.flug-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.flug-b canvas{position:absolute;inset:0;width:100%;height:100%}
+.flug-v{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55))}
+.flug-start{position:absolute;left:0;right:0;bottom:9vh;text-align:center;z-index:3}
+.flug-start p{font:400 clamp(34px,5vw,72px)/1.05 var(--serif);margin:0 0 22px;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.flug-start span{font:500 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.8;animation:puls2 2s infinite}
+@keyframes puls2{50%{opacity:.3}}
+.flug-logo{position:absolute;left:50%;top:44%;z-index:3;text-align:center;opacity:0;width:min(560px,82vw);transform:translate(-50%,-50%) scale(.4);will-change:transform,opacity}
+.flug-logo::before{content:"";position:absolute;inset:-40% -20%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent);z-index:-1}.flug-logo img{width:100%;height:auto;display:block;filter:drop-shadow(0 0 40px rgba(255,190,110,.55)) drop-shadow(0 0 12px rgba(255,255,255,.35))}
+.flug-logo p{margin:18px 0 0;font:500 12px/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#f1e6d2;text-shadow:0 2px 16px #000}
+.flug-lade{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);width:0;transition:opacity .6s;z-index:4}
 /* 00 Logo-Film */
 .lh{position:relative;height:280vh}
 .lh-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
@@ -148,6 +161,12 @@ em{font-style:italic}
 <body>
 <header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#vorlagen">Vorlagen</a><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
 
+<section class="flug" id="flug"><div class="flug-b">
+ <canvas id="fc"></canvas><div class="flug-v"></div>
+ <div class="flug-start" id="flS"><p>Websites aus einer anderen Liga.</p><span>Scrollen</span></div>
+ <div class="flug-logo" id="flL"><img src="neu/logo.webp" alt="Pagerush"><p>KI-Websites mit 3D-Effekten · einmalig 99 €</p></div>
+ <div class="flug-lade" id="flLa"></div>
+</div></section>
 <section class="lh" id="lh"><div class="lh-b">
  <canvas id="lc"></canvas><div class="lh-v"></div>
  <div class="lh-t w" id="lhT"><p class="lh-tag">KI-Websites mit 3D-Effekten · einmalig 99 €, kein Abo</p>
@@ -210,6 +229,19 @@ em{font-style:italic}
 const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sf = $('sf'), schirm = $('schirm'), deckel = $('deckel'), rechner = $('rechner');
+// 00a Flug
+const fc = $('fc'), fx2 = fc.getContext('2d'), FN = 180, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
+(function fLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < FN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
+ const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; fMalen(true); w(); }; im.onerror = w; im.src = `neu/flug/f${String(i).padStart(3, '0')}.webp`; };
+ for (let n = 0; n < 6; n++) w(); })();
+function fMalen(zw) { let i = fZiel; if (!FB[i]) for (let d = 1; d < FN; d++) { if (FB[i - d]) { i -= d; break; } if (FB[i + d]) { i += d; break; } } const im = FB[i]; if (!im || (i === fJetzt && !zw)) return; fJetzt = i;
+ const W = fc.width, H = fc.height, cov = Math.max(W / im.width, H / im.height); fx2.fillStyle = '#000'; fx2.fillRect(0, 0, W, H);
+ if (H > W * 1.1) { fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); return; }
+ fx2.globalAlpha = .45; fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); fx2.globalAlpha = 1;
+ const s = H / im.height * 1.02, w = im.width * s; fx2.drawImage(im, (W - w) / 2, (H - im.height * s) / 2, w, im.height * s);
+ const g = fx2.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .15, 0); g.addColorStop(0, 'rgba(0,0,0,.85)'); g.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g; fx2.fillRect((W - w) / 2, 0, w * .15, H);
+ const g2 = fx2.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .15, 0); g2.addColorStop(0, 'rgba(0,0,0,.85)'); g2.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g2; fx2.fillRect((W + w) / 2 - w * .15, 0, w * .15, H); }
+function fGroesse() { const d = Math.min(2, devicePixelRatio || 1); fc.width = Math.round(fc.clientWidth * d); fc.height = Math.round(fc.clientHeight * d); fMalen(true); }
 // 00 Logo-Film (Scroll steuert die 3D-Drehung)
 const lc = $('lc'), lx = lc.getContext('2d'), LN = 120, LB = []; let lGel = 0, lZiel = 0, lJetzt = -1;
 (function lLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < LN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
@@ -225,6 +257,12 @@ const FI = [...document.querySelectorAll('.fahrt img')], FH = [...document.query
 let tick = false;
 function lauf() {
  tick = false; const vh = innerHeight, vw = innerWidth;
+ // 00a Flug: Wolken (0-60) > Logo hält > Büro (60-120) > Laptop (120-180)
+ const fr0 = $('flug').getBoundingClientRect(), q = ruhig ? 0 : kl(-fr0.top, 0, fr0.height - vh);
+ const fIdx = q < .34 ? kl(q, 0, .34) * 59 : q < .46 ? 59 : q < .72 ? 60 + kl(q, .46, .72) * 59 : 120 + kl(q, .72, .97) * 59;
+ fZiel = Math.round(fIdx); fMalen(false); fc.style.opacity = 1 - kl(q, .95, 1);
+ $('flS').style.opacity = 1 - kl(q, .02, .1);
+ const lo = kl(q, .24, .34) * (1 - kl(q, .44, .5)); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, .24, .37)) + .5 * ez(kl(q, .44, .5))).toFixed(3)})`;
  // 00 Logo-Film
  const lr = $('lh').getBoundingClientRect(), lp = ruhig ? 0 : kl(-lr.top, 0, lr.height - vh); lZiel = Math.round(kl(lp, 0, .9) * (LN - 1)); lMalen(false);
  $('lhT').style.opacity = 1 - kl(lp, .04, .22); $('lhT').style.transform = `translateY(${-40 * kl(lp, .04, .25)}px)`;
@@ -249,8 +287,8 @@ function lauf() {
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .2 });
 document.querySelectorAll('.rv').forEach(x => io.observe(x));
 addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(lauf); } }, { passive: true });
-addEventListener('resize', () => { lGroesse(); lauf(); });
-lGroesse(); lauf();
+addEventListener('resize', () => { fGroesse(); lGroesse(); lauf(); });
+fGroesse(); lGroesse(); lauf();
 // Vollbild
 const voll = $('voll'), vf = $('vf');
 function auf(u) { vf.src = u; voll.hidden = false; document.body.style.overflow = 'hidden'; document.querySelectorAll('.voll-t button').forEach(b => b.classList.toggle('on', b.dataset.u === u)); }
