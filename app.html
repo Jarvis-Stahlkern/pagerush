@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pagerush · Dashboard</title><meta name="theme-color" content="#0b0a14">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"IS";src:url(fonts/InstrumentSans.woff2) format("woff2");font-weight:400 700;font-display:swap}
+:root{--bg:#0a0912;--p1:#12101f;--p2:#191631;--ln:rgba(255,255,255,.08);--tx:#f1effa;--mu:#9b97b8;--ak:#7c5cff;--ak2:#b08cff;--ok:#38d39f;--wa:#f2b84b}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{background:radial-gradient(1200px 600px at 70% -10%,#241a5a55,transparent),var(--bg);color:var(--tx);font:15px/1.5 "IS",-apple-system,"Segoe UI",system-ui,sans-serif;overflow:hidden}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:232px 1fr;height:100%}
+.side{background:var(--p1);border-right:1px solid var(--ln);padding:18px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.logo{display:flex;align-items:center;gap:8px;padding:4px 10px 18px;font-weight:700;font-size:21px;letter-spacing:-.02em}
+.logo i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--ak),#c9a0ff);display:grid;place-items:center;font-style:normal;font-size:15px}
+.nav{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:var(--mu);background:none;border:0;text-align:left;width:100%}
+.nav:hover{background:#ffffff0a;color:var(--tx)}.nav.on{background:linear-gradient(90deg,#7c5cffcc,#6a4cf0aa);color:#fff}
+.nav span{width:18px;text-align:center}
+.help{margin-top:auto;background:var(--p2);border:1px solid var(--ln);border-radius:14px;padding:14px;font-size:13px;color:var(--mu)}
+.help b{color:var(--tx);display:block;margin-bottom:2px}
+.btn{background:linear-gradient(135deg,#7c5cff,#5d3fe0);border:0;border-radius:11px;padding:11px 18px;color:#fff;font-weight:600;box-shadow:0 8px 24px -8px #7c5cffaa}
+.btn:hover{filter:brightness(1.1)}.btn.g{background:#ffffff0d;border:1px solid var(--ln);box-shadow:none}.btn.sm{padding:7px 12px;font-size:13px;border-radius:9px}
+.main{overflow:auto;padding:22px 26px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:10px}
+.top h1{font-size:13px;font-weight:500;color:var(--mu);letter-spacing:.08em;text-transform:uppercase}
+.user{display:flex;gap:10px;align-items:center;font-size:14px}.av{width:34px;height:34px;border-radius:50%;background:#3a2c8c;display:grid;place-items:center;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 300px;gap:18px}
+.hero{border:1px solid var(--ln);border-radius:20px;padding:34px;background:radial-gradient(700px 300px at 90% 20%,#7c5cff55,transparent),linear-gradient(160deg,#191338,#0e0c1c);position:relative;overflow:hidden;min-height:300px}
+.hero .tag{display:inline-block;border:1px solid #7c5cff77;color:var(--ak2);border-radius:99px;padding:3px 12px;font-size:11px;letter-spacing:.12em;margin-bottom:16px}
+.hero h2{font-size:clamp(30px,4.2vw,54px);line-height:1.04;letter-spacing:-.03em;max-width:560px}
+.hero h2 em{font-style:normal;background:linear-gradient(90deg,#c9a0ff,#8b6cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#cfcbe8;max-width:480px;margin:14px 0 20px}
+.chk{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--mu);margin-top:18px}.chk b{color:var(--ok);font-weight:400}
+.dev{position:absolute;right:-30px;bottom:-40px;width:340px;transform:rotate(-6deg);opacity:.95}
+.dev iframe{width:1000px;height:620px;border:0;transform:scale(.34);transform-origin:0 0;border-radius:14px;pointer-events:none}
+.dev div{width:340px;height:211px;border-radius:12px;overflow:hidden;border:3px solid #2b2650;box-shadow:0 30px 60px -20px #000}
+.card{background:var(--p1);border:1px solid var(--ln);border-radius:16px;padding:16px}
+.card h3{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+textarea.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:11px;padding:11px;resize:none;min-height:96px;outline:0}textarea.in:focus,input.in:focus{border-color:var(--ak)}
+input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:10px;padding:10px;outline:0}
+.q{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid var(--ln);color:var(--mu);font-size:14px;cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left}.q:hover{color:var(--tx)}
+.row{display:flex;gap:12px;align-items:center;padding:8px 0}.thumb{width:46px;height:34px;border-radius:7px;background:#2a2450 center/cover}
+.st{font-size:11px;padding:2px 8px;border-radius:99px;margin-left:auto}.on1{background:#38d39f22;color:var(--ok)}.dr{background:#f2b84b22;color:var(--wa)}
+.sec{margin-top:20px}.sec h3{font-size:18px;margin-bottom:12px}
+.tpls{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.tpl{background:var(--p1);border:1px solid var(--ln);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}.tpl:hover{transform:translateY(-3px);border-color:#7c5cff88}
+.tpl .pv{height:150px;overflow:hidden;position:relative;background:#111}.tpl iframe{width:1280px;height:800px;border:0;transform:scale(.19);transform-origin:0 0;pointer-events:none}
+.tpl .pv.soon{display:grid;place-items:center;color:var(--mu);background:repeating-linear-gradient(45deg,#14112a,#14112a 10px,#181433 10px,#181433 20px)}
+.tpl .in{padding:12px 14px;display:flex;justify-content:space-between;align-items:center}.tpl small{color:var(--mu)}
+.price{background:linear-gradient(160deg,#2a1d6e,#150f33);border-color:#7c5cff66}.price li{list-style:none;color:#d8d3f5;font-size:14px;padding:3px 0}.price li:before{content:"✓ ";color:var(--ak2)}
+.hide{display:none!important}
+/* Editor */
+.ed{position:fixed;inset:0;background:var(--bg);display:grid;grid-template-columns:340px 1fr;grid-template-rows:54px 1fr;z-index:30}
+.edbar{grid-column:1/3;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--ln);background:var(--p1)}
+.edbar .nm{font-weight:600;margin-right:auto;display:flex;gap:10px;align-items:center}
+.seg{display:flex;background:#0c0b18;border:1px solid var(--ln);border-radius:10px;padding:3px}.seg button{background:none;border:0;padding:6px 12px;border-radius:7px;color:var(--mu);font-size:13px}.seg button.on{background:#7c5cff;color:#fff}
+.chat{border-right:1px solid var(--ln);background:var(--p1);display:flex;flex-direction:column;min-height:0}
+.msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:92%;padding:10px 13px;border-radius:14px;font-size:14px;background:var(--p2)}.m.u{align-self:flex-end;background:#6a4cf0}.m small{color:var(--mu)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 8px}.chips button{background:#ffffff0d;border:1px solid var(--ln);border-radius:99px;padding:5px 11px;font-size:12.5px;color:#d6d2ee}
+.send{display:flex;gap:8px;padding:12px;border-top:1px solid var(--ln)}.send input{flex:1}
+.stage{background:#05040a;display:grid;place-items:center;overflow:auto;padding:18px;min-height:0}
+.frame{background:#000;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -20px #000;transition:width .3s;height:100%;border:1px solid var(--ln)}
+.frame iframe{width:100%;height:100%;border:0;background:#fff}
+.drop{border:1px dashed #7c5cff88;border-radius:11px;padding:10px;text-align:center;font-size:13px;color:var(--mu);margin:0 14px 10px;cursor:pointer}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.grid{grid-template-columns:1fr}.dev{display:none}.ed{grid-template-columns:1fr;grid-template-rows:54px 46vh 1fr}.chat{order:3;border:0}.edbar .seg{display:none}}
+</style></head><body>
+
+<div class="app" id="app">
+ <aside class="side">
+  <div class="logo"><img src="neu/logo.webp" alt="Pagerush" style="height:34px;width:auto"></div>
+  <button class="nav on" data-v="dash"><span>⌂</span>Dashboard</button>
+  <button class="nav" data-v="neu"><span>＋</span>Neue Website</button>
+  <button class="nav" data-v="meine"><span>▤</span>Meine Websites</button>
+  <button class="nav" data-v="vor"><span>▦</span>Vorlagen</button>
+  <button class="nav" data-v="ki"><span>✦</span>KI-Assistent</button>
+  <button class="nav" data-v="dom"><span>◍</span>Domains &amp; E-Mail</button>
+  <button class="nav" data-v="set"><span>⚙</span>Einstellungen</button>
+  <div class="help"><b>Du hast Fragen?</b>Unser KI-Assistent hilft dir jederzeit.<br><br><button class="btn sm" style="width:100%" data-v="ki">KI-Assistent starten</button></div>
+ </aside>
+ <main class="main">
+  <div class="top"><h1 id="titel">Dashboard</h1><div class="user"><span id="mail">Gast</span><div class="av">P</div></div></div>
+
+  <section id="v-dash">
+   <div class="grid">
+    <div>
+     <div class="hero"><span class="tag">KI WEBSITE BUILDER</span>
+      <h2>Deine Website.<br><em>In wenigen Minuten.</em></h2>
+      <p>Erzähl einfach, was du machst. Die KI baut dir eine Website, die nach Agentur aussieht. Kein Abo.</p>
+      <button class="btn" data-v="neu">⚡ Jetzt Website erstellen →</button> <a class="btn g" href="kino/beauty/" target="_blank" style="text-decoration:none;display:inline-block">▶ Live-Demo ansehen</a>
+      <div class="chk"><span><b>✓</b> Einmalig 99 €</span><span><b>✓</b> Keine Abos</span><span><b>✓</b> In Minuten online</span><span><b>✓</b> Hosting inklusive</span></div>
+      <div class="dev"><div><iframe src="kino/beauty/" loading="lazy" tabindex="-1"></iframe></div></div>
+     </div>
+     <div class="sec"><h3>Beispiel-Websites</h3><div class="tpls" id="tplA"></div></div>
+    </div>
+    <div style="display:grid;gap:14px;align-content:start">
+     <div class="card"><h3>Neue Website erstellen</h3><textarea class="in" id="dashW" placeholder="z. B. „Ich bin Friseurin in Stuttgart und möchte eine edle Website mit Online-Termin.“"></textarea><button class="btn" style="width:100%;margin-top:10px" id="dashGo">Website mit KI erstellen →</button></div>
+     <div class="card"><h3>Schnellaktionen</h3><button class="q" data-v="vor">Vorlage auswählen <span>›</span></button><button class="q" data-v="neu">Eigene Fotos &amp; Logo hochladen <span>›</span></button><button class="q" data-v="dom">Domain verbinden <span>›</span></button></div>
+     <div class="card"><h3>Deine Websites <a href="#" data-v="meine" style="font-size:12px;color:var(--ak2)">Alle</a></h3><div id="mini"></div></div>
+     <div class="card price"><h3 style="font-size:18px">Nur 99 € – kein Abo</h3><ul><li>Website mit KI erstellen</li><li>Hosting inklusive</li><li>Alle Funktionen</li><li>Einmalig bezahlen</li></ul></div>
+    </div>
+   </div>
+  </section>
+
+  <section id="v-neu" class="hide">
+   <div class="card" style="max-width:720px"><h3 style="font-size:20px">Was für eine Website brauchst du?</h3>
+    <p style="color:var(--mu);margin-bottom:12px">Beschreib dein Geschäft. Wähle danach eine Vorlage. Fotos und Logo lädst du im Editor hoch.</p>
+    <input class="in" id="nFirma" placeholder="Name deines Geschäfts, z. B. Salon Mira" style="margin-bottom:10px">
+    <textarea class="in" id="nText" placeholder="Beschreibung, z. B. Friseur in Stuttgart, edel, mit Online-Termin"></textarea>
+    <h3 style="margin:18px 0 10px">Vorlage</h3><div class="tpls" id="tplN"></div>
+   </div></section>
+
+  <section id="v-meine" class="hide"><div class="card"><h3 style="font-size:20px">Meine Websites</h3><div id="liste"></div></div></section>
+  <section id="v-vor" class="hide"><div class="tpls" id="tplV"></div></section>
+  <section id="v-ki" class="hide"><div class="card" style="max-width:640px"><h3>KI-Assistent</h3><p style="color:var(--mu)">Öffne eine Website im Editor. Dort schreibst du dem Assistenten, was er ändern soll: Farben, Texte, Überschrift, Name.</p><br><button class="btn" data-v="meine">Zu meinen Websites</button></div></section>
+  <section id="v-dom" class="hide"><div class="card" style="max-width:640px"><h3>Domains &amp; E-Mail</h3><p style="color:var(--mu)">Eigene Domain verbinden kommt als Nächstes. Dafür kaufst du die Domain bei deinem Anbieter, wir verbinden sie mit deiner Website.</p></div></section>
+  <section id="v-set" class="hide"><div class="card" style="max-width:640px"><h3>Einstellungen</h3><p style="color:var(--mu)">Login mit E-Mail-Code folgt. Bis dahin werden deine Projekte in diesem Browser gespeichert.</p></div></section>
+ </main>
+</div>
+
+<div class="ed hide" id="ed">
+ <div class="edbar"><button class="btn g sm" id="back">← Zurück</button><div class="nm"><span id="edName">Projekt</span><span class="st dr" id="edSt">Entwurf</span></div>
+  <div class="seg" id="seg"><button data-w="100%" class="on">Desktop</button><button data-w="820px">Tablet</button><button data-w="390px">Handy</button></div>
+  <button class="btn g sm" id="save">Speichern</button><button class="btn sm" id="pub">Veröffentlichen · 99 €</button></div>
+ <div class="chat"><div class="msgs" id="msgs"></div>
+  <div class="chips" id="chips"><button>Farbe Gold</button><button>Farbe Blau</button><button>Farbe Rot</button><button>Farbe Grün</button></div>
+  <div class="drop" id="drop">＋ Eigenes Foto hochladen (ersetzt das Bild, auf das du klickst)</div><input type="file" id="file" accept="image/*" class="hide">
+  <div class="send"><input class="in" id="cin" placeholder="Schreib, was geändert werden soll …"><button class="btn sm" id="csend">Senden</button></div></div>
+ <div class="stage"><div class="frame" id="frame" style="width:100%"><iframe id="fr"></iframe></div></div>
+</div>
+
+<script>
+const TPL=[{id:"beauty",n:"Beauty & Friseur",u:"kino/beauty/",d:"Film-Look, Online-Termin"},{id:"gourmet",n:"Gourmet-Restaurant",u:"kino/gourmet/",d:"Kamerafahrt, Reservierung"},{id:"burger",n:"Burger",soon:1},{id:"villa",n:"Villa & Immobilien",soon:1},{id:"drink",n:"Getränk",soon:1}];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let P=[];try{P=JSON.parse(localStorage.getItem("pr_projekte")||"[]")}catch(_){}
+const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){}};
+let sel="beauty",cur=null,lastEl=null;
+function tplCard(t,cls){return `<div class="tpl" data-t="${t.id}" ${t.soon?'style="opacity:.7"':''}><div class="pv ${t.soon?'soon':''}">${t.soon?'Bald':'<iframe src="'+t.u+'" loading="lazy" tabindex="-1"></iframe>'}</div><div class="in"><div><b>${t.n}</b><br><small>${t.d||'In Arbeit'}</small></div>${t.soon?'':'<button class="btn sm">Nehmen</button>'}</div></div>`}
+function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.map(t=>tplCard(t)).join(""));
+ $("#tplN").innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join("");
+ $$("#tplN .tpl").forEach(c=>c.classList.toggle("sel",c.dataset.t==sel));
+ $$("#tplN .tpl").forEach(c=>c.style.outline=c.dataset.t==sel?"2px solid #7c5cff":"");
+ const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${TPL.find(t=>t.id==p.t).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span></div>`).join("")||'<p style="color:var(--mu)">Noch keine Website. Starte mit „Neue Website".</p>';
+ $("#liste").innerHTML=rows;$("#mini").innerHTML=rows}
+function view(v){$$("section").forEach(s=>s.classList.add("hide"));$("#v-"+v).classList.remove("hide");$$(".nav").forEach(n=>n.classList.toggle("on",n.dataset.v==v));$("#titel").textContent=({dash:"Dashboard",neu:"Neue Website",meine:"Meine Websites",vor:"Vorlagen",ki:"KI-Assistent",dom:"Domains & E-Mail",set:"Einstellungen"})[v]}
+document.addEventListener("click",e=>{
+ const v=e.target.closest("[data-v]");if(v){e.preventDefault();view(v.dataset.v);return}
+ const t=e.target.closest(".tpl");if(t&&!t.querySelector(".soon")){const id=t.dataset.t;if(t.parentElement.id=="tplN"){sel=id;fill()}else{sel=id;view("neu");fill()}return}
+ const r=e.target.closest(".row[data-id]");if(r)open(P.find(p=>p.id==r.dataset.id))});
+$("#dashGo").onclick=()=>{$("#nText").value=$("#dashW").value;view("neu")};
+// Start-Text von der Startseite
+try{const s=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w");if(s){$("#nText").value=s;$("#dashW").value=s;view("neu")}}catch(_){}
+// Neue Website anlegen
+const mk=document.createElement("div");mk.style.cssText="margin-top:16px";mk.innerHTML='<button class="btn" id="mkBtn">Website erstellen & Editor öffnen →</button>';$("#v-neu .card").appendChild(mk);
+$("#mkBtn").onclick=()=>{const p={id:"p"+Date.now(),name:$("#nFirma").value.trim()||"Meine Website",t:sel,txt:$("#nText").value.trim(),pub:0,ed:{}};P.unshift(p);store();fill();open(p)};
+// Editor
+const fr=$("#fr");
+function say(t,u){const d=document.createElement("div");d.className="m"+(u?" u":"");d.innerHTML=t;$("#msgs").appendChild(d);$("#msgs").scrollTop=1e9}
+function open(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");
+ $("#msgs").innerHTML="";say("Hallo! Das ist deine Vorlage. <b>Klick direkt auf einen Text</b> und tipp ihn um. Oder schreib mir hier, z. B. „Farbe Gold“ oder „Name: Salon Mira“.");
+ fr.onload=()=>apply();fr.src=TPL.find(t=>t.id==p.t).u}
+function doc(){try{return fr.contentDocument}catch(_){return null}}
+function apply(){const d=doc();if(!d)return;
+ if(cur.ed.css){let s=d.getElementById("pr-ed");if(!s){s=d.createElement("style");s.id="pr-ed";d.head.appendChild(s)}s.textContent=cur.ed.css}
+ (cur.ed.tx||[]).forEach(o=>{const el=d.querySelectorAll(o.s)[o.i];if(el)el.textContent=o.v});
+ (cur.ed.im||[]).forEach(o=>{const el=d.querySelectorAll("img")[o.i];if(el){el.removeAttribute("srcset");el.src=o.v}});
+ const st=d.createElement("style");st.textContent="[data-pr-e]:hover{outline:2px dashed #7c5cff;outline-offset:3px;cursor:text}[data-pr-e]:focus{outline:2px solid #7c5cff;outline-offset:3px}img:hover{outline:2px dashed #7c5cff;outline-offset:-2px}";d.head.appendChild(st);
+ const sels="h1,h2,h3,p,.btn,button,a,li,span";d.querySelectorAll("h1,h2,h3,p").forEach((el,i)=>{if(el.closest("form,nav,header"))return;if(el.children.length>3)return;el.dataset.prE=1;el.contentEditable="true";el.addEventListener("input",()=>{const l=[...d.querySelectorAll("h1,h2,h3,p")];const k=l.indexOf(el);cur.ed.tx=(cur.ed.tx||[]).filter(o=>!(o.s=="h1,h2,h3,p"&&o.i==k));cur.ed.tx.push({s:"h1,h2,h3,p",i:k,v:el.textContent});store()})});
+ d.addEventListener("click",e=>{const im=e.target.closest("img");if(im){lastEl=[...d.querySelectorAll("img")].indexOf(im);say("Bild ausgewählt. Klick unten auf „Eigenes Foto hochladen“.")}},true)}
+const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
+function cmd(t){const l=t.toLowerCase();let m;
+ if(m=l.match(/farbe\s+(\w+)/)){const c=COL[m[1]];if(!c)return say("Diese Farbe kenne ich noch nicht. Probier: Gold, Blau, Rot, Grün, Lila, Rosa, Orange.");
+  cur.ed.css=`:root{--gold:${c}!important;--akzent:${c}!important;--ak:${c}!important;--c:${c}!important}`;apply();store();return say("Farbe geändert ✓")}
+ if(m=t.match(/(?:name|überschrift|titel)\s*:\s*(.+)/i)){const d=doc(),h=d&&d.querySelector("h1");if(h){h.textContent=m[1];const l2=[...d.querySelectorAll("h1,h2,h3,p")];cur.ed.tx=(cur.ed.tx||[]).filter(o=>o.i!=l2.indexOf(h));cur.ed.tx.push({s:"h1,h2,h3,p",i:l2.indexOf(h),v:m[1]});store();return say("Überschrift geändert ✓")}}
+ say("Das kann ich hier noch nicht automatisch. Ich habe es notiert: <b>„"+t.replace(/</g,"&lt;")+"“</b>. Direkt ändern geht per Klick auf den Text.");(cur.notes=cur.notes||[]).push(t);store()}
+$("#csend").onclick=()=>{const v=$("#cin").value.trim();if(!v)return;say(v.replace(/</g,"&lt;"),1);$("#cin").value="";cmd(v)};
+$("#cin").onkeydown=e=>{if(e.key=="Enter")$("#csend").click()};
+$$("#chips button").forEach(b=>b.onclick=()=>{say(b.textContent,1);cmd(b.textContent)});
+$("#drop").onclick=()=>{if(lastEl==null)return say("Klick zuerst im Vorschaufenster auf das Bild, das du ersetzen willst.");$("#file").click()};
+$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,1600/im.width);c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);const url=c.toDataURL("image/jpeg",.85);cur.ed.im=(cur.ed.im||[]).filter(o=>o.i!=lastEl);cur.ed.im.push({i:lastEl,v:url});apply();try{store()}catch(_){}say("Foto eingesetzt ✓")};im.src=r.result};r.readAsDataURL(f)};
+$("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;$$("#seg button").forEach(x=>x.classList.toggle("on",x==b));$("#frame").style.width=b.dataset.w};
+$("#back").onclick=()=>{$("#ed").classList.add("hide");fr.src="about:blank";fill();view("meine")};
+$("#save").onclick=()=>{store();say("Gespeichert ✓ (in diesem Browser)")};
+$("#pub").onclick=()=>say("Veröffentlichen kommt mit dem Login und der Zahlung (einmalig 99 €). Deine Änderungen sind gespeichert.");
+fill();
+</script></body></html>
