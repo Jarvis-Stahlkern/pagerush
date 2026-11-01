@@ -147,7 +147,7 @@ em{font-style:italic}
 .sp h3{font-size:34px;margin:18px 0 12px}.sp p{color:var(--grau);margin:0;max-width:30ch}
 @media(max-width:860px){.spalten{grid-template-columns:1fr}.sp{padding:34px 0;border-bottom:1px solid var(--linie)}}
 /* 05b Bauen direkt auf der Seite */
-.bau{padding:20vh 0 16vh;border-top:1px solid var(--linie);background:radial-gradient(900px 500px at 50% 0%,rgba(200,164,101,.12),transparent 70%)}
+.bau{position:relative;z-index:5;margin-top:-75vh;padding:34vh 0 16vh;background:linear-gradient(to bottom,rgba(11,11,12,0),#0b0b0c 30vh)!important;}
 .bau h2{font-size:clamp(46px,6.4vw,110px);line-height:.92;text-align:center}.bau h2 em{color:var(--gold)}
 .bau-unter{text-align:center;color:#d9d6d0;max-width:46ch;margin:26px auto 46px;font-size:18px}
 .bau-box{max-width:960px;margin:0 auto;background:rgba(244,242,238,.04);border:1px solid rgba(244,242,238,.22);border-radius:22px;padding:18px;box-shadow:0 40px 120px -40px rgba(200,164,101,.35)}
@@ -174,7 +174,7 @@ em{font-style:italic}
 </style>
 </head>
 <body>
-<header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#vorlagen">Vorlagen</a><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
+<header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
 
 <section class="flug" id="flug"><div class="flug-b">
  <canvas id="fc"></canvas><div class="flug-v"></div>
@@ -182,43 +182,23 @@ em{font-style:italic}
  <div class="flug-logo" id="flL"><img src="neu/logo.webp" alt="Pagerush"><p>KI-Websites mit 3D-Effekten · einmalig 99 €</p></div>
  <div class="flug-lade" id="flLa"></div>
 </div></section>
-<section class="lh" id="lh"><div class="lh-b">
- <canvas id="lc"></canvas><div class="lh-v"></div>
- <div class="lh-t w" id="lhT"><p class="lh-tag">KI-Websites mit 3D-Effekten · einmalig 99 €, kein Abo</p>
-  <form class="start" id="start" action="app.html" method="get"><input type="text" name="w" id="startText" placeholder="Beschreib deine Website … z. B. Friseur in Stuttgart, edel, mit Online-Termin" autocomplete="off" maxlength="300"><button type="submit">Bauen →</button></form></div>
- <div class="lh-lade" id="lhL"></div>
-</div></section>
-<section class="lap" id="lap"><div class="lap-b">
- <div class="lap-glow"></div>
- <div class="lap-text w" id="lapText">
-  <h1><i><span>Deine Website.</span></i><i><span>In Minuten.</span></i></h1>
-  <div class="held-unter"><p>Pagerush baut sie mit KI. Mit 3D-Effekten, Film und Scroll-Bewegung. Einmalig 99 €, kein Abo.</p><a class="link" href="#vorlagen">Vorlagen ansehen →</a></div>
- </div>
- <div class="lap-szene"><div class="rechner" id="rechner">
-   <div class="deckel" id="deckel"><div class="schirm" id="schirm"><img id="sf" src="neu/lap/g000.webp" alt="Beispiel einer KI-gebauten Website" decoding="async"><button class="tippen" id="tippen" type="button"><span>Antippen für Vollbild</span></button></div></div>
-   <div class="sockel"><i></i></div></div>
-   <p class="badge" id="badge">KI-generierte Website · in wenigen Minuten gebaut</p></div>
-</div></section>
-<div class="voll" id="voll" hidden><div class="voll-k"><div class="voll-t"><button type="button" data-u="kino/gourmet/" class="on">Restaurant</button><button type="button" data-u="kino/beauty/">Salon</button></div><a class="knopf" href="app.html" style="padding:12px 20px">So eine Seite bauen →</a><button type="button" id="zu" aria-label="Schließen">✕</button></div><iframe id="vf" title="Vollbild-Vorschau"></iframe></div>
-
-<section class="satz w"><p id="satz">Du erzählst, was du machst. Pagerush schreibt die Texte, wählt den Stil und baut deine Website – mit Film, Effekten und allem, was eine Agentur für Tausende verlangt.</p></section>
-
-<section class="fahrt" id="fahrt"><div class="fahrt-b">
- <img src="kino/gourmet/s1.webp" alt=""><img src="kino/gourmet/s2.webp" alt=""><img src="kino/gourmet/s3.webp" alt=""><img src="kino/gourmet/s4.webp" alt="">
- <div class="fahrt-t w"><div class="kopfzeile"><span class="nr">02 — Vorlage Gourmet</span><a class="link" href="kino/gourmet/">Ansehen →</a></div>
-  <div class="zeilen"><h2>Jede Branche.</h2><h2>Ein eigener <em>Stil.</em></h2><h2>Eine eigene <em>Bühne.</em></h2><h2>Deine <em>Geschichte.</em></h2></div></div>
+<section class="bau" id="bauen"><div class="w">
+ <h2 class="rv">Bau deine Website.<br><em>Hier. Jetzt. Mit KI.</em></h2>
+ <p class="rv bau-unter">Beschreib in einem Satz, was du brauchst. Pagerush baut die komplette Seite mit 3D-Effekten – du siehst sofort das Ergebnis. Einmalig 99 €.</p>
+ <form class="bau-box rv" id="bauForm">
+  <textarea id="bauText" rows="4" maxlength="600" placeholder="z. B. Friseursalon in Esslingen, edel und dunkel, mit Online-Termin, Preisliste und Scroll-Effekten"></textarea>
+  <div class="bau-leiste"><div class="bau-chips"><button type="button">Restaurant in Stuttgart, warm, mit Reservierung</button><button type="button">Malerbetrieb, modern, mit Anfrageformular</button><button type="button">Fitnessstudio, dynamisch, mit Kursplan</button></div><button type="submit" class="knopf">Mit KI bauen</button></div>
+ </form>
 </div></section>
 
-<section class="vor" id="vorlagen"><div class="vor-b">
- <div class="w vor-kopf"><div><p class="nr" style="margin:0 0 22px">03 — Vorlagen</p><h2>Wähle deinen<br><em>Auftritt.</em></h2></div><p style="max-width:32ch;color:var(--grau);margin:0">Jede Vorlage ist fertig gestaltet. Du tauschst nur Texte und Fotos – den Rest macht Pagerush.</p></div>
- <div class="band" id="band">
-  <a class="karte" href="kino/beauty/"><div class="bild"><img src="kino/beauty/film/hoch/f070.webp" alt="Vorlage Beauty" loading="lazy"></div><div class="info"><b>Beauty</b><span>Friseur · Kosmetik</span></div></a>
-  <a class="karte" href="kino/gourmet/"><div class="bild"><img src="kino/gourmet/s4.webp" alt="Vorlage Gourmet" loading="lazy"></div><div class="info"><b>Gourmet</b><span>Restaurant · Bar</span></div></a>
-  <a class="karte" href="app.html"><div class="bild"><img src="kino/gourmet/s1.webp" alt="" loading="lazy" style="filter:grayscale(1)"></div><div class="info"><b>Frei mit KI</b><span>Deine eigene Idee</span></div></a>
-  <div class="karte bald"><div class="bild"><img src="kino/gourmet/s2.webp" alt="" loading="lazy" style="filter:grayscale(1)"></div><div class="info"><b>Villa</b><span>Bald</span></div></div>
-  <div class="karte bald"><div class="bild"><img src="kino/gourmet/s3.webp" alt="" loading="lazy" style="filter:grayscale(1)"></div><div class="info"><b>Burger</b><span>Bald</span></div></div>
- </div>
-</div></section>
+
+
+
+
+
+
+
+
 
 <section class="drei w" id="ablauf">
  <p class="nr rv">04 — Ablauf</p><h2 class="rv">Drei Schritte.<br><em>Kein Aufwand.</em></h2>
@@ -229,14 +209,7 @@ em{font-style:italic}
  </div>
 </section>
 
-<section class="bau" id="bauen"><div class="w">
- <h2 class="rv">Bau deine Website.<br><em>Hier. Jetzt. Mit KI.</em></h2>
- <p class="rv bau-unter">Beschreib in einem Satz, was du brauchst. Pagerush baut die komplette Seite mit 3D-Effekten – du siehst sofort das Ergebnis. Einmalig 99 €.</p>
- <form class="bau-box rv" id="bauForm">
-  <textarea id="bauText" rows="4" maxlength="600" placeholder="z. B. Friseursalon in Esslingen, edel und dunkel, mit Online-Termin, Preisliste und Scroll-Effekten"></textarea>
-  <div class="bau-leiste"><div class="bau-chips"><button type="button">Restaurant in Stuttgart, warm, mit Reservierung</button><button type="button">Malerbetrieb, modern, mit Anfrageformular</button><button type="button">Fitnessstudio, dynamisch, mit Kursplan</button></div><button type="submit" class="knopf">Mit KI bauen</button></div>
- </form>
-</div></section>
+
 <div class="studio" id="studio" hidden><div class="studio-k"><span>Pagerush Studio</span><button type="button" id="studioZu" aria-label="Schließen">✕</button></div><iframe id="studioF" title="Pagerush Studio"></iframe></div>
 <section class="preis" id="preis"><div>
  <p class="nr rv">05 — Preis</p>
@@ -252,80 +225,39 @@ em{font-style:italic}
 (() => {
 const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sf = $('sf'), schirm = $('schirm'), deckel = $('deckel'), rechner = $('rechner');
-// 00a Flug
-const fc = $('fc'), fx2 = fc.getContext('2d'), FQ = innerWidth > innerHeight, FN = FQ ? 120 : 240, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
-(function fLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < FN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
- const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; fMalen(true); w(); }; im.onerror = w; im.src = `neu/${FQ ? 'fq2' : 'flug'}/f${String(i).padStart(3, '0')}.webp`; };
- for (let n = 0; n < 6; n++) w(); })();
-function fMalen(zw) { let i = fZiel; if (!FB[i]) for (let d = 1; d < FN; d++) { if (FB[i - d]) { i -= d; break; } if (FB[i + d]) { i += d; break; } } const im = FB[i]; if (!im || (i === fJetzt && !zw)) return; fJetzt = i;
- const W = fc.width, H = fc.height, cov = Math.max(W / im.width, H / im.height); fx2.fillStyle = '#000'; fx2.fillRect(0, 0, W, H);
+// Flug: Wolken > Gebäude (Logo) > Büro > Laptop > in den Bildschirm
+const fc = $('fc'), fx2 = fc.getContext('2d'), FQ = innerWidth > innerHeight, FN = FQ ? 120 : 240, FB = []; let fGel = 0, fZiel = 0, fAkt = 0, fJetzt = -1;
+(function fLaden() { const ord = []; for (let i = 0; i < FN; i += 8) ord.push(i); for (let i = 0; i < FN; i++) if (!ord.includes(i)) ord.push(i); let k = 0;
+ const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.decoding = 'async'; im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; if (Math.abs(i - fZiel) < 3) fMalen(true); w(); }; im.onerror = w; im.src = `neu/${FQ ? 'fq2' : 'flug'}/f${String(i).padStart(3, '0')}.webp`; };
+ for (let n = 0; n < 10; n++) w(); })();
+function fMalen(zw) { let i = Math.round(fAkt); if (!FB[i]) for (let d = 1; d < FN; d++) { if (FB[i - d]) { i -= d; break; } if (FB[i + d]) { i += d; break; } } const im = FB[i]; if (!im || (i === fJetzt && !zw)) return; fJetzt = i;
+ const W = fc.width, H = fc.height, cov = Math.max(W / im.width, H / im.height); fx2.imageSmoothingQuality = 'high'; fx2.fillStyle = '#000'; fx2.fillRect(0, 0, W, H);
  if (H > W * 1.1 || im.width > im.height) { fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); return; }
  fx2.globalAlpha = .45; fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); fx2.globalAlpha = 1;
- const s = H / im.height * 1.02, w = im.width * s; fx2.drawImage(im, (W - w) / 2, (H - im.height * s) / 2, w, im.height * s);
- const g = fx2.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .15, 0); g.addColorStop(0, 'rgba(0,0,0,.85)'); g.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g; fx2.fillRect((W - w) / 2, 0, w * .15, H);
- const g2 = fx2.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .15, 0); g2.addColorStop(0, 'rgba(0,0,0,.85)'); g2.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g2; fx2.fillRect((W + w) / 2 - w * .15, 0, w * .15, H); }
+ const s = H / im.height * 1.02, w = im.width * s; fx2.drawImage(im, (W - w) / 2, (H - im.height * s) / 2, w, im.height * s); }
 function fGroesse() { const d = Math.min(2, devicePixelRatio || 1); fc.width = Math.round(fc.clientWidth * d); fc.height = Math.round(fc.clientHeight * d); fMalen(true); }
-// 00 Logo-Film (Scroll steuert die 3D-Drehung)
-const lc = $('lc'), lx = lc.getContext('2d'), LQ = innerWidth > innerHeight, LN = LQ ? 90 : 120, LB = []; let lGel = 0, lZiel = 0, lJetzt = -1;
-(function lLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < LN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
- const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { LB[i] = im; lGel++; $('lhL').style.width = (lGel / LN * 100) + '%'; if (lGel === LN) $('lhL').style.opacity = 0; lMalen(true); w(); }; im.onerror = w; im.src = `neu/${LQ ? 'logoq' : 'logo'}/f${String(i + 1).padStart(3, '0')}.webp`; };
- for (let n = 0; n < 6; n++) w(); })();
-function lMalen(zw) { let i = lZiel; if (!LB[i]) for (let d = 1; d < LN; d++) { if (LB[i - d]) { i -= d; break; } if (LB[i + d]) { i += d; break; } } const im = LB[i]; if (!im || (i === lJetzt && !zw)) return; lJetzt = i;
- const W = lc.width, H = lc.height, hoch = H > W * 1.1 || im.width > im.height, s = hoch ? Math.max(W / im.width, H / im.height) : H / im.height * 1.32, w = im.width * s, h = im.height * s; lx.fillStyle = '#000'; lx.fillRect(0, 0, W, H); lx.drawImage(im, (W - w) / 2, hoch ? (H - h) / 2 : (H - h) * .42, w, h);
- if (!hoch) { const g = lx.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .18, 0); g.addColorStop(0, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g; lx.fillRect((W - w) / 2 - 2, 0, w * .18, H); const g2 = lx.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .18, 0); g2.addColorStop(0, '#000'); g2.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g2; lx.fillRect((W + w) / 2 - w * .18, 0, w * .18 + 2, H); } }
-function lGroesse() { const d = Math.min(2, devicePixelRatio || 1); lc.width = Math.round(lc.clientWidth * d); lc.height = Math.round(lc.clientHeight * d); lMalen(true); }
-const LF = []; for (let i = 0; i < 48; i++) { const im = new Image(); im.src = `neu/lap/g${String(i).padStart(3, '0')}.webp`; LF.push(im); } let lfJetzt = 0;
-const sz = $('satz'); const GOLD = ['Film,', 'Effekten', 'Tausende']; sz.innerHTML = sz.textContent.split(' ').map(w => `<span class="wo${GOLD.includes(w) ? ' g' : ''}">${w}</span>`).join(' '); const WO = [...sz.children];
-const FI = [...document.querySelectorAll('.fahrt img')], FH = [...document.querySelectorAll('.fahrt-t h2')];
 let tick = false;
 function lauf() {
- tick = false; const vh = innerHeight, vw = innerWidth;
- // 00a Flug: Wolken (0-60) > Logo hält > Büro (60-120) > Laptop (120-180)
+ tick = false; const vh = innerHeight;
  const fr0 = $('flug').getBoundingClientRect(), q = ruhig ? 0 : kl(-fr0.top, 0, fr0.height - vh);
- const fIdx = FQ ? (q < .1 ? kl(q, 0, .1) * 8 : q < .24 ? 8 : q < .6 ? 8 + kl(q, .24, .6) * 51 : 60 + kl(q, .6, .97) * 59) : (q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .56 ? 60 + kl(q, .37, .56) * 59 : q < .74 ? 120 + kl(q, .56, .74) * 59 : 180 + kl(q, .74, .97) * 59);
- fZiel = Math.round(fIdx); fMalen(false); fc.style.opacity = 1 - kl(q, .95, 1);
+ fZiel = FQ ? (q < .1 ? kl(q, 0, .1) * 8 : q < .24 ? 8 : q < .6 ? 8 + kl(q, .24, .6) * 51 : 60 + kl(q, .6, .97) * 59) : (q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .56 ? 60 + kl(q, .37, .56) * 59 : q < .74 ? 120 + kl(q, .56, .74) * 59 : 180 + kl(q, .74, .97) * 59);
+ // am Ende in den Bildschirm hinein: Zoom + Abblenden, dann beginnt die Seite
+ fc.style.transform = `scale(${1 + .35 * ez(kl(q, .9, 1))})`; fc.style.opacity = 1 - kl(q, .94, 1);
  $('flS').style.opacity = 1 - kl(q, .02, .1);
  const LA = FQ ? [.05, .12, .2, .25] : [.19, .27, .35, .4], lo = kl(q, LA[0], LA[1]) * (1 - kl(q, LA[2], LA[3])); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, LA[0], LA[1] + .02)) + .5 * ez(kl(q, LA[2], LA[3]))).toFixed(3)})`;
- // 00 Logo-Film
- const lr = $('lh').getBoundingClientRect(), lp = ruhig ? 0 : kl(-lr.top, 0, lr.height - vh); lZiel = Math.round(kl(lp, 0, .9) * (LN - 1)); lMalen(false);
- $('lhT').style.opacity = 1 - kl(lp, .04, .22); $('lhT').style.transform = `translateY(${-40 * kl(lp, .04, .25)}px)`;
- // 01 Laptop: öffnet sich, wächst, Website scrollt im Bildschirm
- const r = $('lap').getBoundingClientRect(), p = ruhig ? .7 : kl(-r.top, 0, r.height - vh);
- $('lapText').style.opacity = 1 - kl(p, .08, .26); $('lapText').style.transform = `translateY(calc(-50% + ${-70 * kl(p, .06, .3)}px))`;
- deckel.style.transform = `rotateX(${-(1 - ez(kl(p, .12, .4))) * 88}deg)`;
- const h0 = rechner.offsetHeight || 1, fit = Math.min(1, (vh - 170) / h0), gross = vw < 760 ? Math.max(fit, 1.55) : fit, sc = fit * (.62 + .38 * ez(kl(p, .1, .55))) + (gross - fit) * ez(kl(p, .8, 1));
- rechner.style.transform = `translateY(${(1 - ez(kl(p, .04, .4))) * 62}vh) scale(${sc.toFixed(4)})`;
- $('badge').style.opacity = kl(p, .5, .6) * (1 - kl(p, .88, .97));
- $('tippen').classList.toggle('da', p > .6);
- const fi = Math.round(kl(p, .4, .92) * 47); if (fi !== lfJetzt && LF[fi].complete) { lfJetzt = fi; sf.src = LF[fi].src; }
- // 02 Satz
- const sr = sz.getBoundingClientRect(), sp = kl(vh * .85 - sr.top, 0, sr.height + vh * .3), an = Math.round(sp * WO.length); WO.forEach((w, i) => w.classList.toggle('an', ruhig || i < an));
- // 03 Fahrt
- const fr = $('fahrt').getBoundingClientRect(), fp = ruhig ? 0 : kl(-fr.top, 0, fr.height - vh), f = fp * (FI.length - 1);
- FI.forEach((im, i) => { const l = f - i, rein = i ? kl(l, -1, -.4) : 1, raus = kl(l, .4, 1); im.style.opacity = rein * (i === FI.length - 1 ? 1 : 1 - raus); im.style.transform = `scale(${(1 + .08 * kl(l, -1, .4) + .45 * ez(raus) - (i ? .12 * (1 - kl(l, -1, 0)) : 0)).toFixed(4)})`; });
- const fa = Math.min(FH.length - 1, Math.round(f)); FH.forEach((h, i) => h.classList.toggle('an', i === fa));
- // 04 Vorlagen seitlich
- const vr = $('vorlagen').getBoundingClientRect(), vp = kl(-vr.top, 0, vr.height - vh), band = $('band'), weit = Math.max(0, band.scrollWidth - vw + 48); band.style.transform = `translateX(${-weit * ez(kl(vp, .15, .95))}px)`;
 }
+// weiches Nachführen: der Film läuft flüssig, auch wenn das Mausrad ruckt
+(function glatt() { const d = fZiel - fAkt; if (Math.abs(d) > .05) { fAkt += d * .2; fMalen(false); } requestAnimationFrame(glatt); })();
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .2 });
 document.querySelectorAll('.rv').forEach(x => io.observe(x));
 addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(lauf); } }, { passive: true });
-addEventListener('resize', () => { fGroesse(); lGroesse(); lauf(); });
-fGroesse(); lGroesse(); lauf();
-// Vollbild
-const voll = $('voll'), vf = $('vf');
-function auf(u) { vf.src = u; voll.hidden = false; document.body.style.overflow = 'hidden'; document.querySelectorAll('.voll-t button').forEach(b => b.classList.toggle('on', b.dataset.u === u)); }
-$('tippen').addEventListener('click', () => { location.href = 'kino/gourmet/'; });
-$('zu').addEventListener('click', () => { voll.hidden = true; vf.src = 'about:blank'; document.body.style.overflow = ''; });
-document.querySelector('.voll-t').addEventListener('click', e => { const b = e.target.closest('button'); if (b) auf(b.dataset.u); });
-addEventListener('keydown', e => { if (e.key === 'Escape' && !voll.hidden) $('zu').click(); });
+addEventListener('resize', () => { fGroesse(); lauf(); });
+fGroesse(); lauf();
 function studio(t) { $('studioF').src = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); $('studio').hidden = false; document.body.style.overflow = 'hidden'; }
 $('studioZu').addEventListener('click', () => { $('studio').hidden = true; $('studioF').src = 'about:blank'; document.body.style.overflow = ''; });
-$('start').addEventListener('submit', e => { e.preventDefault(); const t = $('startText').value.trim(); if (!t) { $('startText').focus(); return; } studio(t); });
 $('bauForm').addEventListener('submit', e => { e.preventDefault(); const t = $('bauText').value.trim(); if (!t) { $('bauText').focus(); return; } studio(t); });
 document.querySelectorAll('.bau-chips button').forEach(b => b.addEventListener('click', () => { $('bauText').value = b.textContent; $('bauText').focus(); }));
-document.querySelectorAll('a[href="app.html"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const z = $('bauen'); z.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => $('bauText').focus(), 700); }));
+document.querySelectorAll('a[href="app.html"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); $('bauen').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => $('bauText').focus(), 700); }));
 })();
 </script>
 </body>
