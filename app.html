@@ -194,7 +194,7 @@ function showStudio(){if(!TOK){lgAuf();return}$("#ed").classList.remove("hide");
 function openGen(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.removeAttribute("src");fr.srcdoc=p.html?withImgs(p):PLACE;$("#msgs").innerHTML="";say(p.html?"Deine Website ist geladen. Sag mir, was ich ändern soll.":"Ich baue …");chipsSet(true);gSlots();renderProj()}
 function gSlots(){$("#slots").innerHTML=(cur&&cur.imgs&&cur.imgs.length)?cur.imgs.map((u,i)=>`<button title="IMG${i+1}"><img src="${u}" alt=""></button>`).join(""):"<small>Fotos mit 📎 hinzufügen</small>"}
 let busy=false;
-const CSPM='<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; img-src data: blob:; style-src \'unsafe-inline\'; script-src \'unsafe-inline\'; font-src data:; media-src data: blob:">';
+const CSPM='<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; img-src data: blob:; style-src \'unsafe-inline\'; script-src \'unsafe-inline\' https://pagerush.de; font-src data:; media-src data: blob:">';
 function csp(h){return /^\s*<!doctype[^>]*>/i.test(h)?h.replace(/^(\s*<!doctype[^>]*>)/i,"$1"+CSPM):CSPM+h}
 function pageHtml(p){return csp(withImgs(p))}
 function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy=true;const p=cur;const t0=Date.now();const m=document.createElement("div");m.className="m";m.innerHTML="<small>Ich baue deine Website … <span id='tz'>0</span> s · <span id='tb'>0</span> Zeichen</small>";$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;
