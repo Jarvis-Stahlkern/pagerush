@@ -27,7 +27,7 @@ em{font-style:italic}
 .knopf{display:inline-flex;align-items:center;gap:12px;font:500 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:18px 30px;background:var(--weiss);color:var(--schwarz);transition:background .3s}
 .knopf:hover{background:var(--gold)}
 /* Kopf */
-.kopf{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);color:#fff;background:linear-gradient(rgba(11,11,12,.55),transparent)}
+.kopf{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);color:#fff;background:linear-gradient(rgba(11,11,12,.88),rgba(11,11,12,.55) 65%,transparent)}
 .kopf .w{display:flex;align-items:center;justify-content:space-between;height:84px}
 .wort{font:400 26px/1 var(--serif);letter-spacing:.02em}
 .kopf nav{display:flex;gap:36px;font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase}
@@ -40,6 +40,8 @@ em{font-style:italic}
 .held-schleier{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,11,12,.75),rgba(11,11,12,0) 50%),linear-gradient(90deg,rgba(11,11,12,.25),transparent 40%)}
 .held-text{position:absolute;left:0;right:0;bottom:11vh;z-index:3}
 @media(max-width:760px){.held-text{bottom:8vh}.held h1{font-size:clamp(56px,16vw,90px)}}
+.held h1{text-shadow:0 2px 34px rgba(0,0,0,.65)}.held h1 i:nth-child(2) span{color:#e6c88f}
+@media(max-width:760px){.held-schleier{background:linear-gradient(0deg,rgba(11,11,12,.94),rgba(11,11,12,.62) 52%,rgba(11,11,12,.12))}.preis .gross{font-size:clamp(110px,34vw,200px)}}
 .held h1{font-size:clamp(64px,10.5vw,190px);line-height:.88;max-width:9ch}
 .held h1 i{display:block;overflow:hidden}.held h1 i span{display:block;transform:translateY(105%);animation:hoch 1.4s cubic-bezier(.2,.8,.1,1) forwards}
 .held h1 i:nth-child(2) span{animation-delay:.15s;font-style:italic;color:var(--gold)}
