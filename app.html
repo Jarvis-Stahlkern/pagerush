@@ -194,8 +194,23 @@ function showStudio(){if(!TOK){lgAuf();return}$("#ed").classList.remove("hide");
 function openGen(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.removeAttribute("src");fr.srcdoc=p.html?withImgs(p):PLACE;$("#msgs").innerHTML="";say(p.html?"Deine Website ist geladen. Sag mir, was ich ändern soll.":"Ich baue …");chipsSet(true);gSlots();renderProj()}
 function gSlots(){$("#slots").innerHTML=(cur&&cur.imgs&&cur.imgs.length)?cur.imgs.map((u,i)=>`<button title="IMG${i+1}"><img src="${u}" alt=""></button>`).join(""):"<small>Fotos mit 📎 hinzufügen</small>"}
 let busy=false;
-function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy=true;const p=cur;const t0=Date.now();const m=document.createElement("div");m.className="m";m.innerHTML="<small>Ich baue deine Website … <span id='tz'>0</span> s</small>";$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;const iv=setInterval(()=>{const z=$("#tz");if(z)z.textContent=Math.round((Date.now()-t0)/1000)},1000);
- fetch(API+"bauen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({anweisung:t,html:p.html||"",bilder:(p.imgs||[]).length})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{clearInterval(iv);busy=false;m.remove();if(!ok)return say(j.fehler||"Das hat nicht geklappt.");p.prev=p.html;p.html=j.html;store();if(cur&&cur.id==p.id){fr.srcdoc=withImgs(p);say("Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}}).catch(()=>{clearInterval(iv);busy=false;m.remove();say("Keine Verbindung. Bitte nochmal.")})}
+const CSPM='<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; img-src data: blob:; style-src \'unsafe-inline\'; script-src \'unsafe-inline\'; font-src data:; media-src data: blob:">';
+function csp(h){return /^\s*<!doctype[^>]*>/i.test(h)?h.replace(/^(\s*<!doctype[^>]*>)/i,"$1"+CSPM):CSPM+h}
+function pageHtml(p){return csp(withImgs(p))}
+function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy=true;const p=cur;const t0=Date.now();const m=document.createElement("div");m.className="m";m.innerHTML="<small>Ich baue deine Website … <span id='tz'>0</span> s · <span id='tb'>0</span> Zeichen</small>";$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;
+ const iv=setInterval(()=>{const z=$("#tz");if(z)z.textContent=Math.round((Date.now()-t0)/1000)},1000);
+ let acc="",lastLen=0,fin="";
+ const fix=h=>{const i=h.toLowerCase().indexOf("<!doctype");if(i>0)h=h.slice(i);return h.replace(/\{\{IMG(\d+)\}\}/g,(x,n)=>(p.imgs||[])[n-1]||"")};
+ const show=()=>{if(acc.search(/<body/i)<0||acc.length-lastLen<1200&&lastLen)return;lastLen=acc.length;if(cur&&cur.id==p.id)fr.srcdoc=csp(fix(acc))};
+ fetch(API+"bauen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({anweisung:t,html:p.html||"",bilder:(p.imgs||[]).length})}).then(async r=>{
+  if(!r.ok||!r.body){const j=await r.json().catch(()=>({}));throw j.fehler||"Das hat nicht geklappt."}
+  const rd=r.body.getReader(),dec=new TextDecoder();let buf="";
+  for(;;){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let k;
+   while((k=buf.indexOf("\n\n"))>=0){const line=buf.slice(0,k);buf=buf.slice(k+2);if(!line.startsWith("data:"))continue;let o;try{o=JSON.parse(line.slice(5))}catch(_){continue}
+    if(o.d){acc+=o.d;const b=$("#tb");if(b)b.textContent=acc.length;show()}else if(o.fehler)throw o.fehler;else if(o.ende)fin=o.html}}
+  if(!fin)throw "Die Verbindung wurde unterbrochen. Bitte nochmal.";
+  clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say("Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
+ }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
 function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);bauen(t,true)}
 function attach(url){if(!cur){pend.push(url);say("Foto "+pend.length+" vorgemerkt. Beschreib jetzt deine Website, ich baue es ein.");return}
  if(cur.t=="gen"){cur.imgs=cur.imgs||[];cur.imgs.push(url);store();gSlots();say("Foto "+cur.imgs.length+" hinzugefügt. Sag mir, wo es hin soll, z. B. <b>„Nimm Foto "+cur.imgs.length+" als Titelbild mit 3D-Effekt“</b>.");return}
@@ -230,7 +245,7 @@ function slots(d){const box=$("#slots");const seen=new Set();let h="";
  box.innerHTML=h||"<small>Keine Bilder gefunden</small>"}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
 function cmd(t,ki){if(!cur){newGen(t);return}
- if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=withImgs(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}bauen(t);return}
+ if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}bauen(t);return}
  const l=t.toLowerCase();let m;
  if(!ki&&!/farbe|effekt\s+(tiefe|schwenk|zoom)/i.test(t)&&!/\btext|überschrift|titel|schreib|formulier|kürzer|länger|slogan|beschreibung|preis|name\b/i.test(t)){say("Das ist mehr als eine Textänderung. Ich baue dafür eine <b>komplett neue Seite</b> nach deiner Beschreibung.");newGen(t);return}
  if(!ki&&/effekt\s+(tiefe|schwenk|zoom)|animier|3\s?d|scroll|bewegung|kamerafahrt/i.test(t)){const d=doc();if(!cur.ed.hero)return say("Setz zuerst dein Foto bei <b>Titelbild</b> ein (Bilder-Leiste unten, Filmklappe). Dann bekommt es den 3D-Scroll-Effekt.");const f=(t.toLowerCase().match(/tiefe|schwenk|zoom/)||["tiefe"])[0];cur.ed.heroFx=f;store();d&&d.getElementById("pr-hero")&&d.getElementById("pr-hero")._u();return say("Titelbild-Effekt: <b>"+f+"</b> ✓ Scroll in der Vorschau nach unten, dann siehst du ihn. Weitere: Effekt Tiefe, Effekt Schwenk, Effekt Zoom.")}
