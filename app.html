@@ -111,7 +111,12 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 
   <section id="v-meine" class="hide"><div class="card"><h3 style="font-size:20px">Meine Websites</h3><div id="liste"></div></div></section>
   <section id="v-vor" class="hide"><div class="tpls" id="tplV"></div></section>
-  <section id="v-ki" class="hide"><div class="card" style="max-width:640px"><h3>KI-Assistent</h3><p style="color:var(--mu)">Öffne eine Website im Editor. Dort schreibst du dem Assistenten, was er ändern soll: Farben, Texte, Überschrift, Name.</p><br><button class="btn" data-v="meine">Zu meinen Websites</button></div></section>
+  <section id="v-ki" class="hide"><div class="card" style="max-width:720px"><h3 style="font-size:20px">KI-Assistent: Website bauen lassen</h3>
+ <p style="color:var(--mu);margin-bottom:12px">Beschreib dein Geschäft. Die KI schreibt alle Texte und öffnet danach deine Website im Editor.</p>
+ <input class="in" id="kFirma" placeholder="Name deines Geschäfts" style="margin-bottom:10px">
+ <textarea class="in" id="kText" placeholder="z. B. Friseursalon in Esslingen, 3 Mitarbeiter, Schnitt, Farbe, Hochsteckfrisuren, Termin online"></textarea>
+ <div class="seg" id="kTpl" style="margin:12px 0;display:inline-flex"></div><br>
+ <button class="btn" id="kGo">Mit KI bauen →</button></div></section>
   <section id="v-dom" class="hide"><div class="card" style="max-width:640px"><h3>Domains &amp; E-Mail</h3><p style="color:var(--mu)">Eigene Domain verbinden kommt als Nächstes. Dafür kaufst du die Domain bei deinem Anbieter, wir verbinden sie mit deiner Website.</p></div></section>
   <section id="v-set" class="hide"><div class="card" style="max-width:640px"><h3>Einstellungen</h3><p style="color:var(--mu)">Login mit E-Mail-Code folgt. Bis dahin werden deine Projekte in diesem Browser gespeichert.</p></div></section>
  </main>
@@ -151,7 +156,7 @@ function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.map(t=>tplCard
  $("#tplN").innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join("");
  $$("#tplN .tpl").forEach(c=>c.classList.toggle("sel",c.dataset.t==sel));
  $$("#tplN .tpl").forEach(c=>c.style.outline=c.dataset.t==sel?"2px solid #7c5cff":"");
- const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${TPL.find(t=>t.id==p.t).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span></div>`).join("")||'<p style="color:var(--mu)">Noch keine Website. Starte mit „Neue Website".</p>';
+ const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${TPL.find(t=>t.id==p.t).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span></div>`).join("")||'<p style="color:var(--mu);margin-bottom:10px">Noch keine Website.</p><button class="btn sm" data-v="ki">＋ Website mit KI erstellen</button>';
  $("#liste").innerHTML=rows;$("#mini").innerHTML=rows}
 function view(v){$$("section").forEach(s=>s.classList.add("hide"));$("#v-"+v).classList.remove("hide");$$(".nav").forEach(n=>n.classList.toggle("on",n.dataset.v==v));$("#titel").textContent=({dash:"Dashboard",neu:"Neue Website",meine:"Meine Websites",vor:"Vorlagen",ki:"KI-Assistent",dom:"Domains & E-Mail",set:"Einstellungen"})[v]}
 document.addEventListener("click",e=>{
@@ -169,7 +174,7 @@ const fr=$("#fr");
 function say(t,u){const d=document.createElement("div");d.className="m"+(u?" u":"");d.innerHTML=t;$("#msgs").appendChild(d);$("#msgs").scrollTop=1e9}
 function open(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");
  $("#msgs").innerHTML="";say("Hallo! Das ist deine Vorlage. <b>Klick direkt auf einen Text</b> und tipp ihn um. Oder schreib mir hier, z. B. „Farbe Gold“ oder „Name: Salon Mira“.");
- fr.onload=()=>apply();fr.src=TPL.find(t=>t.id==p.t).u}
+ fr.onload=()=>{apply();if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.src=TPL.find(t=>t.id==p.t).u}
 function doc(){try{return fr.contentDocument}catch(_){return null}}
 function apply(){const d=doc();if(!d)return;
  if(cur.ed.css){let s=d.getElementById("pr-ed");if(!s){s=d.createElement("style");s.id="pr-ed";d.head.appendChild(s)}s.textContent=cur.ed.css}
@@ -179,10 +184,10 @@ function apply(){const d=doc();if(!d)return;
  const sels="h1,h2,h3,p,.btn,button,a,li,span";d.querySelectorAll("h1,h2,h3,p").forEach((el,i)=>{if(el.closest("form,nav,header"))return;if(el.children.length>3)return;el.dataset.prE=1;el.contentEditable="true";el.addEventListener("input",()=>{const l=[...d.querySelectorAll("h1,h2,h3,p")];const k=l.indexOf(el);cur.ed.tx=(cur.ed.tx||[]).filter(o=>!(o.s=="h1,h2,h3,p"&&o.i==k));cur.ed.tx.push({s:"h1,h2,h3,p",i:k,v:el.textContent});store()})});
  d.addEventListener("click",e=>{const im=e.target.closest("img");if(im){lastEl=[...d.querySelectorAll("img")].indexOf(im);say("Bild ausgewählt. Klick unten auf „Eigenes Foto hochladen“.")}},true)}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
-function cmd(t){const l=t.toLowerCase();let m;
- if(m=l.match(/farbe\s+(\w+)/)){const c=COL[m[1]];if(!c)return say("Diese Farbe kenne ich noch nicht. Probier: Gold, Blau, Rot, Grün, Lila, Rosa, Orange.");
+function cmd(t,ki){const l=t.toLowerCase();let m;
+ if(!ki&&(m=l.match(/farbe\s+(\w+)/))){const c=COL[m[1]];if(!c)return say("Diese Farbe kenne ich noch nicht. Probier: Gold, Blau, Rot, Grün, Lila, Rosa, Orange.");
   cur.ed.css=`:root{--gold:${c}!important;--akzent:${c}!important;--ak:${c}!important;--c:${c}!important}`;apply();store();return say("Farbe geändert ✓")}
- if(m=t.match(/(?:name|überschrift|titel)\s*:\s*(.+)/i)){const d=doc(),h=d&&d.querySelector("h1");if(h){h.textContent=m[1];const l2=[...d.querySelectorAll("h1,h2,h3,p")];cur.ed.tx=(cur.ed.tx||[]).filter(o=>o.i!=l2.indexOf(h));cur.ed.tx.push({s:"h1,h2,h3,p",i:l2.indexOf(h),v:m[1]});store();return say("Überschrift geändert ✓")}}
+ if(!ki&&(m=t.match(/(?:name|überschrift|titel)\s*:\s*(.+)/i))){const d=doc(),h=d&&d.querySelector("h1");if(h){h.textContent=m[1];const l2=[...d.querySelectorAll("h1,h2,h3,p")];cur.ed.tx=(cur.ed.tx||[]).filter(o=>o.i!=l2.indexOf(h));cur.ed.tx.push({s:"h1,h2,h3,p",i:l2.indexOf(h),v:m[1]});store();return say("Überschrift geändert ✓")}}
  if(!TOK){say("Melde dich kurz an, dann kann die KI deine Wünsche umsetzen.");lgAuf();return}
  const d=doc();if(!d)return;const list=[...d.querySelectorAll("h1,h2,h3,p")];
  const texte=list.map((el,i)=>({i,v:el.textContent.trim().slice(0,200)})).filter(o=>o.v&&!list[o.i].closest("form,nav,header")).slice(0,90);
@@ -200,6 +205,11 @@ $("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileR
 $("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;$$("#seg button").forEach(x=>x.classList.toggle("on",x==b));$("#frame").style.width=b.dataset.w};
 $("#back").onclick=()=>{$("#ed").classList.add("hide");fr.src="about:blank";fill();view("meine")};
 $("#save").onclick=()=>{store();say(TOK?"Gespeichert ✓ in deinem Konto":"Gespeichert ✓ (nur in diesem Browser. Melde dich an, um überall zugreifen zu können.)")};
+function kTplFill(){$("#kTpl").innerHTML=TPL.filter(t=>!t.soon).map(t=>`<button data-t="${t.id}" class="${t.id==sel?"on":""}">${t.n}</button>`).join("")}
+kTplFill();$("#kTpl").onclick=e=>{const b=e.target.closest("button");if(!b)return;sel=b.dataset.t;kTplFill()};
+$("#kGo").onclick=()=>{const txt=$("#kText").value.trim();if(!txt){$("#kText").focus();return}
+ if(!TOK){lgAuf();return}
+ const p={id:"p"+Date.now(),name:$("#kFirma").value.trim()||"Meine Website",t:sel,txt,pub:0,ed:{}};P.unshift(p);store();fill();open(p)};
 function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(MAIL||"P")[0].toUpperCase()}
 let stufe=0;
 function lgZu(){$("#lg").classList.add("hide")}
