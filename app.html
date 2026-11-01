@@ -158,7 +158,7 @@ const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch
 function abmelden(){TOK="";MAIL="";try{localStorage.removeItem("pr_token");localStorage.removeItem("pr_mail")}catch(_){}ui()}
 let sel="beauty",cur=null,lastEl=null;
 function tplCard(t,cls){return `<div class="tpl" data-t="${t.id}" ${t.soon?'style="opacity:.7"':''}><div class="pv ${t.soon?'soon':''}">${t.soon?'Bald':'<iframe src="'+t.u+'" loading="lazy" tabindex="-1"></iframe>'}</div><div class="in"><div><b>${t.n}</b><br><small>${t.d||'In Arbeit'}</small></div>${t.soon?'':'<button class="btn sm">Nehmen</button>'}</div></div>`}
-function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.map(t=>tplCard(t)).join(""));
+function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join(""));
  $("#tplN").innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join("");
  $$("#tplN .tpl").forEach(c=>c.classList.toggle("sel",c.dataset.t==sel));
  $$("#tplN .tpl").forEach(c=>c.style.outline=c.dataset.t==sel?"2px solid #7c5cff":"");
@@ -183,14 +183,14 @@ function open(p){if(p.t=="gen")return openGen(p);cur=p;$("#ed").classList.remove
  if(!Array.isArray(cur.ed.tx)||(cur.ed.tx[0]&&cur.ed.tx[0].s)){cur.ed.tx=[];cur.ed.im=[]}
  $("#msgs").innerHTML="";say("Hallo! Schreib mir unten, was du ändern willst. Oder tipp direkt in der Vorschau auf einen Text. Eigene Fotos setzt du über die Bilder-Leiste ein.");
  fr.onload=()=>{apply();setTimeout(()=>{const d=doc();d&&slots(d)},1800);if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.removeAttribute("srcdoc");fr.removeAttribute("sandbox");fr.src=TPL.find(t=>t.id==p.t).u;chipsSet(false);renderProj()}
-const PLACE='<!doctype html><body style="margin:0;background:#0a0912;color:#9b97b8;font:16px system-ui;display:grid;place-items:center;height:100vh;text-align:center"><div style="max-width:320px;padding:20px"><div style="font-size:42px">✦</div><p style="margin-top:12px">Hier erscheint deine Website.<br>Beschreib sie links im Chat.</p></div>';
+const PLACE='<!doctype html><body style="margin:0;background:#0a0912;color:#9b97b8;font:16px system-ui;display:grid;place-items:center;height:100vh;text-align:center"><div style="max-width:320px;padding:20px"><div style="font-size:42px">✦</div><p style="margin-top:12px">Hier erscheint deine Website.<br>Beschreib sie im Chat.</p></div>';
 let pend=[];
 function withImgs(p){return (p.html||"").replace(/\{\{IMG(\d+)\}\}/g,(m,n)=>(p.imgs||[])[n-1]||"")}
 function chipsSet(g){$("#chips").innerHTML=(g?["Mehr 3D-Effekt beim Scrollen","Edler und dunkler","Heller und freundlicher","Eigenes Foto als Titelbild","Rückgängig"]:["Effekt Tiefe","Effekt Schwenk","Effekt Zoom","Farbe Gold","Farbe Blau","Farbe Rot","Farbe Grün"]).map(x=>"<button>"+x+"</button>").join("");$$("#chips button").forEach(b=>b.onclick=()=>{say(b.textContent,1);cmd(b.textContent)})}
 function renderProj(){$("#proj").innerHTML=P.map(p=>`<button data-o="${p.id}" class="${cur&&cur.id==p.id?"on":""}">${(p.name||"Website").replace(/</g,"")}</button>`).join("")+'<button data-o="">＋ Neu</button>'}
 $("#proj").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.o)open(P.find(p=>p.id==b.dataset.o));else newState()};
 function newState(){cur=null;$("#ed").classList.remove("hide");$("#edName").textContent="Neues Projekt";$("#edSt").textContent="";fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.srcdoc=PLACE;$("#msgs").innerHTML="";say("Hallo! Beschreib mir deine Website, ich baue sie komplett. Zum Beispiel: <b>„Friseursalon in Esslingen, edel, dunkel, mit Termin-Buchung und Scroll-Effekten“</b>. Fotos kannst du mit 📎 hinzufügen.");chipsSet(true);$("#slots").innerHTML="<small>Fotos mit 📎 hinzufügen</small>";renderProj()}
-function showStudio(){if(!TOK){lgAuf();return}$("#ed").classList.remove("hide");P.length&&P[0].t=="gen"?open(P[0]):newState()}
+function showStudio(){$("#ed").classList.remove("hide");P.length&&P[0].t=="gen"?open(P[0]):newState()}
 function openGen(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.removeAttribute("src");fr.srcdoc=p.html?withImgs(p):PLACE;$("#msgs").innerHTML="";say(p.html?"Deine Website ist geladen. Sag mir, was ich ändern soll.":"Ich baue …");chipsSet(true);gSlots();renderProj()}
 function gSlots(){$("#slots").innerHTML=(cur&&cur.imgs&&cur.imgs.length)?cur.imgs.map((u,i)=>`<button title="IMG${i+1}"><img src="${u}" alt=""></button>`).join(""):"<small>Fotos mit 📎 hinzufügen</small>"}
 let busy=false;
@@ -280,7 +280,7 @@ function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(M
 let stufe=0;
 function lgZu(){$("#lg").classList.add("hide")}
 function lgAuf(){stufe=0;$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
-$("#lgX").onclick=lgZu;$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
+$("#lgX").onclick=()=>{lgZu();showStudio()};$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
 $("#lgB").onclick=async()=>{const m=$("#lgM").value.trim().toLowerCase(),E=$("#lgE");E.textContent="";$("#lgB").disabled=true;
  try{if(stufe==0){const r=await fetch(API+"code",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";stufe=1;$("#lgM").classList.add("hide");$("#lgC").classList.remove("hide");$("#lgC").focus();$("#lgT").textContent="Code gesendet an "+m+". Schau auch im Spam-Ordner nach.";$("#lgB").textContent="Anmelden"}
  else{const r=await fetch(API+"login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m,code:$("#lgC").value})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";TOK=j.token;MAIL=j.email;try{localStorage.setItem("pr_token",TOK);localStorage.setItem("pr_mail",MAIL)}catch(_){}
@@ -289,7 +289,7 @@ $("#lgB").onclick=async()=>{const m=$("#lgM").value.trim().toLowerCase(),E=$("#l
 $("#lgM").onkeydown=$("#lgC").onkeydown=e=>{if(e.key=="Enter")$("#lgB").click()};
 ui();
 if(TOK)fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>{if(r.status==401){abmelden();return null}return r.json()}).then(g=>{if(!g)return;const srv=g.projekte||[],ids=new Set(srv.map(p=>p.id));P=srv.concat(P.filter(p=>!ids.has(p.id)));try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){};fill()}).catch(()=>{});
-else setTimeout(lgAuf,600);
+else setTimeout(()=>{showStudio();lgAuf()},400);
 function startText(){let st="";try{st=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||"";sessionStorage.removeItem("pagerush_start")}catch(_){}if(st&&TOK){showStudio();newGen(st)}}
 if(TOK){setTimeout(()=>{const hasS=(()=>{try{return !!(sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w"))}catch(_){return false}})();if(hasS)startText();else showStudio()},300)}
 $("#pub").onclick=()=>{if(!TOK){lgAuf();return}say("Veröffentlichen kommt mit der Zahlung (einmalig 99 €). Deine Änderungen sind in deinem Konto gespeichert.")};
