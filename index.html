@@ -146,6 +146,21 @@ em{font-style:italic}
 .sp .zahl{font:400 clamp(70px,8vw,140px)/1 var(--serif);color:var(--gold)}
 .sp h3{font-size:34px;margin:18px 0 12px}.sp p{color:var(--grau);margin:0;max-width:30ch}
 @media(max-width:860px){.spalten{grid-template-columns:1fr}.sp{padding:34px 0;border-bottom:1px solid var(--linie)}}
+/* 05b Bauen direkt auf der Seite */
+.bau{padding:20vh 0 16vh;border-top:1px solid var(--linie);background:radial-gradient(900px 500px at 50% 0%,rgba(200,164,101,.12),transparent 70%)}
+.bau h2{font-size:clamp(46px,6.4vw,110px);line-height:.92;text-align:center}.bau h2 em{color:var(--gold)}
+.bau-unter{text-align:center;color:#d9d6d0;max-width:46ch;margin:26px auto 46px;font-size:18px}
+.bau-box{max-width:960px;margin:0 auto;background:rgba(244,242,238,.04);border:1px solid rgba(244,242,238,.22);border-radius:22px;padding:18px;box-shadow:0 40px 120px -40px rgba(200,164,101,.35)}
+.bau-box textarea{width:100%;background:transparent;border:0;outline:none;resize:none;color:var(--weiss);font:400 clamp(18px,2vw,24px)/1.45 var(--sans);padding:10px}
+.bau-box textarea::placeholder{color:rgba(244,242,238,.45)}
+.bau-leiste{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px}
+.bau-chips{display:flex;gap:8px;flex-wrap:wrap}.bau-chips button{background:rgba(244,242,238,.06);border:1px solid var(--linie);color:#d9d6d0;border-radius:99px;padding:8px 14px;font:400 13px/1.2 var(--sans);cursor:pointer}
+.bau-chips button:hover{border-color:var(--gold);color:#fff}
+.bau-box .knopf{border:0;cursor:pointer;border-radius:12px}
+.studio{position:fixed;inset:0;z-index:120;background:#0a0912;display:flex;flex-direction:column}.studio[hidden]{display:none}
+.studio-k{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:1px solid rgba(255,255,255,.08);font:500 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#d9d6d0}
+.studio-k button{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;width:40px;height:40px;font-size:17px;cursor:pointer}
+.studio iframe{flex:1;width:100%;border:0}
 /* 06 Preis */
 .preis{min-height:100vh;display:grid;place-items:center;text-align:center;padding:16vh 24px;border-top:1px solid var(--linie)}
 .preis .gross{font:400 clamp(150px,26vw,420px)/.8 var(--serif);letter-spacing:-.04em}
@@ -214,6 +229,15 @@ em{font-style:italic}
  </div>
 </section>
 
+<section class="bau" id="bauen"><div class="w">
+ <h2 class="rv">Bau deine Website.<br><em>Hier. Jetzt. Mit KI.</em></h2>
+ <p class="rv bau-unter">Beschreib in einem Satz, was du brauchst. Pagerush baut die komplette Seite mit 3D-Effekten – du siehst sofort das Ergebnis. Einmalig 99 €.</p>
+ <form class="bau-box rv" id="bauForm">
+  <textarea id="bauText" rows="4" maxlength="600" placeholder="z. B. Friseursalon in Esslingen, edel und dunkel, mit Online-Termin, Preisliste und Scroll-Effekten"></textarea>
+  <div class="bau-leiste"><div class="bau-chips"><button type="button">Restaurant in Stuttgart, warm, mit Reservierung</button><button type="button">Malerbetrieb, modern, mit Anfrageformular</button><button type="button">Fitnessstudio, dynamisch, mit Kursplan</button></div><button type="submit" class="knopf">Mit KI bauen</button></div>
+ </form>
+</div></section>
+<div class="studio" id="studio" hidden><div class="studio-k"><span>Pagerush Studio</span><button type="button" id="studioZu" aria-label="Schließen">✕</button></div><iframe id="studioF" title="Pagerush Studio"></iframe></div>
 <section class="preis" id="preis"><div>
  <p class="nr rv">05 — Preis</p>
  <div class="gross rv">99<em>€</em></div>
@@ -230,9 +254,9 @@ const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sf = $('sf'), schirm = $('schirm'), deckel = $('deckel'), rechner = $('rechner');
 // 00a Flug
-const fc = $('fc'), fx2 = fc.getContext('2d'), FQ = innerWidth > innerHeight, FN = FQ ? 180 : 240, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
+const fc = $('fc'), fx2 = fc.getContext('2d'), FQ = innerWidth > innerHeight, FN = FQ ? 120 : 240, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
 (function fLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < FN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
- const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; fMalen(true); w(); }; im.onerror = w; im.src = `neu/${FQ ? 'flugq' : 'flug'}/f${String(i).padStart(3, '0')}.webp`; };
+ const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; fMalen(true); w(); }; im.onerror = w; im.src = `neu/${FQ ? 'fq2' : 'flug'}/f${String(i).padStart(3, '0')}.webp`; };
  for (let n = 0; n < 6; n++) w(); })();
 function fMalen(zw) { let i = fZiel; if (!FB[i]) for (let d = 1; d < FN; d++) { if (FB[i - d]) { i -= d; break; } if (FB[i + d]) { i += d; break; } } const im = FB[i]; if (!im || (i === fJetzt && !zw)) return; fJetzt = i;
  const W = fc.width, H = fc.height, cov = Math.max(W / im.width, H / im.height); fx2.fillStyle = '#000'; fx2.fillRect(0, 0, W, H);
@@ -243,12 +267,12 @@ function fMalen(zw) { let i = fZiel; if (!FB[i]) for (let d = 1; d < FN; d++) { 
  const g2 = fx2.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .15, 0); g2.addColorStop(0, 'rgba(0,0,0,.85)'); g2.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g2; fx2.fillRect((W + w) / 2 - w * .15, 0, w * .15, H); }
 function fGroesse() { const d = Math.min(2, devicePixelRatio || 1); fc.width = Math.round(fc.clientWidth * d); fc.height = Math.round(fc.clientHeight * d); fMalen(true); }
 // 00 Logo-Film (Scroll steuert die 3D-Drehung)
-const lc = $('lc'), lx = lc.getContext('2d'), LN = 120, LB = []; let lGel = 0, lZiel = 0, lJetzt = -1;
+const lc = $('lc'), lx = lc.getContext('2d'), LQ = innerWidth > innerHeight, LN = LQ ? 90 : 120, LB = []; let lGel = 0, lZiel = 0, lJetzt = -1;
 (function lLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < LN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
- const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { LB[i] = im; lGel++; $('lhL').style.width = (lGel / LN * 100) + '%'; if (lGel === LN) $('lhL').style.opacity = 0; lMalen(true); w(); }; im.onerror = w; im.src = `neu/logo/f${String(i + 1).padStart(3, '0')}.webp`; };
+ const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { LB[i] = im; lGel++; $('lhL').style.width = (lGel / LN * 100) + '%'; if (lGel === LN) $('lhL').style.opacity = 0; lMalen(true); w(); }; im.onerror = w; im.src = `neu/${LQ ? 'logoq' : 'logo'}/f${String(i + 1).padStart(3, '0')}.webp`; };
  for (let n = 0; n < 6; n++) w(); })();
 function lMalen(zw) { let i = lZiel; if (!LB[i]) for (let d = 1; d < LN; d++) { if (LB[i - d]) { i -= d; break; } if (LB[i + d]) { i += d; break; } } const im = LB[i]; if (!im || (i === lJetzt && !zw)) return; lJetzt = i;
- const W = lc.width, H = lc.height, hoch = H > W * 1.1, s = hoch ? Math.max(W / im.width, H / im.height) : H / im.height * 1.32, w = im.width * s, h = im.height * s; lx.fillStyle = '#000'; lx.fillRect(0, 0, W, H); lx.drawImage(im, (W - w) / 2, hoch ? (H - h) / 2 : (H - h) * .42, w, h);
+ const W = lc.width, H = lc.height, hoch = H > W * 1.1 || im.width > im.height, s = hoch ? Math.max(W / im.width, H / im.height) : H / im.height * 1.32, w = im.width * s, h = im.height * s; lx.fillStyle = '#000'; lx.fillRect(0, 0, W, H); lx.drawImage(im, (W - w) / 2, hoch ? (H - h) / 2 : (H - h) * .42, w, h);
  if (!hoch) { const g = lx.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .18, 0); g.addColorStop(0, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g; lx.fillRect((W - w) / 2 - 2, 0, w * .18, H); const g2 = lx.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .18, 0); g2.addColorStop(0, '#000'); g2.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g2; lx.fillRect((W + w) / 2 - w * .18, 0, w * .18 + 2, H); } }
 function lGroesse() { const d = Math.min(2, devicePixelRatio || 1); lc.width = Math.round(lc.clientWidth * d); lc.height = Math.round(lc.clientHeight * d); lMalen(true); }
 const LF = []; for (let i = 0; i < 48; i++) { const im = new Image(); im.src = `neu/lap/g${String(i).padStart(3, '0')}.webp`; LF.push(im); } let lfJetzt = 0;
@@ -259,10 +283,10 @@ function lauf() {
  tick = false; const vh = innerHeight, vw = innerWidth;
  // 00a Flug: Wolken (0-60) > Logo hält > Büro (60-120) > Laptop (120-180)
  const fr0 = $('flug').getBoundingClientRect(), q = ruhig ? 0 : kl(-fr0.top, 0, fr0.height - vh);
- const fIdx = FQ ? (q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .62 ? 60 + kl(q, .37, .62) * 59 : 120 + kl(q, .62, .97) * 59) : (q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .56 ? 60 + kl(q, .37, .56) * 59 : q < .74 ? 120 + kl(q, .56, .74) * 59 : 180 + kl(q, .74, .97) * 59);
+ const fIdx = FQ ? (q < .1 ? kl(q, 0, .1) * 8 : q < .24 ? 8 : q < .6 ? 8 + kl(q, .24, .6) * 51 : 60 + kl(q, .6, .97) * 59) : (q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .56 ? 60 + kl(q, .37, .56) * 59 : q < .74 ? 120 + kl(q, .56, .74) * 59 : 180 + kl(q, .74, .97) * 59);
  fZiel = Math.round(fIdx); fMalen(false); fc.style.opacity = 1 - kl(q, .95, 1);
  $('flS').style.opacity = 1 - kl(q, .02, .1);
- const lo = kl(q, .19, .27) * (1 - kl(q, .35, .4)); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, .19, .29)) + .5 * ez(kl(q, .35, .4))).toFixed(3)})`;
+ const LA = FQ ? [.05, .12, .2, .25] : [.19, .27, .35, .4], lo = kl(q, LA[0], LA[1]) * (1 - kl(q, LA[2], LA[3])); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, LA[0], LA[1] + .02)) + .5 * ez(kl(q, LA[2], LA[3]))).toFixed(3)})`;
  // 00 Logo-Film
  const lr = $('lh').getBoundingClientRect(), lp = ruhig ? 0 : kl(-lr.top, 0, lr.height - vh); lZiel = Math.round(kl(lp, 0, .9) * (LN - 1)); lMalen(false);
  $('lhT').style.opacity = 1 - kl(lp, .04, .22); $('lhT').style.transform = `translateY(${-40 * kl(lp, .04, .25)}px)`;
@@ -296,7 +320,12 @@ $('tippen').addEventListener('click', () => { location.href = 'kino/gourmet/'; }
 $('zu').addEventListener('click', () => { voll.hidden = true; vf.src = 'about:blank'; document.body.style.overflow = ''; });
 document.querySelector('.voll-t').addEventListener('click', e => { const b = e.target.closest('button'); if (b) auf(b.dataset.u); });
 addEventListener('keydown', e => { if (e.key === 'Escape' && !voll.hidden) $('zu').click(); });
-$('start').addEventListener('submit', e => { const t = $('startText').value.trim(); if (!t) { e.preventDefault(); $('startText').focus(); return; } try { sessionStorage.setItem('pagerush_start', t); } catch (_) {} });
+function studio(t) { $('studioF').src = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); $('studio').hidden = false; document.body.style.overflow = 'hidden'; }
+$('studioZu').addEventListener('click', () => { $('studio').hidden = true; $('studioF').src = 'about:blank'; document.body.style.overflow = ''; });
+$('start').addEventListener('submit', e => { e.preventDefault(); const t = $('startText').value.trim(); if (!t) { $('startText').focus(); return; } studio(t); });
+$('bauForm').addEventListener('submit', e => { e.preventDefault(); const t = $('bauText').value.trim(); if (!t) { $('bauText').focus(); return; } studio(t); });
+document.querySelectorAll('.bau-chips button').forEach(b => b.addEventListener('click', () => { $('bauText').value = b.textContent; $('bauText').focus(); }));
+document.querySelectorAll('a[href="app.html"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const z = $('bauen'); z.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => $('bauText').focus(), 700); }));
 })();
 </script>
 </body>
