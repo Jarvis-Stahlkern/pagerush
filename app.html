@@ -78,7 +78,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
   <div class="help"><b>Du hast Fragen?</b>Unser KI-Assistent hilft dir jederzeit.<br><br><button class="btn sm" style="width:100%" data-v="ki">KI-Assistent starten</button></div>
  </aside>
  <main class="main">
-  <div class="top"><h1 id="titel">Dashboard</h1><div class="user"><span id="mail">Gast</span><div class="av">P</div></div></div>
+  <div class="top"><h1 id="titel">Dashboard</h1><div class="user"><button class="btn g sm" id="mail">Anmelden</button><div class="av" id="av">P</div></div></div>
 
   <section id="v-dash">
    <div class="grid">
@@ -128,11 +128,23 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
  <div class="stage"><div class="frame" id="frame" style="width:100%"><iframe id="fr"></iframe></div></div>
 </div>
 
+<div class="hide" id="lg" style="position:fixed;inset:0;z-index:60;background:#05040acc;backdrop-filter:blur(8px);display:grid;place-items:center">
+ <div class="card" style="width:min(420px,92vw);padding:26px"><h3 style="font-size:22px">Anmelden</h3>
+  <p style="color:var(--mu);margin:6px 0 14px" id="lgT">Gib deine E-Mail ein. Wir schicken dir einen Code. Kein Passwort nötig.</p>
+  <input class="in" id="lgM" type="email" placeholder="deine@email.de" autocomplete="email">
+  <input class="in hide" id="lgC" inputmode="numeric" maxlength="6" placeholder="6-stelliger Code" style="margin-top:10px;letter-spacing:.3em;text-align:center;font-size:20px">
+  <p id="lgE" style="color:#ff8a8a;font-size:13px;min-height:18px;margin:8px 0"></p>
+  <button class="btn" style="width:100%" id="lgB">Code senden</button>
+  <button class="q" id="lgX" style="margin-top:8px;border:0;justify-content:center">Ohne Anmeldung weiter</button></div></div>
 <script>
 const TPL=[{id:"beauty",n:"Beauty & Friseur",u:"kino/beauty/",d:"Film-Look, Online-Termin"},{id:"gourmet",n:"Gourmet-Restaurant",u:"kino/gourmet/",d:"Kamerafahrt, Reservierung"},{id:"burger",n:"Burger",soon:1},{id:"villa",n:"Villa & Immobilien",soon:1},{id:"drink",n:"Getränk",soon:1}];
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 let P=[];try{P=JSON.parse(localStorage.getItem("pr_projekte")||"[]")}catch(_){}
-const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){}};
+const API="https://2-31-5-96.sslip.io/konto/";let TOK="",MAIL="",tm=null;
+try{TOK=localStorage.getItem("pr_token")||"";MAIL=localStorage.getItem("pr_mail")||""}catch(_){}
+const sync=()=>{if(!TOK)return;clearTimeout(tm);tm=setTimeout(()=>fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:P})}).then(r=>{if(r.status==401)abmelden()}).catch(()=>{}),900)};
+const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){};sync()};
+function abmelden(){TOK="";MAIL="";try{localStorage.removeItem("pr_token");localStorage.removeItem("pr_mail")}catch(_){}ui()}
 let sel="beauty",cur=null,lastEl=null;
 function tplCard(t,cls){return `<div class="tpl" data-t="${t.id}" ${t.soon?'style="opacity:.7"':''}><div class="pv ${t.soon?'soon':''}">${t.soon?'Bald':'<iframe src="'+t.u+'" loading="lazy" tabindex="-1"></iframe>'}</div><div class="in"><div><b>${t.n}</b><br><small>${t.d||'In Arbeit'}</small></div>${t.soon?'':'<button class="btn sm">Nehmen</button>'}</div></div>`}
 function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.map(t=>tplCard(t)).join(""));
@@ -180,6 +192,20 @@ $("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileR
 $("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;$$("#seg button").forEach(x=>x.classList.toggle("on",x==b));$("#frame").style.width=b.dataset.w};
 $("#back").onclick=()=>{$("#ed").classList.add("hide");fr.src="about:blank";fill();view("meine")};
 $("#save").onclick=()=>{store();say("Gespeichert ✓ (in diesem Browser)")};
-$("#pub").onclick=()=>say("Veröffentlichen kommt mit dem Login und der Zahlung (einmalig 99 €). Deine Änderungen sind gespeichert.");
+function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(MAIL||"P")[0].toUpperCase()}
+let stufe=0;
+function lgZu(){$("#lg").classList.add("hide")}
+function lgAuf(){stufe=0;$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
+$("#lgX").onclick=lgZu;$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
+$("#lgB").onclick=async()=>{const m=$("#lgM").value.trim().toLowerCase(),E=$("#lgE");E.textContent="";$("#lgB").disabled=true;
+ try{if(stufe==0){const r=await fetch(API+"code",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";stufe=1;$("#lgM").classList.add("hide");$("#lgC").classList.remove("hide");$("#lgC").focus();$("#lgT").textContent="Code gesendet an "+m+". Schau auch im Spam-Ordner nach.";$("#lgB").textContent="Anmelden"}
+ else{const r=await fetch(API+"login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m,code:$("#lgC").value})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";TOK=j.token;MAIL=j.email;try{localStorage.setItem("pr_token",TOK);localStorage.setItem("pr_mail",MAIL)}catch(_){}
+  const g=await fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>r.json()).catch(()=>({projekte:[]}));const srv=g.projekte||[];const ids=new Set(srv.map(p=>p.id));P=srv.concat(P.filter(p=>!ids.has(p.id)));store();fill();ui();lgZu();view("meine")}}
+ catch(x){E.textContent=typeof x=="string"?x:"Keine Verbindung. Bitte nochmal."}$("#lgB").disabled=false};
+$("#lgM").onkeydown=$("#lgC").onkeydown=e=>{if(e.key=="Enter")$("#lgB").click()};
+ui();
+if(TOK)fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>{if(r.status==401){abmelden();return null}return r.json()}).then(g=>{if(!g)return;const srv=g.projekte||[],ids=new Set(srv.map(p=>p.id));P=srv.concat(P.filter(p=>!ids.has(p.id)));try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){};fill()}).catch(()=>{});
+else setTimeout(lgAuf,600);
+$("#pub").onclick=()=>{if(!TOK){lgAuf();return}say("Veröffentlichen kommt mit der Zahlung (einmalig 99 €). Deine Änderungen sind in deinem Konto gespeichert.")};
 fill();
 </script></body></html>
