@@ -292,6 +292,13 @@ if(TOK)fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>{if
 else setTimeout(()=>{showStudio();lgAuf()},400);
 function startText(){let st="";try{st=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||"";sessionStorage.removeItem("pagerush_start")}catch(_){}if(st&&TOK){showStudio();newGen(st)}}
 if(TOK){setTimeout(()=>{const hasS=(()=>{try{return !!(sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w"))}catch(_){return false}})();if(hasS)startText();else showStudio()},300)}
-$("#pub").onclick=()=>{if(!TOK){lgAuf();return}say("Veröffentlichen kommt mit der Zahlung (einmalig 99 €). Deine Änderungen sind in deinem Konto gespeichert.")};
+$("#pub").onclick=async()=>{if(!TOK){lgAuf();return}if(!cur||cur.t!="gen"||!cur.html)return say("Bau zuerst eine Website mit der KI, dann kannst du sie veröffentlichen.");
+ say("<small>Ich stelle deine Website online …</small>");
+ try{await fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:P})});
+  const r=await fetch(API+"veroeffentlichen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({id:cur.id})});const j=await r.json();if(!r.ok)throw j.fehler||"Das hat nicht geklappt.";
+  cur.pub=1;cur.url=j.url;store();$("#edSt").textContent="Online";$("#edSt").className="st on1";
+  say(`Deine Website ist online ✓<br><a href="${j.url}" target="_blank" rel="noopener" style="color:#b08cff;word-break:break-all">${j.url}</a><br><br>Eigene Domain und dauerhaft online: <button class="btn sm" id="kauf99">Für 99 € freischalten</button>`);
+  document.getElementById("kauf99").onclick=()=>kaufen(j.url)}catch(x){say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")}};
+function kaufen(url){say("<small>Ich leite dich zur sicheren Zahlung weiter …</small>");fetch("https://2-31-5-96.sslip.io/pagerush-api/bestellung",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:MAIL,mail:MAIL,firma:(cur&&cur.name)||"",branche:"",domain:"",text:"Studio-Projekt: "+((cur&&cur.name)||"")+" – Live-Vorschau: "+url})}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const z="https://buy.stripe.com/eVq28rbUEdus0z74tJ3cc08?client_reference_id="+encodeURIComponent(j.ref)+"&prefilled_email="+encodeURIComponent(MAIL);try{window.top.location.href=z}catch(_){location.href=z}}).catch(()=>say("Das hat gerade nicht geklappt. Bitte nochmal oder schreib an info@stahlkern.gmbh."))}
 fill();
 </script></body></html>
