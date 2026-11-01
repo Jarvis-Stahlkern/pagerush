@@ -60,6 +60,15 @@ em{font-style:italic}
 .start button{appearance:none;border:0;cursor:pointer;background:var(--weiss);color:var(--schwarz);font:500 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:0 26px;transition:background .3s}
 .start button:hover{background:var(--gold)}
 @media(max-width:760px){.start{flex-direction:column;border:0;background:none;backdrop-filter:none;gap:10px}.start input{border:1px solid rgba(244,242,238,.35);background:rgba(11,11,12,.6);padding:16px 18px;font-size:16px}.start button{padding:16px}}
+/* 00 Logo-Film */
+.lh{position:relative;height:280vh}
+.lh-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.lh-b canvas{position:absolute;inset:0;width:100%;height:100%}
+.lh-v{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,0) 34%)}
+.lh-t{position:absolute;left:0;right:0;bottom:7vh;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center}
+.lh-tag{margin:0 0 18px;color:#e9e6df;font:400 17px/1.4 var(--sans);opacity:0;animation:auf 1.2s .4s forwards}
+.lh-t .start{width:100%;margin-top:0}
+.lh-lade{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);width:0;transition:opacity .6s;z-index:4}
 /* 01 Laptop-Szene */
 .lap{position:relative;height:520vh}
 .lap-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#07070a}
@@ -139,11 +148,16 @@ em{font-style:italic}
 <body>
 <header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#vorlagen">Vorlagen</a><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
 
+<section class="lh" id="lh"><div class="lh-b">
+ <canvas id="lc"></canvas><div class="lh-v"></div>
+ <div class="lh-t w" id="lhT"><p class="lh-tag">KI-Websites mit 3D-Effekten · einmalig 99 €, kein Abo</p>
+  <form class="start" id="start" action="app.html" method="get"><input type="text" name="w" id="startText" placeholder="Beschreib deine Website … z. B. Friseur in Stuttgart, edel, mit Online-Termin" autocomplete="off" maxlength="300"><button type="submit">Bauen →</button></form></div>
+ <div class="lh-lade" id="lhL"></div>
+</div></section>
 <section class="lap" id="lap"><div class="lap-b">
  <div class="lap-glow"></div>
  <div class="lap-text w" id="lapText">
   <h1><i><span>Deine Website.</span></i><i><span>In Minuten.</span></i></h1>
-  <form class="start" id="start" action="app.html" method="get"><input type="text" name="w" id="startText" placeholder="Beschreib deine Website … z. B. Friseur in Stuttgart, edel, mit Online-Termin" autocomplete="off" maxlength="300"><button type="submit">Bauen →</button></form>
   <div class="held-unter"><p>Pagerush baut sie mit KI. Mit 3D-Effekten, Film und Scroll-Bewegung. Einmalig 99 €, kein Abo.</p><a class="link" href="#vorlagen">Vorlagen ansehen →</a></div>
  </div>
  <div class="lap-szene"><div class="rechner" id="rechner">
@@ -196,12 +210,24 @@ em{font-style:italic}
 const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sf = $('sf'), schirm = $('schirm'), deckel = $('deckel'), rechner = $('rechner');
+// 00 Logo-Film (Scroll steuert die 3D-Drehung)
+const lc = $('lc'), lx = lc.getContext('2d'), LN = 120, LB = []; let lGel = 0, lZiel = 0, lJetzt = -1;
+(function lLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < LN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
+ const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { LB[i] = im; lGel++; $('lhL').style.width = (lGel / LN * 100) + '%'; if (lGel === LN) $('lhL').style.opacity = 0; lMalen(true); w(); }; im.onerror = w; im.src = `neu/logo/f${String(i + 1).padStart(3, '0')}.webp`; };
+ for (let n = 0; n < 6; n++) w(); })();
+function lMalen(zw) { let i = lZiel; if (!LB[i]) for (let d = 1; d < LN; d++) { if (LB[i - d]) { i -= d; break; } if (LB[i + d]) { i += d; break; } } const im = LB[i]; if (!im || (i === lJetzt && !zw)) return; lJetzt = i;
+ const W = lc.width, H = lc.height, hoch = H > W * 1.1, s = hoch ? Math.max(W / im.width, H / im.height) : H / im.height * 1.32, w = im.width * s, h = im.height * s; lx.fillStyle = '#000'; lx.fillRect(0, 0, W, H); lx.drawImage(im, (W - w) / 2, hoch ? (H - h) / 2 : (H - h) * .42, w, h);
+ if (!hoch) { const g = lx.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .18, 0); g.addColorStop(0, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g; lx.fillRect((W - w) / 2 - 2, 0, w * .18, H); const g2 = lx.createLinearGradient((W + w) / 2, 0, (W + w) / 2 - w * .18, 0); g2.addColorStop(0, '#000'); g2.addColorStop(1, 'rgba(0,0,0,0)'); lx.fillStyle = g2; lx.fillRect((W + w) / 2 - w * .18, 0, w * .18 + 2, H); } }
+function lGroesse() { const d = Math.min(2, devicePixelRatio || 1); lc.width = Math.round(lc.clientWidth * d); lc.height = Math.round(lc.clientHeight * d); lMalen(true); }
 const LF = []; for (let i = 0; i < 48; i++) { const im = new Image(); im.src = `neu/lap/g${String(i).padStart(3, '0')}.webp`; LF.push(im); } let lfJetzt = 0;
 const sz = $('satz'); const GOLD = ['Film,', 'Effekten', 'Tausende']; sz.innerHTML = sz.textContent.split(' ').map(w => `<span class="wo${GOLD.includes(w) ? ' g' : ''}">${w}</span>`).join(' '); const WO = [...sz.children];
 const FI = [...document.querySelectorAll('.fahrt img')], FH = [...document.querySelectorAll('.fahrt-t h2')];
 let tick = false;
 function lauf() {
  tick = false; const vh = innerHeight, vw = innerWidth;
+ // 00 Logo-Film
+ const lr = $('lh').getBoundingClientRect(), lp = ruhig ? 0 : kl(-lr.top, 0, lr.height - vh); lZiel = Math.round(kl(lp, 0, .9) * (LN - 1)); lMalen(false);
+ $('lhT').style.opacity = 1 - kl(lp, .04, .22); $('lhT').style.transform = `translateY(${-40 * kl(lp, .04, .25)}px)`;
  // 01 Laptop: öffnet sich, wächst, Website scrollt im Bildschirm
  const r = $('lap').getBoundingClientRect(), p = ruhig ? .7 : kl(-r.top, 0, r.height - vh);
  $('lapText').style.opacity = 1 - kl(p, .08, .26); $('lapText').style.transform = `translateY(calc(-50% + ${-70 * kl(p, .06, .3)}px))`;
@@ -223,8 +249,8 @@ function lauf() {
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .2 });
 document.querySelectorAll('.rv').forEach(x => io.observe(x));
 addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(lauf); } }, { passive: true });
-addEventListener('resize', () => lauf());
-lauf();
+addEventListener('resize', () => { lGroesse(); lauf(); });
+lGroesse(); lauf();
 // Vollbild
 const voll = $('voll'), vf = $('vf');
 function auf(u) { vf.src = u; voll.hidden = false; document.body.style.overflow = 'hidden'; document.querySelectorAll('.voll-t button').forEach(b => b.classList.toggle('on', b.dataset.u === u)); }
