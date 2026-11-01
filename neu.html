@@ -61,7 +61,7 @@ em{font-style:italic}
 .start button:hover{background:var(--gold)}
 @media(max-width:760px){.start{flex-direction:column;border:0;background:none;backdrop-filter:none;gap:10px}.start input{border:1px solid rgba(244,242,238,.35);background:rgba(11,11,12,.6);padding:16px 18px;font-size:16px}.start button{padding:16px}}
 /* 00a Flug: Wolken > Gebäude > Büro > Laptop */
-.flug{position:relative;height:640vh}
+.flug{position:relative;height:780vh}
 .flug-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
 .flug-b canvas{position:absolute;inset:0;width:100%;height:100%}
 .flug-v{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55))}
@@ -230,13 +230,13 @@ const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sf = $('sf'), schirm = $('schirm'), deckel = $('deckel'), rechner = $('rechner');
 // 00a Flug
-const fc = $('fc'), fx2 = fc.getContext('2d'), FN = 180, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
+const fc = $('fc'), fx2 = fc.getContext('2d'), FN = 240, FB = []; let fGel = 0, fZiel = 0, fJetzt = -1;
 (function fLaden() { const ord = [0]; for (let s = 32; s >= 1; s >>= 1) for (let i = 0; i < FN; i += s) if (!ord.includes(i)) ord.push(i); let k = 0;
  const w = () => { if (k >= ord.length) return; const i = ord[k++], im = new Image(); im.onload = () => { FB[i] = im; fGel++; $('flLa').style.width = (fGel / FN * 100) + '%'; if (fGel === FN) $('flLa').style.opacity = 0; fMalen(true); w(); }; im.onerror = w; im.src = `neu/flug/f${String(i).padStart(3, '0')}.webp`; };
  for (let n = 0; n < 6; n++) w(); })();
 function fMalen(zw) { let i = fZiel; if (!FB[i]) for (let d = 1; d < FN; d++) { if (FB[i - d]) { i -= d; break; } if (FB[i + d]) { i += d; break; } } const im = FB[i]; if (!im || (i === fJetzt && !zw)) return; fJetzt = i;
  const W = fc.width, H = fc.height, cov = Math.max(W / im.width, H / im.height); fx2.fillStyle = '#000'; fx2.fillRect(0, 0, W, H);
- if (H > W * 1.1) { fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); return; }
+ if (H > W * 1.1 || im.width > im.height) { fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); return; }
  fx2.globalAlpha = .45; fx2.drawImage(im, (W - im.width * cov) / 2, (H - im.height * cov) / 2, im.width * cov, im.height * cov); fx2.globalAlpha = 1;
  const s = H / im.height * 1.02, w = im.width * s; fx2.drawImage(im, (W - w) / 2, (H - im.height * s) / 2, w, im.height * s);
  const g = fx2.createLinearGradient((W - w) / 2, 0, (W - w) / 2 + w * .15, 0); g.addColorStop(0, 'rgba(0,0,0,.85)'); g.addColorStop(1, 'rgba(0,0,0,0)'); fx2.fillStyle = g; fx2.fillRect((W - w) / 2, 0, w * .15, H);
@@ -259,10 +259,10 @@ function lauf() {
  tick = false; const vh = innerHeight, vw = innerWidth;
  // 00a Flug: Wolken (0-60) > Logo hält > Büro (60-120) > Laptop (120-180)
  const fr0 = $('flug').getBoundingClientRect(), q = ruhig ? 0 : kl(-fr0.top, 0, fr0.height - vh);
- const fIdx = q < .34 ? kl(q, 0, .34) * 59 : q < .46 ? 59 : q < .72 ? 60 + kl(q, .46, .72) * 59 : 120 + kl(q, .72, .97) * 59;
+ const fIdx = q < .27 ? kl(q, 0, .27) * 59 : q < .37 ? 59 : q < .56 ? 60 + kl(q, .37, .56) * 59 : q < .74 ? 120 + kl(q, .56, .74) * 59 : 180 + kl(q, .74, .97) * 59;
  fZiel = Math.round(fIdx); fMalen(false); fc.style.opacity = 1 - kl(q, .95, 1);
  $('flS').style.opacity = 1 - kl(q, .02, .1);
- const lo = kl(q, .24, .34) * (1 - kl(q, .44, .5)); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, .24, .37)) + .5 * ez(kl(q, .44, .5))).toFixed(3)})`;
+ const lo = kl(q, .19, .27) * (1 - kl(q, .35, .4)); $('flL').style.opacity = lo; $('flL').style.transform = `translate(-50%,-50%) scale(${(.35 + .65 * ez(kl(q, .19, .29)) + .5 * ez(kl(q, .35, .4))).toFixed(3)})`;
  // 00 Logo-Film
  const lr = $('lh').getBoundingClientRect(), lp = ruhig ? 0 : kl(-lr.top, 0, lr.height - vh); lZiel = Math.round(kl(lp, 0, .9) * (LN - 1)); lMalen(false);
  $('lhT').style.opacity = 1 - kl(lp, .04, .22); $('lhT').style.transform = `translateY(${-40 * kl(lp, .04, .25)}px)`;
