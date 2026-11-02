@@ -133,7 +133,12 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
  <textarea class="in" id="kText" placeholder="z. B. Friseursalon in Esslingen, 3 Mitarbeiter, Schnitt, Farbe, Hochsteckfrisuren, Termin online"></textarea>
  <div class="seg" id="kTpl" style="margin:12px 0;display:inline-flex"></div><br>
  <button class="btn" id="kGo">Mit KI bauen →</button></div></section>
-  <section id="v-dom" class="hide"><div class="card" style="max-width:640px"><h3>Domains &amp; E-Mail</h3><p style="color:var(--mu)">Eigene Domain verbinden kommt als Nächstes. Dafür kaufst du die Domain bei deinem Anbieter, wir verbinden sie mit deiner Website.</p></div></section>
+  <section id="v-dom" class="hide"><div class="card" style="max-width:640px"><h3>Domains &amp; E-Mail</h3><p style="color:var(--mu)">So bekommt deine Website eine eigene Adresse wie <b>deinname.de</b>:</p>
+<p><b>1. Domain kaufen</b> – bei einem Anbieter deiner Wahl, z. B. <a href="https://www.strato.de/domains/" target="_blank" rel="noopener" style="color:#b08cff">Strato</a>, <a href="https://www.ionos.de/domains/domain-check" target="_blank" rel="noopener" style="color:#b08cff">IONOS</a> oder <a href="https://www.checkdomain.de/" target="_blank" rel="noopener" style="color:#b08cff">Checkdomain</a>.</p>
+<p><b>2. Domain hier eintragen</b><br><input class="in" id="domName" placeholder="z. B. salon-mira.de" style="margin-top:8px"></p>
+<p><b>3. Wir verbinden</b> – du bekommst die zwei Einträge für deinen Anbieter zum Kopieren, oder wir richten es gemeinsam ein. Danach läuft deine Seite unter deiner Domain mit https.</p>
+<a class="btn" id="domSend" href="mailto:info@stahlkern.gmbh?subject=Pagerush%20Domain%20verbinden">Domain verbinden lassen</a>
+<script>document.getElementById("domName").addEventListener("input",e=>{document.getElementById("domSend").href="mailto:info@stahlkern.gmbh?subject="+encodeURIComponent("Pagerush Domain verbinden: "+e.target.value.trim())})</script></div></section>
   <section id="v-set" class="hide"><div class="card" style="max-width:640px"><h3>Einstellungen</h3><p style="color:var(--mu)">Login mit E-Mail-Code folgt. Bis dahin werden deine Projekte in diesem Browser gespeichert.</p></div></section>
  </main>
 </div>
@@ -194,7 +199,7 @@ function open(p){if(p.t=="gen")return openGen(p);cur=p;$("#ed").classList.remove
  $("#msgs").innerHTML="";say("Hallo! Schreib mir unten, was du ändern willst. Oder tipp direkt in der Vorschau auf einen Text. Eigene Fotos setzt du über die Bilder-Leiste ein.");
  fr.onload=()=>{apply();setTimeout(()=>{const d=doc();d&&slots(d)},1800);if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.removeAttribute("srcdoc");fr.removeAttribute("sandbox");fr.src=TPL.find(t=>t.id==p.t).u;chipsSet(false);renderProj()}
 const PLACE='<!doctype html><body style="margin:0;background:#0a0912;color:#9b97b8;font:16px system-ui;display:grid;place-items:center;height:100vh;text-align:center"><div style="max-width:320px;padding:20px"><div style="font-size:42px">✦</div><p style="margin-top:12px">Hier erscheint deine Website.<br>Beschreib sie im Chat.</p></div>';
-let pend=[];
+let pend=[];try{pend=JSON.parse(sessionStorage.getItem("pagerush_bilder")||"[]")||[]}catch(_){pend=[]}
 function withImgs(p){return (p.html||"").replace(/\{\{IMG(\d+)\}\}/g,(m,n)=>(p.imgs||[])[n-1]||"")}
 function chipsSet(g){$("#chips").innerHTML=(g?["Mehr 3D-Effekt beim Scrollen","Edler und dunkler","Heller und freundlicher","Eigenes Foto als Titelbild","Rückgängig"]:["Effekt Tiefe","Effekt Schwenk","Effekt Zoom","Farbe Gold","Farbe Blau","Farbe Rot","Farbe Grün"]).map(x=>"<button>"+x+"</button>").join("");$$("#chips button").forEach(b=>b.onclick=()=>{say(b.textContent,1);cmd(b.textContent)})}
 function renderProj(){$("#proj").innerHTML=P.map(p=>`<button data-o="${p.id}" class="${cur&&cur.id==p.id?"on":""}">${(p.name||"Website").replace(/</g,"")}</button>`).join("")+'<button data-o="">＋ Neu</button>'}
@@ -221,7 +226,7 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
   if(!fin)throw "Die Verbindung wurde unterbrochen. Bitte nochmal.";
   clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say("Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
  }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
-function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
+function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];try{sessionStorage.removeItem("pagerush_bilder")}catch(_){}P.unshift(p);store();fill();openGen(p);fragen(p,t)}
 // 02.11.: erst 4 kurze Fragen, dann bauen – so wird die Seite passgenau statt geraten
 function fragen(p,t){const bg=document.createElement("div");bg.className="frg-bg";const box=document.createElement("div");box.className="frg";bg.appendChild(box);
  const ch=(n,arr,multi)=>`<div class="frg-ch" data-n="${n}" data-m="${multi?1:0}">`+arr.map(x=>`<button type="button">${x}</button>`).join("")+"</div>";
@@ -229,17 +234,22 @@ function fragen(p,t){const bg=document.createElement("div");bg.className="frg-bg
   <label>Name des Geschäfts<input id="fq-name" placeholder="z. B. Djengo's Burger"></label>
   <label>Ort<input id="fq-ort" placeholder="z. B. Herrenberg"></label>
   <label>Was macht euch besonders?<input id="fq-usp" placeholder="z. B. regionales Rindfleisch, eigene Saucen"></label>
+  <label>Straße und Hausnummer<input id="fq-str" autocomplete="street-address" placeholder="z. B. Hauptstraße 12"></label>
+  <label>Telefon<input id="fq-tel" type="tel" autocomplete="tel" placeholder="z. B. 07032 123456"></label>
+  <label>E-Mail<input id="fq-mail" type="email" autocomplete="email" placeholder="z. B. info@deinladen.de"></label>
   <span class="frg-l">Wie sollen Kunden euch erreichen?</span>${ch("kontakt",["Anrufen","WhatsApp","Kontaktformular","Termin online","Lieferdienst"],1)}
   <span class="frg-l">Stil</span>${ch("stil",["Dunkel & edel","Hell & freundlich","Modern & bunt","Natürlich & warm"],0)}
   <div class="frg-a"><button type="button" class="btn sm" id="fq-go">Website bauen</button><button type="button" class="frg-skip" id="fq-skip">Überspringen</button></div>`;
  document.body.appendChild(bg);
  box.querySelectorAll(".frg-ch").forEach(g=>g.onclick=e=>{const b=e.target.closest("button");if(!b)return;if(g.dataset.m!="1")g.querySelectorAll("button").forEach(x=>x!==b&&x.classList.remove("on"));b.classList.toggle("on")});
  const los=(mit)=>{let z=t;if(mit){const v=id=>(box.querySelector(id).value||"").trim(),w=n=>[...box.querySelectorAll(`[data-n="${n}"] .on`)].map(x=>x.textContent).join(", ");
-   const name=v("#fq-name"),ort=v("#fq-ort"),usp=v("#fq-usp"),k=w("kontakt"),st=w("stil");
-   z+=(name?"\nName: "+name:"")+(ort?"\nOrt: "+ort:"")+(usp?"\nBesonderheiten: "+usp:"")+(k?"\nKontaktwege (als gut sichtbare Buttons): "+k:"")+(st?"\nStil: "+st:"");
+   const name=v("#fq-name"),ort=v("#fq-ort"),usp=v("#fq-usp"),str=v("#fq-str"),tel=v("#fq-tel"),mail=v("#fq-mail"),k=w("kontakt"),st=w("stil");
+   const schon=x=>z.indexOf(x)>=0;
+   z+=(name&&!schon(name)?"\nName: "+name:"")+(ort&&!schon(ort)?"\nOrt: "+ort:"")+(usp?"\nBesonderheiten: "+usp:"")+(str&&!schon(str)?"\nAdresse: "+str:"")+(tel&&!schon(tel)?"\nTelefon: "+tel:"")+(mail&&!schon(mail)?"\nE-Mail (Kontakt, Impressum): "+mail:"")+(k?"\nKontaktwege (als gut sichtbare Buttons): "+k:"")+(st?"\nStil: "+st:"");
    if(name){p.name=name.slice(0,26);$("#edName").textContent=p.name;renderProj()}}
   p.txt=z;store();bg.remove();if(z!=t)say(z.slice(t.length).trim().replace(/</g,"&lt;").replace(/\n/g,"<br>"),1);bauen(z,true)};
- box.querySelector("#fq-go").onclick=()=>los(true);box.querySelector("#fq-skip").onclick=()=>los(false);setTimeout(()=>box.querySelector("#fq-name").focus(),50)}
+ box.querySelector("#fq-go").onclick=()=>los(true);box.querySelector("#fq-skip").onclick=()=>los(false);try{const d=JSON.parse(sessionStorage.getItem("pagerush_kontakt")||"{}");[["firma","#fq-name"],["ort","#fq-ort"],["str","#fq-str"],["tel","#fq-tel"],["mail","#fq-mail"]].forEach(([k,id])=>{if(d[k])box.querySelector(id).value=d[k]})}catch(_){}
+ setTimeout(()=>box.querySelector("#fq-name").focus(),50)}
 function attach(url){if(!cur){pend.push(url);say("Foto "+pend.length+" vorgemerkt. Beschreib jetzt deine Website, ich baue es ein.");return}
  if(cur.t=="gen"){cur.imgs=cur.imgs||[];cur.imgs.push(url);store();gSlots();say("Foto "+cur.imgs.length+" hinzugefügt. Sag mir, wo es hin soll, z. B. <b>„Nimm Foto "+cur.imgs.length+" als Titelbild mit 3D-Effekt“</b>.");return}
  cur.ed.hero=url;const d=doc();d&&heroSet(d,url);store();say("Titelbild eingesetzt ✓ mit 3D-Scroll-Effekt.")}

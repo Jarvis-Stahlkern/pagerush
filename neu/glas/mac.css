@@ -1,0 +1,39 @@
+/* Pagerush 02.11.2026 19:00: MacBook-Monitore, Logo mitten im Glasfeld, leichtere Effekte (kein Hängen) */
+
+/* ---------- Leichter: teure Vollbild-Effekte raus ---------- */
+#aurora{filter:none!important}               /* Canvas ist ohnehin klein und weich hochskaliert */
+.korn{mix-blend-mode:normal!important;opacity:.035!important}
+.lm-licht{mix-blend-mode:normal!important;transition:opacity .3s!important;will-change:transform}
+.lm-licht.druck{transition:none!important}
+.lm-punkt{transition:none!important}
+
+/* ---------- Großes Logo in der Mitte: Glasfeld ---------- */
+.logo-glas{padding:5% 7% 5.5%!important;border-radius:clamp(26px,3.4vw,48px)!important;
+ background:radial-gradient(260px circle at var(--gx,30%) var(--gy,0%),rgba(255,255,255,.28),transparent 62%),
+  linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.07) 42%,rgba(255,255,255,.05) 60%,rgba(255,255,255,.18))!important;
+ border:1px solid rgba(255,255,255,.4)!important;
+ box-shadow:inset 0 1.5px 0 rgba(255,255,255,.75),inset 0 -14px 26px rgba(255,255,255,.07),0 40px 100px -40px rgba(40,0,110,.8),0 0 80px -24px rgba(197,139,255,.6)!important}
+.logo-glas::before{display:block!important}
+.logo-glas::after{display:block!important;mix-blend-mode:normal!important}
+.logo-glas .kante{display:block!important}
+
+/* ---------- MacBook statt Standmonitor ---------- */
+.dsp-arm{display:none!important}
+.dsp-geh{border-radius:calc(var(--sw) * .02) calc(var(--sw) * .02) calc(var(--sw) * .004) calc(var(--sw) * .004)!important;padding:calc(var(--sw) * .0035)!important;
+ background:linear-gradient(180deg,#e9eaee 0%,#c2c4ca 40%,#9fa2a9 100%)!important}
+.dsp-glas{border-radius:calc(var(--sw) * .0165) calc(var(--sw) * .0165) 0 0!important;padding:calc(var(--sw) * .0085) calc(var(--sw) * .0085) calc(var(--sw) * .007)!important}
+.dsp-schirm{border-radius:calc(var(--sw) * .006)!important}
+/* Kamera-Einkerbung wie beim MacBook */
+.dsp-kamera{top:0!important;width:calc(var(--sw) * .07)!important;height:calc(var(--sw) * .0105)!important;margin-left:calc(var(--sw) * -.035)!important;border-radius:0 0 calc(var(--sw) * .006) calc(var(--sw) * .006)!important;
+ background:#050506!important;z-index:12;box-shadow:none!important}
+.dsp-kamera::after{content:"";position:absolute;right:30%;top:32%;width:calc(var(--sw) * .0035);height:calc(var(--sw) * .0035);border-radius:50%;background:radial-gradient(circle at 35% 35%,#3a4a78,#0c1020 70%)}
+.dsp-glanz{border-radius:calc(var(--sw) * .0165) calc(var(--sw) * .0165) 0 0!important;inset:calc(var(--sw) * .0035)!important}
+/* Unterteil: flache Alu-Basis mit Griffmulde, etwas breiter als der Deckel */
+.dsp-fuss{display:block!important;left:50%!important;top:100%!important;width:116%!important;height:calc(var(--sw) * .0225)!important;transform:translateX(-50%)!important;
+ clip-path:none!important;border-radius:0 0 calc(var(--sw) * .02) calc(var(--sw) * .02) / 0 0 calc(var(--sw) * .012) calc(var(--sw) * .012)!important;
+ background:linear-gradient(180deg,#8e9096 0%,#d6d8dc 22%,#e9eaee 55%,#b4b6bc 100%)!important;
+ box-shadow:0 calc(var(--sw) * .012) calc(var(--sw) * .02) rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.7)}
+.dsp-fuss::after{content:"";position:absolute;left:50%;top:0;width:15%;height:46%;transform:translateX(-50%);border-radius:0 0 calc(var(--sw) * .01) calc(var(--sw) * .01);
+ background:linear-gradient(180deg,#7d7f86,#b9bbc1)}
+.dsp-schatten{top:calc(100% + var(--sw) * .02)!important;width:90%!important;height:calc(var(--sw) * .035)!important}
+@media(max-width:760px){.dsp-arm{display:none!important}.dsp-fuss{top:100%!important}.dsp-schatten{top:calc(100% + var(--sw) * .02)!important}}

@@ -1,0 +1,133 @@
+/* Pagerush – Farbverlauf-Design (02.11.2026): fließende Aurora in Purple/Blau/Lila/Rosa, Glas-Abschnitte mit Bewegung */
+:root{--p1:#8b5cff;--p2:#3d7bff;--p3:#c04dff;--p4:#ff5fae;--glanz:linear-gradient(100deg,#ff8fd0,#c58bff 35%,#7fa6ff 70%,#8ff0ff)}
+html,body{background:#0b0716}
+#aurora{position:fixed;inset:-6%;width:112%;height:112%;z-index:0;pointer-events:none;filter:blur(38px) saturate(1.25);opacity:.95}
+.korn{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body>section,body>footer{position:relative;z-index:2}
+.kopf{z-index:50;background:linear-gradient(rgba(14,8,30,.55),rgba(14,8,30,0));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+/* Akzent: Verlaufsschrift statt Gold */
+em,.glas-kopf h1 em,.glas-zeile em{background:var(--glanz);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;animation:glanzlauf 8s ease-in-out infinite alternate;padding-right:.06em}
+@keyframes glanzlauf{to{background-position:100% 0}}
+.nr{color:#d3b8ff;letter-spacing:.28em}
+.knopf{border-radius:99px;background:linear-gradient(100deg,#ff6fb5,#a55bff 45%,#4f7dff);color:#fff;box-shadow:0 14px 40px -12px rgba(165,91,255,.8);transition:transform .25s,box-shadow .25s}
+.knopf:hover{background:linear-gradient(100deg,#ff6fb5,#a55bff 45%,#4f7dff);transform:translateY(-2px);box-shadow:0 20px 50px -12px rgba(255,111,181,.8)}
+
+/* Hero: kein Schwarz, keine Sternchen – Farbe kommt von hinten */
+.glas{background:transparent}
+.glas-b{background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(11,7,22,.55))}
+.glas-licht,.glas-staub{display:none}
+.glas-boden{background:linear-gradient(to bottom,transparent,rgba(11,7,22,.6) 70%),repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 90px)}
+.scheibe-g{box-shadow:0 0 0 5px #0b0b0e,0 0 0 6px rgba(255,255,255,.10)}
+.scheibe-dunkel{background:#140b2a}
+.scheibe-tag{color:#ffd0ec}
+.glas-punkte i.an{background:linear-gradient(90deg,#ff6fb5,#7f8bff)}
+
+/* Gemeinsame Glas-Fläche */
+.glasflaeche{position:relative;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.04) 45%,rgba(255,255,255,.09));border:1px solid rgba(255,255,255,.26);backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3);box-shadow:0 40px 100px -40px rgba(10,0,40,.9),inset 0 1px 0 rgba(255,255,255,.45)}
+
+/* Seitlich einwischen */
+.rv.l{transform:translateX(-90px) rotate(-2deg)}.rv.r{transform:translateX(90px) rotate(2deg)}
+.rv.l.an,.rv.r.an{transform:none}
+
+/* 03 Bauen */
+.bau{margin-top:0;padding:18vh 0 14vh;background:none!important}
+.bau h2{text-align:center}
+.bau-unter{text-align:center;color:#e9e3f7;max-width:52ch;margin:26px auto 46px;font-size:18px}
+.bau .nr{text-align:center}
+.bau-box{max-width:1000px;margin:0 auto;border-radius:28px;padding:34px;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.04) 50%,rgba(255,255,255,.08));border:0;backdrop-filter:blur(24px) saturate(1.3);-webkit-backdrop-filter:blur(24px) saturate(1.3);box-shadow:0 50px 140px -40px rgba(120,40,255,.55),inset 0 1px 0 rgba(255,255,255,.45);position:relative;isolation:isolate}
+.bau-rand{position:absolute;inset:0;border-radius:inherit;padding:1.5px;z-index:-1;pointer-events:none;
+ background:conic-gradient(from var(--w,0deg),#ff6fb5,#a55bff,#4f7dff,#6ff0ff,#ff6fb5);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:randdreh 6s linear infinite}
+@property --w{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes randdreh{to{--w:360deg}}
+.bau-schritt{display:flex;align-items:center;gap:14px;font:500 14px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#fff;margin:4px 0 14px}
+.bau-schritt span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--glanz);color:#1a0b35;font-weight:700;letter-spacing:0;flex:none}
+.bau-schritt small{text-transform:none;letter-spacing:0;color:#cfc4e6;font-size:14px}
+.bau-box textarea{background:rgba(10,4,25,.35);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px 18px;font-size:clamp(17px,1.7vw,21px)}
+.bau-box textarea:focus,.bau-felder input:focus{border-color:#c58bff;box-shadow:0 0 0 4px rgba(197,139,255,.18)}
+.bau-chips{margin:14px 0 30px}
+.bau-chips button{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#efe8ff}
+.bau-chips button:hover{border-color:#ff8fd0}
+.bau-felder{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+.bau-felder label{display:flex;flex-direction:column;gap:7px;font:500 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#d8cdef}
+.bau-felder label.breit{grid-column:span 2}
+.bau-felder input{background:rgba(10,4,25,.35);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 15px;color:#fff;font:400 16px/1.2 var(--sans);outline:none;text-transform:none;letter-spacing:0;transition:border-color .2s,box-shadow .2s}
+.bau-felder input::placeholder{color:rgba(240,232,255,.4)}
+.bau-leiste{border-top:1px solid rgba(255,255,255,.14);padding-top:22px}
+.bau-leiste p{margin:0;color:#d8cdef;font-size:14px}
+@media(max-width:760px){.bau-box{padding:20px}.bau-felder{grid-template-columns:1fr}.bau-felder label.breit{grid-column:auto}.bau-leiste .knopf{width:100%;justify-content:center}}
+
+/* 04 Drei Schritte – Glas-Karten fliegen ein */
+.drei{padding:20vh 24px 10vh}
+.drei h2{margin:26px 0 70px}
+.spalten{grid-template-columns:repeat(3,1fr);gap:26px;border-top:0;perspective:1600px;position:relative}
+.spalten::before{content:"";position:absolute;left:4%;right:4%;bottom:-34px;height:2px;background:linear-gradient(90deg,#ff6fb5,#a55bff,#4f7dff);transform-origin:0 50%;transform:scaleX(var(--linie,0));opacity:.8;box-shadow:0 0 24px #a55bff}
+.sp{padding:38px 34px 40px;border-radius:26px;transform-style:preserve-3d;transition:opacity 1.1s cubic-bezier(.2,.8,.1,1),transform 1.3s cubic-bezier(.2,.8,.1,1)}
+.sp.rv{transform:translateY(80px) rotateY(-28deg) rotateX(12deg)}
+.sp.rv:nth-child(2){transform:translateY(120px) rotateX(24deg)}
+.sp.rv:nth-child(3){transform:translateY(80px) rotateY(28deg) rotateX(12deg)}
+.sp.rv.an{transform:none}
+.sp:hover{transform:translateY(-8px)!important}
+.sp .zahl{font:400 clamp(90px,9vw,150px)/1 var(--serif);background:var(--glanz);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:glanzlauf 6s ease-in-out infinite alternate;filter:drop-shadow(0 6px 24px rgba(170,90,255,.55));display:inline-block}
+.sp.an .zahl{animation:glanzlauf 6s ease-in-out infinite alternate,zahlrein 1.4s cubic-bezier(.2,.8,.1,1) both;animation-delay:0s,var(--zd,.2s)}
+@keyframes zahlrein{from{opacity:0;transform:translateX(-60px) rotateY(80deg) scale(.7)}to{opacity:1;transform:none}}
+.sp h3{color:#fff}.sp p{color:#ddd3f2}
+.sp .zeit{display:inline-block;margin-top:22px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#ffd0ec}
+@media(max-width:860px){.spalten{grid-template-columns:1fr}.spalten::before{display:none}.sp{border-bottom:0}}
+
+/* 05 Domain */
+.dom{max-width:1280px;margin:0 auto;padding:14vh 24px 12vh}
+.dom h2{font-size:clamp(46px,6vw,104px);line-height:.95;margin:26px 0 22px}
+.dom-unter{max-width:58ch;color:#e9e3f7;font-size:18px;margin:0 0 56px}
+.dom-raster{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dom-k{border-radius:24px;padding:30px}
+.dom-k b{display:block;font:400 30px/1.1 var(--serif);margin:14px 0 10px;color:#fff}
+.dom-k p{color:#ddd3f2;margin:0;font-size:16px}
+.dom-k .bau-schritt{margin:0}
+.anbieter{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.anbieter a{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);font:500 14px/1 var(--sans);color:#fff;transition:background .25s,transform .25s}
+.anbieter a:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+.anbieter a::after{content:"↗";opacity:.7}
+.dom-adresse{margin-top:40px;border-radius:20px;padding:20px 26px;display:flex;align-items:center;gap:14px;font:400 clamp(18px,2.2vw,30px)/1.2 var(--sans);overflow:hidden;white-space:nowrap}
+.dom-adresse i{font-style:normal;opacity:.55}
+.dom-adresse .tipp{border-right:2px solid #ff8fd0;padding-right:4px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{border-color:transparent}}
+@media(max-width:860px){.dom-raster{grid-template-columns:1fr}}
+
+/* 06 Preis – 99 € in Glas eingraviert, dreht sich beim Scrollen */
+.preis{position:relative;height:260vh;min-height:0;display:block;padding:0;border-top:0;text-align:center}
+.preis-b{position:sticky;top:0;width:100%;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden;perspective:1800px}
+.preis-platte{position:relative;width:min(640px,46vw);aspect-ratio:1.45;border-radius:40px;display:grid;place-items:center;transform-style:preserve-3d;will-change:transform;
+ background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.05) 40%,rgba(255,255,255,.03) 60%,rgba(255,255,255,.18));
+ border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(26px) saturate(1.4);-webkit-backdrop-filter:blur(26px) saturate(1.4);
+ box-shadow:0 70px 160px -50px rgba(60,0,140,.95),0 0 120px -30px rgba(255,111,181,.55),inset 0 2px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(255,255,255,.12)}
+.preis-platte::before{content:"";position:absolute;inset:14px;border-radius:30px;border:1px solid rgba(255,255,255,.18);pointer-events:none}
+.preis-glanz{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.preis-glanz::after{content:"";position:absolute;top:-50%;bottom:-50%;width:40%;left:var(--gx,-60%);transform:rotate(20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);mix-blend-mode:overlay}
+.preis .gravur{position:relative;font:400 clamp(150px,20vw,320px)/.8 var(--serif);letter-spacing:-.04em;
+ color:rgba(255,255,255,.07);text-shadow:0 2px 1px rgba(255,255,255,.45),0 -2px 2px rgba(20,0,50,.55),0 0 40px rgba(200,140,255,.35)}
+.preis .gravur em{font-size:.38em;vertical-align:top;margin-left:.08em;font-style:normal;color:rgba(255,255,255,.07)!important;background:none;animation:none;text-shadow:inherit}
+.preis .gravur span.licht{position:absolute;inset:0;background:var(--glanz);background-size:220% 100%;background-position:var(--lp,0%) 0;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.55;mix-blend-mode:screen;pointer-events:none}
+.preis-unter{position:absolute;bottom:-1px;left:0;right:0;transform:translateZ(40px);font:500 12px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:#f4ecff;padding-bottom:26px}
+.preis-seite{position:absolute;top:50%;width:min(320px,23vw);text-align:left;opacity:0;will-change:transform,opacity}
+.preis-seite.l{left:max(24px,calc(50% - 660px))}.preis-seite.r{right:max(24px,calc(50% - 660px))}
+.preis-seite h3{font-size:clamp(30px,2.6vw,44px);line-height:1.02;margin:0 0 14px}
+.preis-seite p{color:#e3daf5;margin:0;font-size:16px;max-width:none}
+.preis-seite ul{display:block;margin:0;padding:0;list-style:none;color:#fff;font-size:16px;letter-spacing:0;text-transform:none}
+.preis-seite li{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.preis-seite li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--glanz);box-shadow:0 0 12px #c58bff;flex:none}
+.preis-knopf{position:absolute;bottom:7vh;left:0;right:0;opacity:0}
+.preis-knopf .knopf{font-size:14px;padding:20px 36px}
+.preis .nr{position:absolute;top:13vh;left:0;right:0;margin:0}
+@media(max-width:900px){
+ .preis{height:auto}.preis-b{position:relative;height:auto;padding:16vh 20px 12vh;display:flex;flex-direction:column;gap:30px}
+ .preis .nr{position:static}.preis-seite,.preis-knopf{position:static;width:100%;opacity:1;transform:none!important;text-align:left}
+ .preis-platte{order:-1;aspect-ratio:1.25;width:100%}
+}
+.fuss{background:rgba(11,7,22,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+@media(prefers-reduced-motion:reduce){#aurora{display:none}html,body{background:linear-gradient(160deg,#1d0f3d,#3a1460 45%,#13246b)}}
+.preis .nr{max-width:none;text-align:center;margin:0}
+@media(max-width:760px){.bau-schritt{flex-wrap:wrap}.bau-schritt small{flex-basis:100%;padding-left:48px;margin-top:-6px}}
+@media(max-width:900px){.preis .nr{order:-2}.preis-unter{letter-spacing:.16em;font-size:10px}}
