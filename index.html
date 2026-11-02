@@ -292,7 +292,7 @@ const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .2 });
 document.querySelectorAll('.rv').forEach(x => io.observe(x));
-function studio(t) { $('studioF').src = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); $('studio').hidden = false; document.body.style.overflow = 'hidden'; }
+function studio(t) { if (matchMedia('(max-width:900px), (pointer:coarse)').matches) { try { if (t) sessionStorage.setItem('pagerush_start', t); } catch (_) {} location.href = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); return; } $('studioF').src = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); $('studio').hidden = false; document.body.style.overflow = 'hidden'; }
 $('studioZu').addEventListener('click', () => { $('studio').hidden = true; $('studioF').src = 'about:blank'; document.body.style.overflow = ''; });
 $('bauForm').addEventListener('submit', e => { e.preventDefault(); let t = $('bauText').value.trim(); if (!t) { $('bauText').focus(); return; }
  const kd = { firma: 'Name', name: 'Inhaber/Ansprechpartner', str: 'Adresse', ort: 'PLZ/Ort', tel: 'Telefon', mail: 'E-Mail', zeit: 'Öffnungszeiten', dom: 'Wunsch-Domain', ust: 'USt-IdNr. (Impressum)' }, daten = {};
