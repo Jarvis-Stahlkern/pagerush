@@ -39,3 +39,17 @@
 @media (prefers-reduced-motion:reduce){.sp.rv,.dom-k.rv,.dom-check.rv{transform:none!important}}
 
 .bau-chips.eff{margin-top:10px}.bau-chips.eff button.on{background:linear-gradient(100deg,#ff6fb5,#a55bff 60%,#4f7dff);border-color:transparent;color:#fff}
+
+/* 02.11.2026 20:00 (Djengo): 99 € gestochen scharf – keine Filter/Weichzeichner auf der Münze, Safari rastert sonst unscharf */
+.muenze{will-change:auto!important}
+.muenze-buehne{perspective:2200px}
+.preis .muenze .gravur{filter:none!important;background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;
+ -webkit-text-fill-color:#fff!important;color:#fff!important;font-weight:800;letter-spacing:-.05em;
+ text-shadow:0 1px 0 #fff,0 2px 0 #d9c6ff,0 3px 0 #b392f2,0 4px 0 #8a64d8,0 7px 14px rgba(30,0,80,.45)!important;transform:translateZ(1px)}
+.preis .muenze .gravur em{-webkit-text-fill-color:#ffd9a0!important;color:#ffd9a0!important;background:none!important;text-shadow:0 1px 0 #fff3dc,0 2px 0 #e9a35a,0 3px 0 #b8752e,0 6px 12px rgba(30,0,80,.4)!important}
+.m-seite{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+ background:radial-gradient(circle at 30% 20%,#b98cff,#8a4dff 45%,#6a2fe0 75%,#9a6cff)!important}
+.m-vorn::after{border-color:rgba(255,255,255,.45)}
+.preis .muenze .preis-unter{font-weight:800;color:#fff;text-shadow:0 1px 0 rgba(40,0,110,.7)}
+/* neues, scharfes Logo: Farblicht folgt der neuen Form */
+.logo-licht{-webkit-mask-image:url(../logo.webp?v=3)!important;mask-image:url(../logo.webp?v=3)!important;-webkit-mask-size:100% 100%!important;mask-size:100% 100%!important}

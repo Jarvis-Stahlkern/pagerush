@@ -1,8 +1,8 @@
 /* Pagerush – Farbverlauf-Design (02.11.2026): fließende Aurora in Purple/Blau/Lila/Rosa, Glas-Abschnitte mit Bewegung */
 :root{--p1:#8b5cff;--p2:#3d7bff;--p3:#c04dff;--p4:#ff5fae;--glanz:linear-gradient(100deg,#ff8fd0,#c58bff 35%,#7fa6ff 70%,#8ff0ff)}
 html,body{background:#0b0716}
-#aurora{position:fixed;inset:-6%;width:112%;height:112%;z-index:0;pointer-events:none;filter:blur(38px) saturate(1.25);opacity:.95}
-.korn{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+#aurora{position:fixed;inset:-6%;width:112%;height:112%;z-index:0;pointer-events:none;filter:saturate(1.35) contrast(1.12);opacity:1}
+.korn{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 body>section,body>footer{position:relative;z-index:2}
 .kopf{z-index:50;background:linear-gradient(rgba(14,8,30,.55),rgba(14,8,30,0));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}

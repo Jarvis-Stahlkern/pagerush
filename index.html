@@ -195,15 +195,15 @@ em{font-style:italic}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.held-unter{opacity:1;transform:none}.held h1 i span{transform:none}}
 </style>
 <link rel="stylesheet" href="neu/glas/glas.css">
-<link rel="stylesheet" href="neu/glas/farbe.css">
+<link rel="stylesheet" href="neu/glas/farbe.css?v=2">
 <link rel="stylesheet" href="neu/glas/logo-intro.css?v=2"><link rel="stylesheet" href="neu/glas/glaslogo.css?v=1">
-<link rel="stylesheet" href="neu/glas/v3.css?v=4"><link rel="stylesheet" href="neu/glas/v4.css?v=4">
-<link rel="stylesheet" href="neu/glas/monitor.css?v=7"><link rel="stylesheet" href="neu/glas/kopf.css?v=1"><link rel="stylesheet" href="neu/glas/macbook.css?v=1"><link rel="stylesheet" href="neu/glas/mac.css?v=1"><link rel="stylesheet" href="neu/glas/rolleinflug.css?v=1"><link rel="stylesheet" href="neu/glas/glas2.css?v=3"><link rel="stylesheet" href="neu/glas/schweben.css?v=2"><link rel="stylesheet" href="neu/glas/v5.css?v=2">
+<link rel="stylesheet" href="neu/glas/v3.css?v=4"><link rel="stylesheet" href="neu/glas/v4.css?v=5">
+<link rel="stylesheet" href="neu/glas/monitor.css?v=7"><link rel="stylesheet" href="neu/glas/kopf.css?v=1"><link rel="stylesheet" href="neu/glas/macbook.css?v=1"><link rel="stylesheet" href="neu/glas/mac.css?v=1"><link rel="stylesheet" href="neu/glas/rolleinflug.css?v=1"><link rel="stylesheet" href="neu/glas/glas2.css?v=3"><link rel="stylesheet" href="neu/glas/schweben.css?v=2"><link rel="stylesheet" href="neu/glas/v5.css?v=3"><link rel="stylesheet" href="neu/glas/v6.css?v=1">
 </head>
 <body>
 <canvas id="aurora" aria-hidden="true"></canvas><canvas id="sterne" aria-hidden="true"></canvas><div class="korn" aria-hidden="true"></div>
-<div class="logo-mit" id="logoMit" aria-hidden="true"><div class="logo-schein"></div><div class="logo-glas"><div class="logo-bild"><img src="neu/logo.webp" alt=""><span class="logo-licht"></span></div><i class="kante"></i></div></div>
-<header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
+<div class="logo-mit" id="logoMit" aria-hidden="true"><div class="logo-schein"></div><div class="logo-glas"><div class="logo-bild"><img src="neu/logo.webp?v=3" alt=""><span class="logo-licht"></span></div><i class="kante"></i></div></div>
+<header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp?v=3" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
 
 <section class="glas" id="glas"><div class="glas-b">
  <div class="glas-licht"></div><div class="glas-boden"></div><div class="glas-staub"></div>
@@ -217,9 +217,9 @@ em{font-style:italic}
  <p class="rv bau-unter">Beschreib dein Geschäft und trag deine Kontaktdaten ein. Die KI baut daraus die komplette Seite – mit Kontaktbereich, Anfahrt und Impressum. Die Vorschau ist kostenlos.</p>
  <form class="bau-box rv" id="bauForm"><div class="bau-rand"></div>
   <div class="bau-schritt"><span>1</span>Was für eine Website brauchst du?</div>
-  <textarea id="bauText" rows="3" maxlength="600" placeholder="z. B. Friseursalon in Esslingen, edel und dunkel, mit Online-Termin, Preisliste und Scroll-Effekten"></textarea>
-  <div class="bau-chips"><button type="button">Restaurant in Stuttgart, warm, mit Reservierung</button><button type="button">Malerbetrieb, modern, mit Anfrageformular</button><button type="button">Fitnessstudio, dynamisch, mit Kursplan</button></div>
-  <div class="bau-chips eff"><small style="width:100%;opacity:.7;font-size:12px;letter-spacing:.12em;text-transform:uppercase">Effekt-Vorlagen – antippen zum Hinzufügen</small><button type="button" data-e="mit Kino-Optik: großes Titelfoto, edle Serif-Schrift, weiche Lichtverläufe">Kino-Look</button><button type="button" data-e="mit Smooth-3D-Effekten: Karten kippen zur Maus und beim Scrollen, Tiefe und Glas">Smooth 3D</button><button type="button" data-e="mit Slide-Effekten: Abschnitte schieben sich beim Scrollen weich ein, Slider mit Wischen">Slide-Effekte</button><button type="button" data-e="mit Scroll-Effekten: Parallax, gestaffeltes Einblenden, hochzählende Zahlen">Scroll-Effekte</button><button type="button" data-e="mit echten, zur Branche passenden Fotos in jedem Abschnitt">Echte Fotos</button></div>
+  <textarea id="bauText" rows="3" maxlength="600" placeholder="Name, Branche, Ort – dann Stil und Effekte. Z. B.: Friseursalon Mira in Esslingen, hell und elegant, echte Fotos, Online-Termin, Slide- und Scroll-Effekte"></textarea>
+  <div class="bau-chips prompts"><small style="width:100%;opacity:.7;font-size:12px;letter-spacing:.12em;text-transform:uppercase">Prompt-Beispiele – antippen, anpassen, bauen</small><button type="button" data-p="Zimmerei Brenner in Herrenberg: moderne Premium-Website, dunkel mit warmem Holzlicht, großes echtes Titelfoto vom Dachstuhl, Leistungen als Glas-Karten, die beim Scrollen einfliegen und zur Maus kippen, Referenzen als Wisch-Slider, Anfrageformular. Klare moderne Schrift.">Zimmerei · dunkel & edel</button><button type="button" data-p="Italienisches Restaurant Luce in Stuttgart: Kino-Look mit Vollbild-Foto vom Gericht und weichem Parallax, Speisekarte als Slide-Abschnitte, Tisch-Reservierung, Öffnungszeiten, Anfahrt. Edel, warm, modern.">Restaurant · Kino-Look</button><button type="button" data-p="Friseursalon Mira in Esslingen: hell und elegant mit viel Weißraum, echte Fotos aus dem Salon, Leistungen mit Preisen, Online-Termin-Button, weiche Slide- und Scroll-Effekte, 3D-Karten.">Friseur · hell & elegant</button><button type="button" data-p="Malerbetrieb in Böblingen: frisch und modern, Vorher-Nachher-Slider, hochzählende Zahlen (Projekte, Jahre Erfahrung), Leistungen als 3D-Glas-Karten, Kontaktformular mit Rückruf-Wunsch.">Malerbetrieb · modern</button></div>
+  <div class="bau-chips eff"><small style="width:100%;opacity:.7;font-size:12px;letter-spacing:.12em;text-transform:uppercase">Effekt-Vorlagen – antippen zum Hinzufügen</small><button type="button" data-e="mit Kino-Optik: großes Titelfoto, moderne klare Schrift, weiche Lichtverläufe">Kino-Look</button><button type="button" data-e="mit Smooth-3D-Effekten: Karten kippen zur Maus und beim Scrollen, Tiefe und Glas">Smooth 3D</button><button type="button" data-e="mit Slide-Effekten: Abschnitte schieben sich beim Scrollen weich ein, Slider mit Wischen">Slide-Effekte</button><button type="button" data-e="mit Scroll-Effekten: Parallax, gestaffeltes Einblenden, hochzählende Zahlen">Scroll-Effekte</button><button type="button" data-e="mit echten, zur Branche passenden Fotos in jedem Abschnitt">Echte Fotos</button></div>
   <div class="bau-schritt"><span>2</span>Deine Kontaktdaten <small>– kommen automatisch auf die Seite. Ändern kannst du sie später einfach im Chat.</small></div>
   <div class="bau-felder">
    <label>Firmenname<input id="kdFirma" autocomplete="organization" placeholder="z. B. Salon Mira"></label>
@@ -255,7 +255,7 @@ em{font-style:italic}
   <div class="dom-k glasflaeche rv"><div class="bau-schritt"><span>1</span>Domain aussuchen</div><b>Beim Anbieter kaufen</b><p>Wunschnamen prüfen und kaufen – zum Beispiel bei einem dieser Anbieter:</p>
    <div class="anbieter"><a href="https://www.strato.de/domains/" target="_blank" rel="noopener">Strato</a><a href="https://www.ionos.de/domains/domain-check" target="_blank" rel="noopener">IONOS</a><a href="https://www.checkdomain.de/" target="_blank" rel="noopener">Checkdomain</a></div></div>
   <div class="dom-k glasflaeche rv" style="transition-delay:.15s"><div class="bau-schritt"><span>2</span>Uns Bescheid geben</div><b>Domain eintragen</b><p>Nach dem Kauf trägst du deine Domain in deinem Pagerush-Konto unter „Domains &amp; E-Mail“ ein – oder schreibst sie uns an info@stahlkern.gmbh.</p></div>
-  <div class="dom-k glasflaeche rv" style="transition-delay:.3s"><div class="bau-schritt"><span>3</span>Wir verbinden</div><b>Online mit Schloss</b><p>Du bekommst die zwei Einträge zum Kopieren für deinen Anbieter – oder wir richten es gemeinsam mit dir ein. Danach läuft deine Seite unter deiner Domain, sicher mit https.</p></div>
+  <div class="dom-k glasflaeche rv" style="transition-delay:.3s"><div class="bau-schritt"><span>3</span>Wir verbinden</div><b>Online mit Schloss<span class="schloss" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="rgba(255,255,255,.25)"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></b><p>Du bekommst die zwei Einträge zum Kopieren für deinen Anbieter – oder wir richten es gemeinsam mit dir ein. Danach läuft deine Seite unter deiner Domain, sicher mit https.</p></div>
  </div>
  <div class="dom-check glasflaeche rv" id="domCheck">
   <div class="bau-schritt"><span>✓</span>Ist deine Wunsch-Domain noch frei?</div>
@@ -268,7 +268,7 @@ em{font-style:italic}
 <div class="studio" id="studio" hidden><div class="studio-k"><span>Pagerush Studio</span><button type="button" id="studioZu" aria-label="Schließen">✕</button></div><iframe id="studioF" title="Pagerush Studio"></iframe></div>
 <section class="preis" id="preis"><div class="preis-b">
  <p class="nr">06 — Preis</p>
- <div class="preis-seite l"><h3>Einmal zahlen.<br><em>Für immer deins.</em></h3><p>Kein Abo, keine versteckten Kosten. Du zahlst erst, wenn dir deine Seite gefällt und du sie veröffentlichen willst.</p></div>
+ <div class="preis-seite l"><h3>Einmal zahlen.<br><em>Für immer deins.</em></h3><p>Kein Abo, keine versteckten Kosten. Du zahlst erst, wenn dir deine Seite gefällt und du sie veröffentlichen willst.</p><div class="plakette gr">Kein Abo<small>einmalig</small></div></div>
  <div class="muenze-buehne" aria-label="Einmalig 99 Euro">
   <svg class="muenze-ring" viewBox="0 0 600 600" aria-hidden="true"><defs><path id="mKreis" d="M300,300 m-262,0 a262,262 0 1,1 524,0 a262,262 0 1,1 -524,0"/><linearGradient id="mVerlauf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fd0"/><stop offset=".5" stop-color="#c58bff"/><stop offset="1" stop-color="#7fd8ff"/></linearGradient></defs><text><textPath href="#mKreis" textLength="1640">EINMALIG · KEIN ABO · FÜR IMMER DEINS · VORSCHAU GRATIS · PC &amp; HANDY · </textPath></text></svg>
   <div class="muenze-bahn"><i></i></div>
@@ -302,13 +302,13 @@ $('bauForm').addEventListener('submit', e => { e.preventDefault(); let t = $('ba
  try { sessionStorage.setItem('pagerush_kontakt', JSON.stringify(daten)); } catch (_) {}
  try { if (bilder.length) sessionStorage.setItem('pagerush_bilder', JSON.stringify(bilder)); else sessionStorage.removeItem('pagerush_bilder'); } catch (_) { try { sessionStorage.setItem('pagerush_bilder', JSON.stringify(bilder.slice(0, 2))); } catch (__) {} }
  studio(t); });
-document.querySelectorAll('.bau-chips:not(.eff) button').forEach(b => b.addEventListener('click', () => { $('bauText').value = b.textContent; $('bauText').focus(); }));
+document.querySelectorAll('.bau-chips:not(.eff) button').forEach(b => b.addEventListener('click', () => { $('bauText').value = b.dataset.p || b.textContent; $('bauText').focus(); }));
 document.querySelectorAll('a[href="app.html"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); $('bauen').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => $('bauText').focus(), 700); }));
 })();
 </script>
-<script src="neu/glas/monitor.js?v=10"></script>
-<script src="neu/glas/farbe.js"></script>
+<script src="neu/glas/monitor.js?v=11"></script>
+<script src="neu/glas/farbe.js?v=2"></script>
 <script src="neu/glas/logo-intro.js?v=8"></script><script src="neu/glas/glaslogo.js?v=3"></script><script src="neu/glas/rolleinflug.js?v=1"></script><script src="neu/glas/glas2.js?v=1"></script>
-<script src="neu/glas/v3.js?v=6"></script><script src="neu/glas/schweben.js?v=2"></script><script src="neu/glas/v5.js?v=2"></script>
+<script src="neu/glas/v3.js?v=7"></script><script src="neu/glas/schweben.js?v=2"></script><script src="neu/glas/v5.js?v=3"></script><script src="neu/glas/v6.js?v=1"></script>
 </body>
 </html>

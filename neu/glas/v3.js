@@ -11,11 +11,11 @@ if (cv && !ruhig) {
  let sterne = [], kugeln = [], schnuppen = [], fenster = [], naechste = 1800;
  const zufall = (a, b) => a + Math.random() * (b - a);
  function aufbau() {
-  dpr = 1; w = innerWidth; h = innerHeight;
+  dpr = Math.min(2, devicePixelRatio || 1); w = innerWidth; h = innerHeight;
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0);
   const n = Math.round(Math.min(190, w * h / 8000));
   sterne = Array.from({ length: n }, () => { const z = Math.random(); return { x: Math.random() * w, y: Math.random() * h * 3, z, r: .4 + z * 1.3, p: Math.random() * 6.3, v: zufall(.6, 2.2), f: Math.random() < .18 ? (Math.random() < .5 ? '255,180,230' : '170,200,255') : '255,255,255' }; });
-  fenster = Array.from({ length: w < 760 ? 4 : 7 }, (_, k) => ({ img: k % THUMBS.length, x: (k % 2 ? w * zufall(.84, .93) : w * zufall(-.04, .05)), y: Math.random() * h * 2.4, z: zufall(.35, 1), b: zufall(120, 200), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][k % 4], z2: Math.random() < .5 ? 1 : 0 }));
+  fenster = Array.from({ length: w < 760 ? 6 : 14 }, (_, k) => ({ img: k % THUMBS.length, x: (k % 2 ? w * zufall(.86, .95) : w * zufall(-.05, .04)), y: Math.random() * h * 2.4, z: zufall(.35, 1), b: zufall(110, 180), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][k % 4], z2: Math.random() < .5 ? 1 : 0 }));
   kugeln = Array.from({ length: w < 760 ? 7 : 13 }, () => ({ x: Math.random() * w, y: Math.random() * h, r: zufall(18, 70), vy: zufall(.05, .18), vx: zufall(-.06, .06), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][Math.floor(Math.random() * 4)] }));
  }
  function schnuppe() {
@@ -96,6 +96,9 @@ if (cv && !ruhig) {
  }
  addEventListener('pointermove', e => { if (e.pointerType === 'mouse') treffer(e); }, { passive: true });
  addEventListener('pointerdown', treffer, { passive: true });
+ // iPhone/iPad: auch beim Wischen mit dem Finger über ein Fenster (Safari bricht pointermove beim Scrollen ab)
+ const fing = e => { for (const t of e.touches) treffer({ target: e.target, clientX: t.clientX, clientY: t.clientY }); };
+ addEventListener('touchstart', fing, { passive: true }); addEventListener('touchmove', fing, { passive: true });
  aufbau(); addEventListener('resize', aufbau);
  document.addEventListener('visibilitychange', () => { laeuft = !document.hidden; last = 0; if (laeuft) requestAnimationFrame(bild); });
  requestAnimationFrame(bild);

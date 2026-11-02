@@ -23,15 +23,15 @@
  });
  // Text wird Buchstabe für Buchstabe geschrieben (Platz bleibt reserviert, nichts springt)
  function schreibe(c) {
-  c.schrieb = true; let t0 = 350;
+  c.schrieb = true; let t0 = 250, offen = c.teile.length;
   c.teile.forEach(el => {
-   const txt = el.textContent, a = document.createElement('span'), b = document.createElement('span'); a.className = 'tw-a'; b.className = 'tw-b'; b.textContent = txt;
+   const txt = el.dataset.tw || (el.dataset.tw = el.textContent), a = document.createElement('span'), b = document.createElement('span'); a.className = 'tw-a'; b.className = 'tw-b'; b.textContent = txt;
    el.textContent = ''; el.append(a, b);
-   const cps = el.tagName === 'P' ? 78 : 40, dauer = txt.length / cps * 1000, start = performance.now() + t0; t0 += dauer + 120;
+   const cps = el.tagName === 'P' ? 38 : 16, dauer = txt.length / cps * 1000, start = performance.now() + t0; t0 += dauer + 120;
    (function lauf(now) {
     const n = Math.max(0, Math.min(txt.length, Math.floor((now - start) / 1000 * cps)));
     if (now >= start) { a.classList.add('tippt'); a.textContent = txt.slice(0, n); b.textContent = txt.slice(n); }
-    if (n < txt.length) requestAnimationFrame(lauf); else { a.classList.remove('tippt'); a.textContent = txt; b.remove(); }
+    if (n < txt.length) requestAnimationFrame(lauf); else { a.classList.remove('tippt'); a.textContent = txt; b.remove(); if (--offen === 0) c.fertig = true; }
    })(performance.now());
   });
  }
@@ -45,11 +45,14 @@
    const e = ez(kl(vh * 1.02 - r.top, 0, vh * .62)); c.e = e;
    c.ax += (c.hx - c.ax) * .12; c.ay += (c.hy - c.ay) * .12;
    const s = c.side, w = innerWidth < 860 ? .5 : 1;
-   const ry = (1 - e) * s * 34 * w + s * mitte * -8 * w + c.ax * 9;
-   const rx = (1 - e) * 20 + mitte * -9 + c.ay * -7;
+   // deutlich sichtbares Kippen: beim Reinfliegen stark, danach kippt die Karte dauerhaft mit dem Scroll und wiegt sich leicht
+   const tt = performance.now() / 1000, wieg = Math.sin(tt * 1.1 + s * 1.7) * 3.5;
+   const ry = (1 - e) * s * 48 * w + (s || .6) * mitte * -26 * w + wieg * w + c.ax * 16;
+   const rx = (1 - e) * 32 + mitte * -22 + Math.cos(tt * .9 + s) * 2.5 + c.ay * -13;
    c.el.style.setProperty('--ry', ry.toFixed(2) + 'deg'); c.el.style.setProperty('--rx', rx.toFixed(2) + 'deg');
    c.el.style.setProperty('--tx', ((1 - e) * s * 120 * w).toFixed(1) + 'px'); c.el.style.setProperty('--ty', ((1 - e) * 90 + mitte * -22 * (1 + Math.abs(s) * .5)).toFixed(1) + 'px');
    if (!c.schrieb && e > .45 && c.teile.length) schreibe(c);
+   if (c.schrieb && c.fertig && (r.top > vh * 1.05 || r.bottom < -40)) { c.schrieb = false; c.fertig = false; }
   }
  }
  requestAnimationFrame(bild);

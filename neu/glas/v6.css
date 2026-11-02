@@ -1,0 +1,48 @@
+/* Pagerush 02.11.2026 19:40 (Djengo): alles schärfer, Domain-Bereich und „Kein Abo“ wie in Glas graviert, Domain-Überschrift animiert */
+.korn{display:none!important}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+
+/* Gravur: Schrift ist ins Glas geschnitten – dunkle Oberkante, helle Unterkante, keine Filter (bleibt in Safari scharf) */
+.gr,.dom-k b,.anbieter a,.bau-schritt span{color:rgba(246,242,255,.94)!important;
+ text-shadow:0 -1px 0 rgba(26,6,70,.75),0 1px 0 rgba(255,255,255,.55),0 0 1px rgba(255,255,255,.35)!important}
+
+/* Glas-Plakette: dickes, geschliffenes Glas mit Facette und wandernder Lichtkante */
+.plakette,.anbieter a,.bau-schritt span{position:relative;overflow:hidden;isolation:isolate;
+ background:linear-gradient(160deg,rgba(255,255,255,.34),rgba(255,255,255,.09) 38%,rgba(255,255,255,.05) 62%,rgba(255,255,255,.2))!important;
+ border:1px solid rgba(255,255,255,.5)!important;
+ box-shadow:inset 0 1.5px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(40,10,90,.35),inset 0 0 0 3px rgba(255,255,255,.07),inset 0 -14px 22px -14px rgba(255,180,230,.45),0 14px 34px -14px rgba(16,0,50,.75)!important}
+.plakette::before,.anbieter a::before,.bau-schritt span::before{content:"";position:absolute;inset:-40% auto -40% -60%;width:38%;z-index:-1;pointer-events:none;
+ background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:glint 5.5s cubic-bezier(.5,0,.2,1) infinite}
+.anbieter a:nth-child(2)::before{animation-delay:.6s}.anbieter a:nth-child(3)::before{animation-delay:1.2s}
+.dom-k:nth-child(2) .bau-schritt span::before{animation-delay:.9s}.dom-k:nth-child(3) .bau-schritt span::before{animation-delay:1.8s}
+@keyframes glint{0%,62%{left:-60%}100%{left:130%}}
+
+/* Schritt-Zahlen 1·2·3 und ✓: runde Glaslinsen mit gravierter Ziffer */
+.bau-schritt span{width:46px!important;height:46px!important;font:800 21px/1 var(--serif)!important;transform:translateZ(30px)}
+
+/* Anbieter Strato · IONOS · Checkdomain: Glasplatten mit Gravur */
+.anbieter{gap:12px!important}
+.anbieter a{padding:14px 22px!important;border-radius:16px!important;font:800 16px/1 var(--serif)!important;letter-spacing:.02em!important;transition:transform .35s cubic-bezier(.2,.8,.1,1),box-shadow .35s!important}
+.anbieter a:hover{transform:translateY(-3px) translateZ(20px)!important}
+.anbieter a::after{content:"↗";opacity:.75;font-weight:600}
+
+/* Überschriften der Domain-Karten: graviert, mit Schloss bei „Online mit Schloss“ */
+.dom-k b{font-weight:800!important;letter-spacing:-.02em!important}
+.schloss{display:inline-grid;place-items:center;width:1.05em;height:1.05em;margin-left:.3em;vertical-align:-.12em;border-radius:.28em;
+ background:linear-gradient(160deg,rgba(255,255,255,.4),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(40,10,90,.4)}
+.schloss svg{width:62%;height:62%}
+
+/* „Kein Abo“ als gravierte Glasplakette im Preis */
+.plakette{display:inline-flex;align-items:center;gap:12px;margin-top:22px;padding:14px 22px;border-radius:18px;font:800 clamp(18px,1.5vw,22px)/1 var(--serif);letter-spacing:.01em}
+.plakette small{font:700 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;opacity:.8}
+
+/* „Deine eigene Adresse.“ – Wörter steigen gekippt aus dem Glas, danach zieht ein Lichtstreifen drüber */
+.dom h2 .wd{display:inline-block;opacity:0;transform:perspective(900px) translateY(.55em) rotateX(-75deg);transform-origin:50% 100%;
+ transition:opacity .9s cubic-bezier(.2,.8,.1,1),transform 1.1s cubic-bezier(.2,.8,.1,1);transition-delay:calc(var(--i)*90ms)}
+.dom h2.wd-an .wd{opacity:1;transform:none}
+.dom h2{position:relative}
+.dom h2 .wd-licht{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) no-repeat;
+ background-size:250% 100%;background-position:150% 0;-webkit-mask:linear-gradient(#000,#000);mix-blend-mode:overlay;opacity:0}
+.dom h2.wd-an .wd-licht{animation:wdlicht 1.6s 1.1s cubic-bezier(.5,0,.2,1) forwards}
+@keyframes wdlicht{0%{opacity:1;background-position:150% 0}100%{opacity:1;background-position:-60% 0}}
+@media (prefers-reduced-motion:reduce){.dom h2 .wd{opacity:1;transform:none}.plakette::before,.anbieter a::before,.bau-schritt span::before{animation:none}}

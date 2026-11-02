@@ -16,7 +16,7 @@ const cv = document.getElementById('aurora');
 if (cv && !ruhig) {
  const c = cv.getContext('2d');
  let w = 0, h = 0, sAkt = 0, start = performance.now(), laeuft = true;
- const groesse = () => { w = cv.width = Math.max(80, Math.round(innerWidth / 7)); h = cv.height = Math.max(60, Math.round(innerHeight / 7)); };
+ const groesse = () => { w = cv.width = Math.max(80, Math.round(innerWidth / 3)); h = cv.height = Math.max(60, Math.round(innerHeight / 3)); };
  const B = [ // Grundposition, Bewegung, Größe
   { x: .2, y: .25, ax: .18, ay: .12, s: .55, v: .00011, p: 0 },
   { x: .8, y: .2, ax: .14, ay: .16, s: .5, v: .00009, p: 1.7 },
@@ -32,14 +32,14 @@ if (cv && !ruhig) {
   const A = STIMMUNG[i], Z = STIMMUNG[i + 1], t0 = now - start;
   const g = mix(A.g, Z.g, t);
   c.globalCompositeOperation = 'source-over'; c.fillStyle = `rgb(${g})`; c.fillRect(0, 0, w, h);
-  c.globalCompositeOperation = 'lighter';
+  c.globalCompositeOperation = 'source-over';
   B.forEach((b, k) => {
    const f = mix(A.f[k], Z.f[k], t);
    const x = (b.x + Math.sin(t0 * b.v * 6 + b.p) * b.ax + Math.sin(sAkt * 6.3 + k) * .08) * w;
    const y = (b.y + Math.cos(t0 * b.v * 5 + b.p) * b.ay - (sAkt - .5) * .25 * (k % 2 ? 1 : -1)) * h;
    const r = b.s * Math.max(w, h) * (1 + Math.sin(t0 * .0004 + k) * .12);
    const gr = c.createRadialGradient(x, y, 0, x, y, r);
-   gr.addColorStop(0, `rgba(${f},.62)`); gr.addColorStop(.45, `rgba(${f},.24)`); gr.addColorStop(1, `rgba(${f},0)`);
+   gr.addColorStop(0, `rgba(${f},.95)`); gr.addColorStop(.5, `rgba(${f},.38)`); gr.addColorStop(1, `rgba(${f},0)`);
    c.fillStyle = gr; c.fillRect(0, 0, w, h);
   });
   // leichte Abdunklung oben/unten, damit Schrift lesbar bleibt
