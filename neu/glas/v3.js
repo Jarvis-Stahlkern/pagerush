@@ -15,7 +15,7 @@ if (cv && !ruhig) {
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0);
   const n = Math.round(Math.min(190, w * h / 8000));
   sterne = Array.from({ length: n }, () => { const z = Math.random(); return { x: Math.random() * w, y: Math.random() * h * 3, z, r: .4 + z * 1.3, p: Math.random() * 6.3, v: zufall(.6, 2.2), f: Math.random() < .18 ? (Math.random() < .5 ? '255,180,230' : '170,200,255') : '255,255,255' }; });
-  fenster = Array.from({ length: w < 760 ? 12 : 30 }, (_, k) => ({ img: k % THUMBS.length, x: (k % 2 ? w * zufall(.8, .97) : w * zufall(-.06, .1)), y: Math.random() * h * 2.4, z: zufall(.35, 1), b: zufall(110, 180), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][k % 4], z2: Math.random() < .5 ? 1 : 0 }));
+  fenster = Array.from({ length: w < 760 ? 12 : 30 }, (_, k) => ({ img: k % THUMBS.length, x: (w < 760 ? (k % 2 ? w * zufall(.86, 1) : w * zufall(-.1, .02)) : (k % 2 ? w * zufall(.8, .97) : w * zufall(-.06, .1))), y: Math.random() * h * 2.4, z: zufall(.35, 1), b: w < 760 ? zufall(56, 86) : zufall(110, 180), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][k % 4], z2: Math.random() < .5 ? 1 : 0 }));
   kugeln = Array.from({ length: w < 760 ? 7 : 13 }, () => ({ x: Math.random() * w, y: Math.random() * h, r: zufall(18, 70), vy: zufall(.05, .18), vx: zufall(-.06, .06), p: Math.random() * 6.3, f: ['255,143,208', '197,139,255', '127,166,255', '143,240,255'][Math.floor(Math.random() * 4)] }));
  }
  function schnuppe() {
