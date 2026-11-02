@@ -78,6 +78,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 .frg-ch button{font:13px system-ui;padding:7px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#ddd;cursor:pointer}
 .frg-ch button.on{background:#7c6cff;border-color:#7c6cff;color:#fff}
 .frg-a{display:flex;gap:12px;align-items:center;margin-top:4px}
+.pp-t{width:100%;min-height:46vh;font:13px/1.5 ui-monospace,Menlo,monospace;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.35);color:#eee;resize:vertical}
 .frg-skip{background:none;border:0;color:#9b97b8;text-decoration:underline;cursor:pointer;font:13px system-ui}
 </style></head><body>
 
@@ -222,6 +223,15 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
   clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say("Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
  }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
 function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
+// 02.11. Djengo: die KI schreibt aus wenigen Worten selbst einen professionellen Prompt, den man sieht und ändern kann
+function profiPrompt(p,z){const bg=document.createElement("div");bg.className="frg-bg";const box=document.createElement("div");box.className="frg";bg.appendChild(box);
+ box.innerHTML='<b>✦ Ich schreibe deinen Profi-Prompt …</b><small style="color:#b9b5d6">Dauert ca. 10 Sekunden.</small>';document.body.appendChild(bg);
+ const weiter=x=>{bg.remove();p.txt=x;store();bauen(x,true)};
+ fetch(API+"prompt",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({text:z})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
+  if(!ok||!j.prompt)return weiter(z);
+  box.innerHTML='<b>✦ Dein Profi-Prompt</b><small style="color:#b9b5d6">Die KI hat ihn aus deinen Angaben geschrieben. Du kannst ihn noch ändern.</small><textarea id="pp-t" class="pp-t"></textarea><div class="frg-a"><button type="button" class="btn sm" id="pp-go">So bauen</button><button type="button" class="frg-skip" id="pp-alt">Ohne Profi-Prompt bauen</button></div>';
+  const ta=box.querySelector("#pp-t");ta.value=j.prompt;box.querySelector("#pp-go").onclick=()=>weiter(ta.value.trim()||z);box.querySelector("#pp-alt").onclick=()=>weiter(z)
+ }).catch(()=>weiter(z))}
 // 02.11.: erst 4 kurze Fragen, dann bauen – so wird die Seite passgenau statt geraten
 function fragen(p,t){const bg=document.createElement("div");bg.className="frg-bg";const box=document.createElement("div");box.className="frg";bg.appendChild(box);
  const ch=(n,arr,multi)=>`<div class="frg-ch" data-n="${n}" data-m="${multi?1:0}">`+arr.map(x=>`<button type="button">${x}</button>`).join("")+"</div>";
@@ -238,7 +248,7 @@ function fragen(p,t){const bg=document.createElement("div");bg.className="frg-bg
    const name=v("#fq-name"),ort=v("#fq-ort"),usp=v("#fq-usp"),k=w("kontakt"),st=w("stil");
    z+=(name?"\nName: "+name:"")+(ort?"\nOrt: "+ort:"")+(usp?"\nBesonderheiten: "+usp:"")+(k?"\nKontaktwege (als gut sichtbare Buttons): "+k:"")+(st?"\nStil: "+st:"");
    if(name){p.name=name.slice(0,26);$("#edName").textContent=p.name;renderProj()}}
-  p.txt=z;store();bg.remove();if(z!=t)say(z.slice(t.length).trim().replace(/</g,"&lt;").replace(/\n/g,"<br>"),1);bauen(z,true)};
+  p.txt=z;store();bg.remove();if(z!=t)say(z.slice(t.length).trim().replace(/</g,"&lt;").replace(/\n/g,"<br>"),1);profiPrompt(p,z)};
  box.querySelector("#fq-go").onclick=()=>los(true);box.querySelector("#fq-skip").onclick=()=>los(false);setTimeout(()=>box.querySelector("#fq-name").focus(),50)}
 function attach(url){if(!cur){pend.push(url);say("Foto "+pend.length+" vorgemerkt. Beschreib jetzt deine Website, ich baue es ein.");return}
  if(cur.t=="gen"){cur.imgs=cur.imgs||[];cur.imgs.push(url);store();gSlots();say("Foto "+cur.imgs.length+" hinzugefügt. Sag mir, wo es hin soll, z. B. <b>„Nimm Foto "+cur.imgs.length+" als Titelbild mit 3D-Effekt“</b>.");return}
