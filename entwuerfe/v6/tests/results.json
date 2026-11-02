@@ -1,0 +1,100 @@
+[
+  {
+    "test": "builder-real-local-generation-and-reload",
+    "passed": true,
+    "cloudRequestsBlocked": [],
+    "pageErrors": []
+  },
+  {
+    "engine": "chromium",
+    "mode": "desktop",
+    "passed": true,
+    "scene": {
+      "ready": true,
+      "webgl": true,
+      "reduced": false,
+      "paused": false,
+      "draws": 1,
+      "progress": 0.49975513059701493
+    },
+    "errors": [],
+    "checks": [
+      "image",
+      "webgl",
+      "resize",
+      "no overflow",
+      "idle",
+      "reduced motion",
+      "CTA"
+    ]
+  },
+  {
+    "engine": "chromium",
+    "mode": "mobile",
+    "passed": true,
+    "scene": {
+      "ready": true,
+      "webgl": true,
+      "reduced": false,
+      "paused": false,
+      "draws": 1,
+      "progress": 0.4997492609797297
+    },
+    "errors": [],
+    "checks": [
+      "image",
+      "webgl",
+      "resize",
+      "no overflow",
+      "idle",
+      "reduced motion",
+      "CTA"
+    ]
+  },
+  {
+    "engine": "webkit",
+    "mode": "desktop",
+    "passed": true,
+    "scene": {
+      "ready": true,
+      "webgl": true,
+      "reduced": false,
+      "paused": false,
+      "draws": 1,
+      "progress": 0.5005013992537314
+    },
+    "errors": [],
+    "checks": [
+      "image",
+      "webgl",
+      "resize",
+      "no overflow",
+      "idle",
+      "reduced motion",
+      "CTA"
+    ]
+  },
+  {
+    "engine": "webkit",
+    "mode": "mobile",
+    "passed": true,
+    "scene": {
+      "ready": true,
+      "webgl": true,
+      "reduced": false,
+      "paused": false,
+      "draws": 1,
+      "progress": 0.5005938555743243
+    },
+    "errors": [],
+    "checks": [
+      "image",
+      "webgl",
+      "resize",
+      "no overflow",
+      "idle",
+      "reduced motion",
+      "CTA"
+    ]
+  }
+]

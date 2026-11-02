@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><title>Pagerush – Websites, die man fühlt.</title>
+<meta name="description" content="Pagerush baut deine Website mit KI – mit Film, Bewegung und dem Look einer Agentur. In Minuten. Einmalig 99 €.">
+<link rel="canonical" href="https://pagerush.de/"><meta property="og:title" content="Pagerush – Websites, die man fühlt."><meta property="og:url" content="https://pagerush.de/"><meta property="og:image" content="https://pagerush.de/neu/teilen.jpg">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+@font-face{font-family:"Instrument Serif";src:url(fonts/instrument-serif.ttf) format("truetype");font-display:swap}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(fonts/instrument-serif-italic.ttf) format("truetype");font-display:swap}
+:root{--schwarz:#0b0b0c;--weiss:#f4f2ee;--grau:#8d8b87;--gold:#c8a465;--linie:rgba(244,242,238,.14);
+ --serif:"Instrument Serif",Georgia,serif;--sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--schwarz);color:var(--weiss);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.w{max-width:1280px;margin:0 auto;padding:0 max(24px,env(safe-area-inset-left,0px))}
+.mini{font:500 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--grau);margin:0}
+@media(max-width:700px){.held-text .mini{display:none}}
+.nr{font:400 13px/1 var(--sans);letter-spacing:.2em;color:var(--gold)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+em{font-style:italic}
+.link{display:inline-flex;align-items:center;gap:14px;font:500 13px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--gold);transition:gap .3s}
+.link:hover{gap:22px}
+.knopf{display:inline-flex;align-items:center;gap:12px;font:500 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:18px 30px;background:var(--weiss);color:var(--schwarz);transition:background .3s}
+.knopf:hover{background:var(--gold)}
+/* Kopf */
+.kopf{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);color:#fff;background:linear-gradient(rgba(11,11,12,.88),rgba(11,11,12,.55) 65%,transparent)}
+.kopf .w{display:flex;align-items:center;justify-content:space-between;height:84px}
+.wort{font:400 26px/1 var(--serif);letter-spacing:.02em}
+.kopf nav{display:flex;gap:36px;font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase}
+.kopf nav a{opacity:.8}.kopf nav a:hover{opacity:1}
+@media(max-width:860px){.kopf nav a:not(:last-child){display:none}}
+/* 01 Held: Film im Vollbild */
+.held{position:relative;height:340vh}
+.held-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.held canvas{position:absolute;inset:0;width:100%;height:100%}
+.held-schleier{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,11,12,.75),rgba(11,11,12,0) 50%),linear-gradient(90deg,rgba(11,11,12,.25),transparent 40%)}
+.held-text{position:absolute;left:0;right:0;bottom:11vh;z-index:3}
+@media(max-width:760px){.held-text{bottom:8vh}.held h1{font-size:clamp(56px,16vw,90px)}}
+.held h1{text-shadow:0 2px 34px rgba(0,0,0,.65)}.held h1 i:nth-child(2) span{color:#e6c88f}
+@media(max-width:760px){.held-schleier{background:linear-gradient(0deg,rgba(11,11,12,.94),rgba(11,11,12,.62) 52%,rgba(11,11,12,.12))}.preis .gross{font-size:clamp(110px,34vw,200px)}}
+.held h1{font-size:clamp(64px,10.5vw,190px);line-height:.88;max-width:9ch}
+.held h1 i{display:block;overflow:hidden}.held h1 i span{display:block;transform:translateY(105%);animation:hoch 1.4s cubic-bezier(.2,.8,.1,1) forwards}
+.held h1 i:nth-child(2) span{animation-delay:.15s;font-style:italic;color:var(--gold)}
+@keyframes hoch{to{transform:none}}
+.held-unter{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-top:36px;flex-wrap:wrap;opacity:0;animation:auf 1.2s .7s forwards}
+.held-unter p{max-width:34ch;margin:0;color:#d9d6d0}
+@keyframes auf{to{opacity:1}}
+.held-ende{position:absolute;inset:0;z-index:4;display:grid;place-items:center;text-align:center;opacity:0;pointer-events:none}
+.held-ende h2{font-size:clamp(46px,6.6vw,118px);line-height:.95}
+.held-ende h2 em{color:var(--gold)}
+.lade{position:absolute;left:0;bottom:0;height:1px;background:var(--gold);width:0;z-index:5;transition:opacity .6s}
+
+.start{display:flex;gap:0;margin-top:34px;max-width:720px;background:rgba(11,11,12,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(244,242,238,.35);opacity:0;animation:auf 1.2s .5s forwards}
+.start input{flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--weiss);font:400 17px/1.3 var(--sans);padding:20px 22px}
+.start input::placeholder{color:rgba(244,242,238,.55)}
+.start button{appearance:none;border:0;cursor:pointer;background:var(--weiss);color:var(--schwarz);font:500 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:0 26px;transition:background .3s}
+.start button:hover{background:var(--gold)}
+@media(max-width:760px){.start{flex-direction:column;border:0;background:none;backdrop-filter:none;gap:10px}.start input{border:1px solid rgba(244,242,238,.35);background:rgba(11,11,12,.6);padding:16px 18px;font-size:16px}.start button{padding:16px}}
+/* 00a Flug: Wolken > Gebäude > Büro > Laptop */
+.flug{position:relative;height:780vh}
+.flug-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.flug-b canvas{position:absolute;inset:0;width:100%;height:100%}
+.flug-v{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55))}
+.flug-start{position:absolute;left:0;right:0;bottom:9vh;text-align:center;z-index:3}
+.flug-start p{font:400 clamp(34px,5vw,72px)/1.05 var(--serif);margin:0 0 22px;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.flug-start span{font:500 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.8;animation:puls2 2s infinite}
+@keyframes puls2{50%{opacity:.3}}
+.flug-logo{position:absolute;left:50%;top:44%;z-index:3;text-align:center;opacity:0;width:min(560px,82vw);transform:translate(-50%,-50%) scale(.4);will-change:transform,opacity}
+.flug-logo::before{content:"";position:absolute;inset:-40% -20%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent);z-index:-1}.flug-logo img{width:100%;height:auto;display:block;filter:drop-shadow(0 0 40px rgba(255,190,110,.55)) drop-shadow(0 0 12px rgba(255,255,255,.35))}
+.flug-logo p{margin:18px 0 0;font:500 12px/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#f1e6d2;text-shadow:0 2px 16px #000}
+.flug-lade{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);width:0;transition:opacity .6s;z-index:4}
+
+/* 00 Glas-Displays */
+.gl{position:relative;height:320vh}
+.gl-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#07060b}
+.gl-licht{position:absolute;inset:0;background:radial-gradient(900px 520px at 75% 20%,rgba(200,164,101,.22),transparent 70%),radial-gradient(900px 600px at 15% 85%,rgba(110,120,200,.20),transparent 70%)}
+.gl-kopf{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 12vh);text-align:center;z-index:3;padding:0 24px;will-change:transform,opacity}
+.gl-kopf h1{font-size:clamp(40px,6vw,96px);line-height:.98}.gl-kopf h1 em{color:var(--gold)}
+.gl-kopf p{margin:18px auto 0;max-width:42ch;color:#d9d6d0;font-size:clamp(15px,1.4vw,19px)}
+.gl-szene{position:absolute;inset:0;display:grid;place-items:center;perspective:2200px;z-index:2;pointer-events:none;padding-top:18vh}
+.gl-dev{width:min(980px,86vw);will-change:transform;transform-style:preserve-3d}
+.gl-glas{padding:1.4%;border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 50px 120px -30px rgba(0,0,0,.9),0 0 80px -20px rgba(200,164,101,.35),inset 0 1px 0 rgba(255,255,255,.5)}
+.gl-schirm{aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:#000;position:relative}
+.gl-schirm video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gl-schirm::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.12),transparent 35%);pointer-events:none}
+.gl-refl{height:60px;margin-top:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(200,164,101,.28),transparent 70%);filter:blur(14px)}
+.gl-chip{position:absolute;z-index:4;max-width:270px;padding:16px 18px;border-radius:16px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:14px;line-height:1.45;color:#f4f2ee;box-shadow:0 30px 70px -25px rgba(0,0,0,.8);will-change:transform}
+.gl-chip span{display:block;font:500 10px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.gl-c1{left:max(16px,calc(50% - 640px));top:30%}.gl-c2{right:max(16px,calc(50% - 640px));bottom:16%}
+.gl-hint{position:absolute;left:0;right:0;bottom:3.5vh;text-align:center;z-index:3;font:500 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.7}
+.gl-skip{position:absolute;right:24px;bottom:3vh;z-index:5;display:none}
+@media(max-width:860px){.gl-chip{display:none}.gl-dev{width:94vw}.gl-szene{padding-top:26vh}}
+/* 00 Logo-Film */
+.lh{position:relative;height:280vh}
+.lh-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.lh-b canvas{position:absolute;inset:0;width:100%;height:100%}
+.lh-v{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,0) 34%)}
+.lh-t{position:absolute;left:0;right:0;bottom:7vh;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center}
+.lh-tag{margin:0 0 18px;color:#e9e6df;font:400 17px/1.4 var(--sans);opacity:0;animation:auf 1.2s .4s forwards}
+.lh-t .start{width:100%;margin-top:0}
+.lh-lade{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);width:0;transition:opacity .6s;z-index:4}
+/* 01 Laptop-Szene */
+.lap{position:relative;height:520vh}
+.lap-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#07070a}
+.lap-glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 70% 18%,rgba(200,164,101,.20),transparent 70%),radial-gradient(800px 600px at 18% 90%,rgba(120,140,190,.16),transparent 70%)}
+.lap-text{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:3}
+.lap-text h1{font-size:clamp(60px,10vw,168px);line-height:.9;max-width:11ch}
+.lap-text h1 i{display:block;overflow:hidden}.lap-text h1 i span{display:block;transform:translateY(105%);animation:hoch 1.4s cubic-bezier(.2,.8,.1,1) forwards}
+.lap-text h1 i:nth-child(2) span{animation-delay:.15s;font-style:italic;color:#e6c88f}
+.lap-szene{position:absolute;inset:0;display:grid;place-items:center;perspective:2600px;z-index:2;pointer-events:none}
+.rechner{width:min(1120px,90vw);will-change:transform;transform:translateY(60vh) scale(.62);pointer-events:auto}
+.deckel{aspect-ratio:16/10;padding:1.1%;background:linear-gradient(160deg,#3a3a3f,#18181b);border:1px solid #5b5b61;border-radius:18px 18px 6px 6px;transform-origin:50% 100%;transform:rotateX(-88deg);box-shadow:0 60px 140px -30px #000,0 0 0 1px #000;position:relative}
+.schirm{position:relative;width:100%;height:100%;overflow:hidden;border-radius:8px;background:#000;cursor:pointer}
+.schirm img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none}
+.schirm::after{content:"";position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.10),transparent 38%);pointer-events:none}
+.tippen{position:absolute;inset:0;width:100%;height:100%;background:transparent;border:0;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4%}
+.tippen span{background:rgba(11,11,12,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(244,242,238,.4);color:#fff;font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:14px 22px;border-radius:99px;opacity:0;transition:opacity .5s;animation:puls 2.2s infinite}
+.tippen.da span{opacity:1}
+@keyframes puls{50%{box-shadow:0 0 0 10px rgba(200,164,101,.16)}}
+.sockel{height:clamp(10px,1.6vw,18px);margin:0 -5%;background:linear-gradient(#e0e0e4,#8a8a90);border-radius:0 0 22px 22px;box-shadow:0 30px 60px -20px #000;position:relative}
+.sockel i{display:block;width:16%;height:50%;margin:0 auto;background:#b4b4ba;border-radius:0 0 12px 12px}
+.badge{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 96px);text-align:center;margin:0;font:500 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#d9d6d0;opacity:0}
+.voll{position:fixed;inset:0;z-index:100;background:#000;display:flex;flex-direction:column}
+.voll[hidden]{display:none}
+.voll-k{display:flex;align-items:center;gap:12px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:#0b0b0c;border-bottom:1px solid var(--linie)}
+.voll-t{display:flex;gap:6px;margin-right:auto}.voll-t button{background:transparent;border:1px solid var(--linie);color:var(--weiss);padding:10px 16px;font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}.voll-t button.on{background:var(--weiss);color:var(--schwarz)}
+#zu{background:transparent;border:1px solid var(--linie);color:#fff;width:42px;height:42px;font-size:18px;cursor:pointer}
+.voll iframe{flex:1;border:0;width:100%;background:#000}
+@media(max-width:760px){.rechner{width:94vw}.voll-k .knopf{display:none}.lap-text h1{font-size:clamp(54px,16vw,90px)}}
+/* 02 Satz */
+.satz{padding:26vh 0}
+.satz p{font:400 clamp(34px,4.8vw,78px)/1.12 var(--serif);margin:0;max-width:22ch}
+.satz .wo{opacity:.15;transition:opacity .35s}.satz .wo.an{opacity:1}
+.satz .wo.g{color:var(--gold);font-style:italic}
+/* 03 Kamerafahrt Gourmet */
+.fahrt{position:relative;height:420vh}
+.fahrt-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.fahrt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;will-change:transform,opacity}
+.fahrt-b::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent 50%)}
+.fahrt-t{position:absolute;z-index:3;left:0;right:0;bottom:10vh}
+.fahrt-t .zeilen{position:relative;height:clamp(120px,15vw,240px)}
+.fahrt-t h2{position:absolute;left:0;bottom:0;font-size:clamp(46px,7vw,124px);line-height:.92;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.1,1)}
+.fahrt-t h2.an{opacity:1;transform:none}.fahrt-t h2 em{color:var(--gold)}
+.fahrt-t .kopfzeile{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--linie)}
+/* 04 Vorlagen seitlich */
+.vor{position:relative;height:300vh}
+.vor-b{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.vor-kopf{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:50px;flex-wrap:wrap}
+.vor-kopf h2{font-size:clamp(50px,6.6vw,112px);line-height:.92}.vor-kopf h2 em{color:var(--gold)}
+.band{display:flex;gap:28px;padding-left:max(24px,calc((100vw - 1280px)/2 + 24px));will-change:transform}
+.karte{flex:none;width:min(440px,74vw);display:block}
+.karte .bild{position:relative;aspect-ratio:4/5;overflow:hidden;background:#151515}
+.karte img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.4s cubic-bezier(.2,.8,.1,1)}
+.karte:hover img{transform:scale(1)}
+.karte .info{display:flex;justify-content:space-between;align-items:baseline;padding:20px 0 0;border-top:1px solid var(--linie);margin-top:20px}
+.karte b{font:400 34px/1 var(--serif)}.karte span{color:var(--grau);font-size:14px}
+.karte.bald{opacity:.45;pointer-events:none}
+/* 05 Drei Schritte */
+.drei{padding:24vh 0 18vh}
+.drei h2{font-size:clamp(50px,6.6vw,112px);line-height:.92;margin:26px 0 90px;max-width:12ch}.drei h2 em{color:var(--gold)}
+.spalten{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linie)}
+.sp{padding:36px 36px 0 0}
+.sp .zahl{font:400 clamp(70px,8vw,140px)/1 var(--serif);color:var(--gold)}
+.sp h3{font-size:34px;margin:18px 0 12px}.sp p{color:var(--grau);margin:0;max-width:30ch}
+@media(max-width:860px){.spalten{grid-template-columns:1fr}.sp{padding:34px 0;border-bottom:1px solid var(--linie)}}
+/* 05b Bauen direkt auf der Seite */
+.bau{position:relative;z-index:5;margin-top:-30vh;padding:26vh 0 16vh;background:linear-gradient(to bottom,rgba(11,11,12,0),#0b0b0c 22vh)!important;}
+.bau h2{font-size:clamp(46px,6.4vw,110px);line-height:.92;text-align:center}.bau h2 em{color:var(--gold)}
+.bau-unter{text-align:center;color:#d9d6d0;max-width:46ch;margin:26px auto 46px;font-size:18px}
+.bau-box{max-width:960px;margin:0 auto;background:rgba(244,242,238,.04);border:1px solid rgba(244,242,238,.22);border-radius:22px;padding:18px;box-shadow:0 40px 120px -40px rgba(200,164,101,.35)}
+.bau-box textarea{width:100%;background:transparent;border:0;outline:none;resize:none;color:var(--weiss);font:400 clamp(18px,2vw,24px)/1.45 var(--sans);padding:10px}
+.bau-box textarea::placeholder{color:rgba(244,242,238,.45)}
+.bau-leiste{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px}
+.bau-chips{display:flex;gap:8px;flex-wrap:wrap}.bau-chips button{background:rgba(244,242,238,.06);border:1px solid var(--linie);color:#d9d6d0;border-radius:99px;padding:8px 14px;font:400 13px/1.2 var(--sans);cursor:pointer}
+.bau-chips button:hover{border-color:var(--gold);color:#fff}
+.bau-box .knopf{border:0;cursor:pointer;border-radius:12px}
+.studio{position:fixed;inset:0;z-index:120;background:#0a0912;display:flex;flex-direction:column}.studio[hidden]{display:none}
+.studio-k{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:1px solid rgba(255,255,255,.08);font:500 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#d9d6d0}
+.studio-k button{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;width:40px;height:40px;font-size:17px;cursor:pointer}
+.studio iframe{flex:1;width:100%;border:0}
+/* 06 Preis */
+.preis{min-height:100vh;display:grid;place-items:center;text-align:center;padding:16vh 24px;border-top:1px solid var(--linie)}
+.preis .gross{font:400 clamp(150px,26vw,420px)/.8 var(--serif);letter-spacing:-.04em}
+.preis .gross em{color:var(--gold);font-size:.4em;vertical-align:top;margin-left:.1em}
+.preis p{color:#d9d6d0;max-width:40ch;margin:34px auto 44px;font-size:19px}
+.preis ul{list-style:none;padding:0;margin:46px 0 0;display:flex;gap:34px;justify-content:center;flex-wrap:wrap;color:var(--grau);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.fuss{padding:46px 0 calc(40px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--linie);color:var(--grau);font-size:13px}
+.fuss .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.fuss a{margin-left:22px}
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1.2s cubic-bezier(.2,.8,.1,1),transform 1.2s cubic-bezier(.2,.8,.1,1)}.rv.an{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.held-unter{opacity:1;transform:none}.held h1 i span{transform:none}}
+</style>
+<link rel="stylesheet" href="neu/glas/glas.css">
+<link rel="stylesheet" href="neu/glas/farbe.css">
+<link rel="stylesheet" href="neu/glas/logo-intro.css"><link rel="stylesheet" href="neu/glas/glaslogo.css?v=1">
+<link rel="stylesheet" href="neu/glas/v3.css?v=4"><link rel="stylesheet" href="neu/glas/v4.css?v=4">
+<link rel="stylesheet" href="neu/glas/monitor.css?v=5"><link rel="stylesheet" href="neu/glas/kopf.css?v=1"><link rel="stylesheet" href="neu/glas/macbook.css?v=1"><link rel="stylesheet" href="neu/glas/mac.css?v=1">
+</head>
+<body>
+<canvas id="aurora" aria-hidden="true"></canvas><canvas id="sterne" aria-hidden="true"></canvas><div class="korn" aria-hidden="true"></div>
+<div class="logo-mit" id="logoMit" aria-hidden="true"><div class="logo-schein"></div><div class="logo-glas"><div class="logo-bild"><img src="neu/logo.webp" alt=""><span class="logo-licht"></span></div><i class="kante"></i></div></div>
+<header class="kopf"><div class="w"><a class="wort" href="#"><img src="neu/logo.webp" alt="Pagerush" style="height:30px;width:auto;display:block"></a><nav><a href="#ablauf">Ablauf</a><a href="#preis">Preis</a><a href="app.html">Website bauen</a><a href="app.html" style="border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px">Anmelden</a></nav></div></header>
+
+<section class="glas" id="glas"><div class="glas-b">
+ <div class="glas-licht"></div><div class="glas-boden"></div><div class="glas-staub"></div>
+ <div class="glas-kopf"><h1>Websites aus einer <em>anderen Liga.</em></h1><p>Ein Satz von dir – Pagerush baut die komplette Seite. Scroll und sieh zu.</p></div>
+ <div class="glas-buehne"><div class="glas-ring"></div></div>
+ <div class="glas-unten"><div class="glas-zeile"></div><div class="glas-punkte"></div><a class="knopf glas-knopf" href="#bauen">Jetzt Website bauen</a><span class="glas-hinweis">Scrollen</span></div>
+</div></section>
+<section class="bau" id="bauen"><div class="w">
+ <p class="nr rv">03 — Selbst bauen</p>
+ <h2 class="rv">Bau deine Website.<br><em>Hier. Jetzt. Mit KI.</em></h2>
+ <p class="rv bau-unter">Beschreib dein Geschäft und trag deine Kontaktdaten ein. Die KI baut daraus die komplette Seite – mit Kontaktbereich, Anfahrt und Impressum. Die Vorschau ist kostenlos.</p>
+ <form class="bau-box rv" id="bauForm"><div class="bau-rand"></div>
+  <div class="bau-schritt"><span>1</span>Was für eine Website brauchst du?</div>
+  <textarea id="bauText" rows="3" maxlength="600" placeholder="z. B. Friseursalon in Esslingen, edel und dunkel, mit Online-Termin, Preisliste und Scroll-Effekten"></textarea>
+  <div class="bau-chips"><button type="button">Restaurant in Stuttgart, warm, mit Reservierung</button><button type="button">Malerbetrieb, modern, mit Anfrageformular</button><button type="button">Fitnessstudio, dynamisch, mit Kursplan</button></div>
+  <div class="bau-schritt"><span>2</span>Deine Kontaktdaten <small>– kommen automatisch auf die Seite. Ändern kannst du sie später einfach im Chat.</small></div>
+  <div class="bau-felder">
+   <label>Firmenname<input id="kdFirma" autocomplete="organization" placeholder="z. B. Salon Mira"></label>
+   <label>Inhaber / Ansprechpartner<input id="kdName" autocomplete="name" placeholder="Vor- und Nachname"></label>
+   <label>Telefon<input id="kdTel" type="tel" autocomplete="tel" placeholder="z. B. 0711 123456"></label>
+   <label class="breit">Straße und Hausnummer<input id="kdStr" autocomplete="street-address" placeholder="z. B. Hauptstraße 12"></label>
+   <label>PLZ und Ort<input id="kdOrt" autocomplete="postal-code" placeholder="z. B. 73728 Esslingen"></label>
+   <label class="breit">E-Mail<input id="kdMail" type="email" autocomplete="email" placeholder="z. B. info@salon-mira.de"></label>
+   <label><span>Öffnungszeiten <small class="opt">(optional)</small></span><input id="kdZeit" placeholder="z. B. Di–Sa 9–18 Uhr"></label>
+   <label class="breit"><span>Wunsch-Domain <small class="opt">(optional – noch keine? siehe unten)</small></span><input id="kdDom" autocomplete="url" placeholder="z. B. salon-mira.de"></label>
+   <label><span>USt-IdNr. <small class="opt">(falls vorhanden)</small></span><input id="kdUst" placeholder="z. B. DE123456789"></label>
+  </div>
+  <div class="bau-schritt"><span>3</span>Logo &amp; Fotos <small>– optional, bis zu 6 Bilder. Das erste wird dein Logo.</small></div>
+  <label class="bau-upload" id="bauUpload"><input type="file" id="kdBilder" accept="image/*" multiple><b>Bilder hierher ziehen oder antippen</b><i>JPG, PNG, WebP · werden automatisch verkleinert</i><div class="bau-thumbs" id="bauThumbs"></div></label>
+  <div class="bau-leiste"><p>Vorschau gratis · Einmalig 99 € erst zum Veröffentlichen · Kein Abo<small>Mit dem Klick werden deine Angaben zum Erstellen der Seite verarbeitet – siehe <a href="datenschutz.html" target="_blank">Datenschutz</a>.</small></p><button type="submit" class="knopf">Mit KI bauen →</button></div>
+ </form>
+</div></section>
+
+<section class="drei w" id="ablauf">
+ <p class="nr rv">04 — Ablauf</p><h2 class="rv">Drei Schritte.<br><em>Kein Aufwand.</em></h2>
+ <div class="spalten">
+  <div class="sp glasflaeche rv" style="--zd:.15s"><div class="zahl">I</div><h3>Beschreiben</h3><p>Ein Satz und deine Kontaktdaten genügen – oder du wählst eine Vorlage. Fotos und Logo lädst du einfach hoch.</p><span class="zeit">ca. 1 Minute</span></div>
+  <div class="sp glasflaeche rv" style="transition-delay:.15s;--zd:.35s"><div class="zahl">II</div><h3>Anpassen</h3><p>Texte, Farben, Fotos ändern – einfach per Chat. Vorschau sofort, am PC und am Handy.</p><span class="zeit">so oft du willst</span></div>
+  <div class="sp glasflaeche rv" style="transition-delay:.3s;--zd:.55s"><div class="zahl">III</div><h3>Veröffentlichen</h3><p>Einmal 99 € zahlen, Domain verbinden – fertig. Deine Seite gehört dir.</p><span class="zeit">sofort online</span></div>
+ </div>
+</section>
+
+<section class="dom" id="domain">
+ <p class="nr rv">05 — Deine Domain</p>
+ <h2 class="rv l">Deine eigene Adresse.<br><em>Unter deinem Namen.</em></h2>
+ <p class="rv l dom-unter">Damit Kunden dich unter deinem Namen finden, brauchst du eine Domain – zum Beispiel deinsalon.de. Die kaufst du einmal bei einem Anbieter deiner Wahl, meist für wenige Euro im Jahr. Den Rest erledigen wir.</p>
+ <div class="dom-raster">
+  <div class="dom-k glasflaeche rv"><div class="bau-schritt"><span>1</span>Domain aussuchen</div><b>Beim Anbieter kaufen</b><p>Wunschnamen prüfen und kaufen – zum Beispiel bei einem dieser Anbieter:</p>
+   <div class="anbieter"><a href="https://www.strato.de/domains/" target="_blank" rel="noopener">Strato</a><a href="https://www.ionos.de/domains/domain-check" target="_blank" rel="noopener">IONOS</a><a href="https://www.checkdomain.de/" target="_blank" rel="noopener">Checkdomain</a></div></div>
+  <div class="dom-k glasflaeche rv" style="transition-delay:.15s"><div class="bau-schritt"><span>2</span>Uns Bescheid geben</div><b>Domain eintragen</b><p>Nach dem Kauf trägst du deine Domain in deinem Pagerush-Konto unter „Domains &amp; E-Mail“ ein – oder schreibst sie uns an info@stahlkern.gmbh.</p></div>
+  <div class="dom-k glasflaeche rv" style="transition-delay:.3s"><div class="bau-schritt"><span>3</span>Wir verbinden</div><b>Online mit Schloss</b><p>Du bekommst die zwei Einträge zum Kopieren für deinen Anbieter – oder wir richten es gemeinsam mit dir ein. Danach läuft deine Seite unter deiner Domain, sicher mit https.</p></div>
+ </div>
+ <div class="dom-check glasflaeche rv" id="domCheck">
+  <div class="bau-schritt"><span>✓</span>Ist deine Wunsch-Domain noch frei?</div>
+  <form class="dc-zeile" id="dcForm" autocomplete="off"><label class="dc-feld"><i>www.</i><input id="dcName" placeholder="deinname" spellcheck="false" autocapitalize="off" aria-label="Wunsch-Domain"><select id="dcEnd" aria-label="Endung"><option>.de</option><option>.com</option><option>.eu</option><option>.online</option><option>.shop</option><option>.info</option><option>.net</option></select></label><button class="knopf" type="submit">Jetzt prüfen</button></form>
+  <p class="dc-hinweis">Kostenloser Schnell-Check. Ist dein Name vergeben, zeigen wir dir freie Alternativen – kaufen kannst du direkt bei Strato oder IONOS.</p>
+  <div class="dc-erg" id="dcErg" aria-live="polite"></div>
+ </div>
+</section>
+
+<div class="studio" id="studio" hidden><div class="studio-k"><span>Pagerush Studio</span><button type="button" id="studioZu" aria-label="Schließen">✕</button></div><iframe id="studioF" title="Pagerush Studio"></iframe></div>
+<section class="preis" id="preis"><div class="preis-b">
+ <p class="nr">06 — Preis</p>
+ <div class="preis-seite l"><h3>Einmal zahlen.<br><em>Für immer deins.</em></h3><p>Kein Abo, keine versteckten Kosten. Du zahlst erst, wenn dir deine Seite gefällt und du sie veröffentlichen willst.</p></div>
+ <div class="muenze-buehne" aria-label="Einmalig 99 Euro">
+  <svg class="muenze-ring" viewBox="0 0 600 600" aria-hidden="true"><defs><path id="mKreis" d="M300,300 m-262,0 a262,262 0 1,1 524,0 a262,262 0 1,1 -524,0"/><linearGradient id="mVerlauf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fd0"/><stop offset=".5" stop-color="#c58bff"/><stop offset="1" stop-color="#7fd8ff"/></linearGradient></defs><text><textPath href="#mKreis" textLength="1640">EINMALIG · KEIN ABO · FÜR IMMER DEINS · VORSCHAU GRATIS · PC &amp; HANDY · </textPath></text></svg>
+  <div class="muenze-bahn"><i></i></div>
+  <div class="muenze" id="muenze">
+   <div class="m-rand"></div>
+   <div class="m-seite m-vorn"><div class="preis-glanz"></div><div class="gravur">99<em>€</em><span class="licht" aria-hidden="true">99<em>€</em></span></div><div class="preis-unter">einmalig</div></div>
+   <div class="m-seite m-hinten"><img src="logo.svg" alt=""><b>Kein Abo.</b><span>für immer deins</span></div>
+  </div>
+  <div class="muenze-schatten"></div>
+ </div>
+ <div class="preis-seite r"><ul><li>Vorschau kostenlos</li><li>In Minuten fertig</li><li>PC &amp; Handy</li><li>Eigene Domain verbinden</li><li>Kein Abo</li></ul></div>
+ <div class="preis-knopf"><a class="knopf" href="app.html">Jetzt kostenlos testen</a></div>
+</div></section>
+
+<footer class="fuss"><div class="w"><span>Pagerush · ein Angebot der STAHLKERN GmbH, Esslingen am Neckar</span><span><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a></span></div></footer>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id), kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an'); io.unobserve(e.target); } }), { threshold: .2 });
+document.querySelectorAll('.rv').forEach(x => io.observe(x));
+function studio(t) { $('studioF').src = 'app.html' + (t ? '?w=' + encodeURIComponent(t) : ''); $('studio').hidden = false; document.body.style.overflow = 'hidden'; }
+$('studioZu').addEventListener('click', () => { $('studio').hidden = true; $('studioF').src = 'about:blank'; document.body.style.overflow = ''; });
+$('bauForm').addEventListener('submit', e => { e.preventDefault(); let t = $('bauText').value.trim(); if (!t) { $('bauText').focus(); return; }
+ const kd = { firma: 'Name', name: 'Inhaber/Ansprechpartner', str: 'Adresse', ort: 'PLZ/Ort', tel: 'Telefon', mail: 'E-Mail', zeit: 'Öffnungszeiten', dom: 'Wunsch-Domain', ust: 'USt-IdNr. (Impressum)' }, daten = {};
+ Object.keys(kd).forEach(k => { const v = $('kd' + k[0].toUpperCase() + k.slice(1)).value.trim(); if (v) { daten[k] = v; t += '\n' + kd[k] + ': ' + v; } });
+ const bilder = window.__bauBilder || [];
+ if (bilder.length) t += '\nEigene Bilder: ' + bilder.length + ' hochgeladen (Bild 1 = Logo, bitte im Kopf der Seite verwenden)';
+ try { sessionStorage.setItem('pagerush_kontakt', JSON.stringify(daten)); } catch (_) {}
+ try { if (bilder.length) sessionStorage.setItem('pagerush_bilder', JSON.stringify(bilder)); else sessionStorage.removeItem('pagerush_bilder'); } catch (_) { try { sessionStorage.setItem('pagerush_bilder', JSON.stringify(bilder.slice(0, 2))); } catch (__) {} }
+ studio(t); });
+document.querySelectorAll('.bau-chips button').forEach(b => b.addEventListener('click', () => { $('bauText').value = b.textContent; $('bauText').focus(); }));
+document.querySelectorAll('a[href="app.html"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); $('bauen').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => $('bauText').focus(), 700); }));
+})();
+</script>
+<script src="neu/glas/monitor.js?v=5"></script>
+<script src="neu/glas/farbe.js"></script>
+<script src="neu/glas/logo-intro.js?v=5"></script><script src="neu/glas/glaslogo.js?v=3"></script>
+<script src="neu/glas/v3.js?v=5"></script>
+</body>
+</html>

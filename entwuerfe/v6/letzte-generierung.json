@@ -1,0 +1,14 @@
+{
+  "provider": "ollama",
+  "model": "qwen3:14b",
+  "briefing": "Entwirf eine moderne Premium-Website für das fiktive Kosmetikstudio MIRA. Deutsche Texte, klare großzügige Typografie, gedeckte warme Naturfarben, hochwertige vorhandene Bilder und eine separate technische 3D-Produktstudie mit scrollgesteuerter Kamerafahrt. Keine erfundenen Kontaktdaten, Preise, Bewertungen oder Referenzen.",
+  "result": {
+    "firma": "MIRA",
+    "titel": "Moderne Kosmetik für ein strahlendes Erscheinungsbild",
+    "untertitel": "Erleben Sie die Kraft von Natur und Wissenschaft in einer einzigartigen Pflegeerfahrung",
+    "ueber": "Bei MIRA glauben wir an die Macht der Natur und die Präzision der Wissenschaft. Unsere Produkte sind sorgfältig formuliert, um Ihre Haut zu verwöhnen und zu schützen. Jede Pflege ist ein Schritt auf dem Weg zu Ihrem strahlendsten Selbst.",
+    "cta": "Zum Kontakt",
+    "farbe": "#D4AF37"
+  },
+  "paid": false
+}

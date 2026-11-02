@@ -31,12 +31,12 @@ const M = S.map(([n, t, u, prompt], i) => {
    <div class="sz-bar"><i></i><i></i><i></i><span class="sz-url"><b>🔒</b><em>${u}</em></span></div>
    <div class="sz-inhalt">
     <div class="sz-home">
-     <div class="h-nav"><img src="neu/logo.webp?v=7" alt=""><span>Ablauf</span><span>Preis</span><span class="h-an">Anmelden</span></div>
-     <div class="h-mitte"><img class="h-logo" src="neu/logo.webp?v=7" alt="Pagerush"><h4>Websites aus einer <em>anderen Liga.</em></h4><p>Ein Satz von dir – Pagerush baut die komplette Seite.</p><span class="h-knopf">Website bauen →</span></div>
+     <div class="h-nav"><img src="neu/logo.webp?v=8" alt=""><span>Ablauf</span><span>Preis</span><span class="h-an">Anmelden</span></div>
+     <div class="h-mitte"><img class="h-logo" src="neu/logo.webp?v=8" alt="Pagerush"><h4>Websites aus einer <em>anderen Liga.</em></h4><p>Ein Satz von dir – Pagerush baut die komplette Seite.</p><span class="h-knopf">Website bauen →</span></div>
     </div>
     <div class="sz-chat">
      <div class="c-links">
-      <div class="c-kopf"><img src="neu/logo.webp?v=7" alt=""><span>KI-Studio</span></div>
+      <div class="c-kopf"><img src="neu/logo.webp?v=8" alt=""><span>KI-Studio</span></div>
       <div class="c-verlauf">
        <div class="c-msg c-ki c-hallo">Hi! Beschreib mir dein Geschäft in einem Satz – ich baue dir die komplette Website.</div>
        <div class="c-msg c-du">${prompt}</div>
@@ -45,7 +45,7 @@ const M = S.map(([n, t, u, prompt], i) => {
       </div>
       <div class="c-eingabe"><span class="c-text"></span><i class="c-strich"></i><span class="c-senden">↑</span></div>
      </div>
-     <div class="c-vorschau"><div class="c-leer"><img src="neu/logo.webp?v=7" alt=""><span>Hier entsteht deine Website</span></div><div class="c-bild"><img src="neu/glas/seite-${n}.jpg" alt="" loading="eager" decoding="async"></div></div>
+     <div class="c-vorschau"><div class="c-leer"><img src="neu/logo.webp?v=8" alt=""><span>Hier entsteht deine Website</span></div><div class="c-bild"><img src="neu/glas/seite-${n}.jpg" alt="" loading="eager" decoding="async"></div></div>
     </div>
     <div class="sz-seite">
      <img class="sz-lang" src="neu/glas/seite-${n}.jpg" alt="Beispiel-Website ${t}" loading="eager" decoding="async">
