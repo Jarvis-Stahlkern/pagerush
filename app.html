@@ -83,7 +83,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 
 <div class="app" id="app">
  <aside class="side">
-  <div class="logo"><img src="neu/logo.webp?v=9" alt="Pagerush" style="height:34px;width:auto"></div>
+  <div class="logo"><img src="neu/logo-quer.webp?v=1" alt="Pagerush" style="height:34px;width:auto"></div>
   <button class="nav on" data-v="dash"><span>⌂</span>Dashboard</button>
   <button class="nav" data-v="neu"><span>＋</span>Neue Website</button>
   <button class="nav" data-v="meine"><span>▤</span>Meine Websites</button>
@@ -351,6 +351,9 @@ const st=document.createElement("style");st.textContent=".pbsp{display:flex;flex
 const leiste=(feld,vor)=>{const f=document.getElementById(feld);if(!f)return;const d=document.createElement("div");d.className="pbsp";d.innerHTML="<small>Prompt-Beispiele</small>";P.forEach(([l,p])=>{const b=document.createElement("button");b.type="button";b.textContent=l;b.onclick=()=>{f.value=p;f.focus()};d.append(b)});vor?f.closest(".send").before(d):f.after(d)};
 ["dashW","nText","kText"].forEach(id=>leiste(id));
 const C=[["Mehr Kino","Mach die Seite cineastischer: Vollbild-Titelfoto, weicher Parallax, Überschriften blenden Wort für Wort ein."],["3D-Karten","Leistungen als Glas-Karten, die beim Scrollen von der Seite einfliegen und zur Maus kippen."],["Slider","Galerie als Slider zum Wischen, Bilder gleiten weich ein."],["Echte Fotos","Ersetze alle Platzhalter durch echte, zur Branche passende Fotos."],["Moderner","Moderner und klarer: neue Grotesk-Schrift, mehr Weißraum, nichts Verspieltes oder Retro."]];
-const cin=document.getElementById("cin");if(cin){const d=document.createElement("div");d.className="pbsp";C.forEach(([l,p])=>{const b=document.createElement("button");b.type="button";b.textContent=l;b.onclick=()=>{cin.value=p;cin.focus()};d.append(b)});cin.closest(".send")?cin.closest(".send").before(d):cin.before(d)}
+const cin=document.getElementById("cin");if(cin){const d=document.createElement("div");d.className="pbsp";C.forEach(([l,p])=>{const b=document.createElement("button");b.type="button";b.textContent=l;b.onclick=()=>{cin.value=p;cin.focus()};d.append(b)});cin.closest(".send")?cin.closest(".send").before(d):cin.before(d);
+/* 02.11. 20:25: Prompt-Beispiele auch direkt im KI-Chat (Djengo) */
+const pb=document.createElement("div");pb.className="pbsp pbchat";pb.innerHTML="<small>Prompt-Beispiele – antippen, anpassen, senden</small>";P.forEach(([l,p])=>{const b=document.createElement("button");b.type="button";b.textContent=l;b.title=p;b.onclick=()=>{cin.value=p;cin.focus();cin.dispatchEvent(new Event("input"))};pb.append(b)});d.before(pb);
+st.textContent+=".pbchat{padding:0 12px}.pbchat button{font-size:11.5px}"}
 })();</script>
 </body></html>

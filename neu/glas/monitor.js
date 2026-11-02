@@ -11,12 +11,11 @@ const S = [
  ['kraemer', 'Bau', 'kraemer-bau.de', 'Bauunternehmen, modern, mit Referenzen und Anfrageformular'],
  ['mira', 'Friseur', 'mira-hairstudio.de', 'Friseursalon, edel und hell, mit Preisliste und Online-Termin'],
  ['physio', 'Praxis', 'physio-herrenberg.de', 'Physiotherapie-Praxis in Herrenberg, ruhig, mit Terminbuchung'],
- ['sonnenkorn', 'Bäckerei', 'sonnenkorn-baeckerei.de', 'Bäckerei, handwerklich und warm, mit Öffnungszeiten und Sortiment'],
  ['nordlicht', 'Software', 'nordlicht.app', 'Software-Startup, dunkel und modern, mit Demo-Button']
 ];
 const ZEILEN = [
  'Ein Satz – <em>und die Seite entsteht.</em>', 'Echte Fotos, <em>echte Effekte.</em>', 'Jede Branche, <em>ein eigener Stil.</em>',
- 'Am PC <em>und am Handy.</em>', 'In Minuten, <em>nicht Wochen.</em>', 'Von Bäckerei <em>bis Software.</em>', 'Fotos, Texte, <em>Effekte.</em>', 'Einmalig <em>99 €.</em> Jetzt bist <em>du dran.</em>'
+ 'Am PC <em>und am Handy.</em>', 'In Minuten, <em>nicht Wochen.</em>', 'Vom Handwerk <em>bis Software.</em>', 'Fotos, Texte, <em>Effekte.</em>', 'Einmalig <em>99 €.</em> Jetzt bist <em>du dran.</em>'
 ];
 const N = S.length, ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const zeile = root.querySelector('.glas-zeile'), punkte = root.querySelector('.glas-punkte');

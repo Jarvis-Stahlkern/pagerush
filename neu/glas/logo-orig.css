@@ -18,3 +18,9 @@
 /* Kopf-Logo besser lesbar auf dem Glasfeld */
 .kopf .wort{background:linear-gradient(135deg,rgba(20,10,60,.55),rgba(20,10,60,.3) 55%,rgba(20,10,60,.5))!important}
 .kopf .wort::before,.kopf .wort::after{opacity:.35}
+
+/* 02.11. 20:20: neues transparentes Logo (Symbol über Schrift) – kompakter, damit die Überschrift frei bleibt */
+.logo-mit{width:min(500px,58vw,52vh*1.6)!important;top:36%!important}
+.logo-glas{padding:4% 7% 5%!important}
+.kopf .wort{background:none!important}
+@media(max-width:760px){.logo-mit{width:72vw!important;top:32%!important}}
