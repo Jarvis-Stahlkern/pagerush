@@ -13,8 +13,8 @@
 .logo-bild img,.logo-glas .logo-bild img,.logo-mit img,.h-logo,.mon-ki .ki-logo,.kopf .wort img{filter:none!important}
 .logo-schein{display:none!important}
 
-/* weiche Kanten statt hartem Kasten */
-.logo-bild img,.logo-mit img,.mon-ki .ki-logo,.h-logo{border-radius:0!important;
- -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);
- -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);mask-composite:intersect}
-.kopf .wort img{border-radius:0!important}
+/* 02.11. 20:30: echtes transparentes Logo (Alphakanal), keine Masken, nichts abgeschnitten */
+.logo-bild img,.logo-mit img,.mon-ki .ki-logo,.h-logo,.kopf .wort img{-webkit-mask-image:none!important;mask-image:none!important;border-radius:0!important;background:none!important}
+/* Kopf-Logo besser lesbar auf dem Glasfeld */
+.kopf .wort{background:linear-gradient(135deg,rgba(20,10,60,.55),rgba(20,10,60,.3) 55%,rgba(20,10,60,.5))!important}
+.kopf .wort::before,.kopf .wort::after{opacity:.35}
