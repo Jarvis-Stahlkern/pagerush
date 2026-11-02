@@ -52,4 +52,4 @@
 .m-vorn::after{border-color:rgba(255,255,255,.45)}
 .preis .muenze .preis-unter{font-weight:800;color:#fff;text-shadow:0 1px 0 rgba(40,0,110,.7)}
 /* neues, scharfes Logo: Farblicht folgt der neuen Form */
-.logo-licht{-webkit-mask-image:url(../logo.webp?v=3)!important;mask-image:url(../logo.webp?v=3)!important;-webkit-mask-size:100% 100%!important;mask-size:100% 100%!important}
+.logo-licht{-webkit-mask-image:url(../logo.webp?v=6)!important;mask-image:url(../logo.webp?v=6)!important;-webkit-mask-size:100% 100%!important;mask-size:100% 100%!important}

@@ -2,7 +2,7 @@
 .kopf{background:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 
 /* ---------- Logo: Glas mit Glanz, nur auf der Logo-Form (keine Rechtecke) ---------- */
-.logo-bild{--m:url(../logo.webp?v=3)}
+.logo-bild{--m:url(../logo.webp?v=6)}
 .logo-bild::before{content:"";position:absolute;inset:0;pointer-events:none;
  -webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;
  background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.12) 42%,rgba(255,255,255,0) 58%,rgba(180,220,255,.38));mix-blend-mode:screen}
