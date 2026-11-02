@@ -1,5 +1,10 @@
 /* Pagerush 02.11.2026 19:30: Karten (Ablauf, Domain) fliegen von der Seite ein, kippen beim Scrollen und zur Maus; ihr Text wird geschrieben */
 (() => {
+ // Effekt-Vorlagen unter dem Eingabefeld: hängen ihren Satz an die Beschreibung an
+ document.querySelectorAll('.bau-chips.eff button').forEach(b => b.addEventListener('click', () => {
+  const t = document.getElementById('bauText'); if (!t) return; const e = b.dataset.e;
+  if (t.value.includes(e)) { t.value = t.value.replace(', ' + e, '').replace(e, '').trim(); b.classList.remove('on'); } else { t.value = (t.value.trim() ? t.value.trim().replace(/[.,]$/, '') + ', ' : 'Meine Website ') + e; b.classList.add('on'); }
+ }));
  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
  const kl = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a))), ez = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
  const alle = [...document.querySelectorAll('.sp,.dom-k,.dom-check')]; if (!alle.length) return;

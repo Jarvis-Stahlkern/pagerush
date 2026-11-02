@@ -37,3 +37,5 @@
 .tw-a.tippt::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-.12em;background:#ff8fd0;animation:blink .8s step-end infinite}
 @media(max-width:860px){.sp.rv,.dom-k.rv,.dom-check.rv{transform:perspective(1100px) translate3d(var(--tx,0px),var(--ty,0px),0) rotateX(var(--rx,0deg)) rotateY(calc(var(--ry,0deg) * .5))!important}}
 @media (prefers-reduced-motion:reduce){.sp.rv,.dom-k.rv,.dom-check.rv{transform:none!important}}
+
+.bau-chips.eff{margin-top:10px}.bau-chips.eff button.on{background:linear-gradient(100deg,#ff6fb5,#a55bff 60%,#4f7dff);border-color:transparent;color:#fff}
