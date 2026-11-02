@@ -68,7 +68,7 @@ const R0 = .045, R1 = .17, L0 = .19, L1 = .9;
 let sw = 600, ziel = 0, akt = 0, mx = 0, amx = 0, vorn = -1, sichtbar = true, altPos = -9, altRein = -1;
 function groesse() {
  const w = innerWidth, h = innerHeight, handy = w < 760;
- sw = handy ? Math.min(w * .86, 560) : Math.min(w * .5, (h - 420) * 1.45, 960);
+ sw = handy ? Math.min(w * .8, 520) : Math.min(w * .44, (h - 380) * 1.45, 900);
  root.style.setProperty('--sw', sw + 'px');
  M.forEach(m => m.sh = 0); altPos = -9;
 }
@@ -137,9 +137,9 @@ function bild(t) {
  M.forEach((m, i) => {
   const d = i - pos, a = Math.abs(d), s = Math.sign(d) || 0, c = Math.min(1, a);
   // weicher Bogen ohne Knick
-  const x = s * sw * (.95 * glatt(a * 1.1) + .12 * a), z = -430 * glatt(a * 1.3) - 110 * a, ry = -s * 38 * glatt(a * 2) + amx * 9;
+  const x = s * sw * (1.22 * glatt(a * 1.5) + .14 * a), z = -380 * glatt(a * 1.3) - 90 * a, ry = -s * 30 * glatt(a * 2) + amx * 9;
   // Schweben: jedes MacBook hat seinen eigenen Takt, das vordere hebt sich etwas mehr
-  const ph = i * 1.37, hy = (Math.sin(zeit * .9 + ph) * .016 + Math.sin(zeit * .43 + ph * 2) * .008) * sw - (1 - c) * sw * .02;
+  const ph = i * 1.37, hy = (Math.sin(zeit * .9 + ph) * .016 + Math.sin(zeit * .43 + ph * 2) * .008) * sw - (1 - c) * sw * .02 + glatt(a * 1.2) * sw * .05;
   const rx = Math.sin(zeit * .7 + ph) * 2.2 - amy * 5 + 3, rz = Math.sin(zeit * .55 + ph * 1.7) * 1.1 * (.4 + c * .6);
   const e = m.el;
   let fz = 0, fy = 0, fs = 1, fo = 1, frx = 0;

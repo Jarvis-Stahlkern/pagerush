@@ -60,17 +60,20 @@ if (cv && !ruhig) {
   // Schwebende Mini-Fenster mit echten Seiten (Pagerush-Beispiele), scrollen langsam von selbst, gehen beim Scrollen mit
   for (const f of fenster) {
    const im = THUMBS[f.img]; if (!im.complete || !im.naturalWidth) continue;
+   let fq = 0, fa = 1; if (f.fl) { fq = (now - f.fl) / 1000; if (fq >= 2.9) f.fl = 0; else if (fq >= 1.1) { fa = fq < 2.1 ? 0 : (fq - 2.1) / .8; fq = fq < 2.1 ? 1.1 : 0; } }
+   f.hit = null;
    const y = ((f.y - sy * (.2 + f.z * .5)) % (h * 2.4) + h * 2.4) % (h * 2.4) - h * .2; if (y < -260 || y > h + 60) continue;
-   const bw = f.b * f.z, bh = bw * .64, bar = Math.max(7, bw * .06), x = f.x + Math.sin(now * .0004 + f.p) * 16 * f.z, a = .22 + f.z * .3, rr = 6 + 6 * f.z;
+   const bw = f.b * f.z, bh = bw * .64, bar = Math.max(7, bw * .06), a = (.22 + f.z * .3) * (fq > 0 ? Math.max(0, 1 - fq / 1.1) : fa), rr = 6 + 6 * f.z, fe = Math.min(1, fq / 1.1), fe2 = fe * fe * (3 - 2 * fe), x = f.x + Math.sin(now * .0004 + f.p) * 16 * f.z + (f.fdir || 1) * fe2 * w * .35, yy = y - fe2 * h * .25, sc = 1 + fe2 * .6, fr = fe2 * (f.fdir || 1) * .9;
+   f.hit = { x: x + bw / 2, y: yy + bh / 2, w: bw, h: bh };
    const sw = im.naturalWidth, shh = (bh - bar) / bw * sw, off = (.5 - .5 * Math.cos(now * .00035 + f.p)) * Math.max(0, im.naturalHeight - shh);
-   c.save(); c.globalAlpha = a; c.translate(x + bw / 2, y + bh / 2); c.rotate(Math.sin(now * .0003 + f.p) * .06 + (f.z2 ? .07 : -.07));
+   c.save(); c.globalAlpha = a; c.translate(x + bw / 2, yy + bh / 2); c.scale(sc, sc); c.rotate(Math.sin(now * .0003 + f.p) * .06 + (f.z2 ? .07 : -.07) + fr);
    c.beginPath(); c.roundRect(-bw / 2, -bh / 2, bw, bh, rr); c.fillStyle = 'rgba(30,20,60,.9)'; c.fill(); c.clip();
    c.fillStyle = 'rgba(255,255,255,.16)'; c.fillRect(-bw / 2, -bh / 2, bw, bar);
    c.fillStyle = 'rgba(255,255,255,.7)'; for (let q = 0; q < 3; q++) { c.beginPath(); c.arc(-bw / 2 + bar * .6 + q * bar * .55, -bh / 2 + bar / 2, bar * .17, 0, 6.283); c.fill(); }
    c.drawImage(im, 0, off, sw, shh, -bw / 2, -bh / 2 + bar, bw, bh - bar);
    const g = c.createLinearGradient(-bw / 2, -bh / 2, bw / 2, bh / 2); g.addColorStop(0, 'rgba(255,255,255,.28)'); g.addColorStop(.4, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(-bw / 2, -bh / 2, bw, bh);
    c.restore();
-   c.save(); c.globalAlpha = Math.min(1, a + .15); c.translate(x + bw / 2, y + bh / 2); c.rotate(Math.sin(now * .0003 + f.p) * .06 + (f.z2 ? .07 : -.07));
+   c.save(); c.globalAlpha = Math.min(1, a + .15 * (a > 0 ? 1 : 0)); c.translate(x + bw / 2, yy + bh / 2); c.scale(sc, sc); c.rotate(Math.sin(now * .0003 + f.p) * .06 + (f.z2 ? .07 : -.07) + fr);
    c.beginPath(); c.roundRect(-bw / 2, -bh / 2, bw, bh, rr); c.strokeStyle = 'rgba(255,255,255,.55)'; c.lineWidth = 1.2; c.stroke(); c.restore();
   }
   // Sternschnuppen
@@ -85,6 +88,14 @@ if (cv && !ruhig) {
   }
   requestAnimationFrame(bild);
  }
+ // Mini-Fenster: Berührt man sie (Maus drüber oder Fingertipp), fliegen sie weg und kommen später leise zurück
+ function treffer(e) {
+  if (e.target.closest && e.target.closest('input,textarea,select,button,a,iframe,.studio')) return;
+  for (const f of fenster) { const h = f.hit; if (!h || f.fl) continue;
+   if (Math.abs(e.clientX - h.x) < h.w / 2 + 6 && Math.abs(e.clientY - h.y) < h.h / 2 + 6) { f.fl = performance.now(); f.fdir = e.clientX < h.x ? 1 : -1; } }
+ }
+ addEventListener('pointermove', e => { if (e.pointerType === 'mouse') treffer(e); }, { passive: true });
+ addEventListener('pointerdown', treffer, { passive: true });
  aufbau(); addEventListener('resize', aufbau);
  document.addEventListener('visibilitychange', () => { laeuft = !document.hidden; last = 0; if (laeuft) requestAnimationFrame(bild); });
  requestAnimationFrame(bild);
