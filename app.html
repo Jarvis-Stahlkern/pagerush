@@ -210,7 +210,7 @@ function csp(h){return /^\s*<!doctype[^>]*>/i.test(h)?h.replace(/^(\s*<!doctype[
 function pageHtml(p){return csp(withImgs(p))}
 function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy=true;const p=cur;const t0=Date.now();const m=document.createElement("div");m.className="m";m.innerHTML="<small>Ich baue deine Website … <span id='tz'>0</span> s · <span id='tb'>0</span> Zeichen</small>";$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;
  const iv=setInterval(()=>{const z=$("#tz");if(z)z.textContent=Math.round((Date.now()-t0)/1000)},1000);
- let acc="",lastLen=0,fin="";
+ let acc="",lastLen=0,fin="",info="";
  const fix=h=>{const i=h.toLowerCase().indexOf("<!doctype");if(i>0)h=h.slice(i);return h.replace(/\{\{IMG(\d+)\}\}/g,(x,n)=>(p.imgs||[])[n-1]||"")};
  const show=()=>{if(acc.search(/<body/i)<0||acc.length-lastLen<1200&&lastLen)return;lastLen=acc.length;if(cur&&cur.id==p.id)fr.srcdoc=csp(fix(acc))};
  fetch(API+"bauen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({anweisung:t,html:p.html||"",bilder:(p.imgs||[]).length})}).then(async r=>{
@@ -218,9 +218,9 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
   const rd=r.body.getReader(),dec=new TextDecoder();let buf="";
   for(;;){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let k;
    while((k=buf.indexOf("\n\n"))>=0){const line=buf.slice(0,k);buf=buf.slice(k+2);if(!line.startsWith("data:"))continue;let o;try{o=JSON.parse(line.slice(5))}catch(_){continue}
-    if(o.d){acc+=o.d;const b=$("#tb");if(b)b.textContent=acc.length;show()}else if(o.fehler)throw o.fehler;else if(o.ende)fin=o.html}}
+    if(o.d){acc+=o.d;const b=$("#tb");if(b)b.textContent=acc.length;show()}else if(o.fehler)throw o.fehler;else if(o.info)info=o.info;else if(o.ende)fin=o.html}}
   if(!fin)throw "Die Verbindung wurde unterbrochen. Bitte nochmal.";
-  clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say("Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
+  clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say(info?("Fertig ✓ "+info.replace(/</g,"&lt;")+"<br><small>Sag mir, was ich noch ändern soll.</small>"):"Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
  }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
 function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
 // 02.11. Djengo: die KI schreibt aus wenigen Worten selbst einen professionellen Prompt, den man sieht und ändern kann
@@ -283,7 +283,7 @@ function slots(d){const box=$("#slots");const seen=new Set();let h="";
  box.innerHTML=h||"<small>Keine Bilder gefunden</small>"}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
 function cmd(t,ki){if(!cur){newGen(t);return}
- if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}bauen(t);return}
+ if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}if(/\b(neue|komplett neue|ganz neue|andere)\s+((web)?seite|website|homepage)|\bvon vorne\b|\bkomplett neu\b|\b(bau|baue|erstell|erstelle|mach)\w*\s+(mir\s+)?(eine|ne)\s+([\w-]+\s+){0,3}[\w-]*?((web)?seite|website|homepage|landingpage)\b/i.test(t)){say("Das klingt nach einer <b>neuen Seite</b>. Ich frag kurz ein paar Dinge und schreib dir einen Profi-Prompt.");newGen(t);return}bauen(t);return}
  const l=t.toLowerCase();let m;
  if(!ki&&!/farbe|effekt\s+(tiefe|schwenk|zoom)/i.test(t)&&!/\btext|überschrift|titel|schreib|formulier|kürzer|länger|slogan|beschreibung|preis|name\b/i.test(t)){say("Das ist mehr als eine Textänderung. Ich baue dafür eine <b>komplett neue Seite</b> nach deiner Beschreibung.");newGen(t);return}
  if(!ki&&/effekt\s+(tiefe|schwenk|zoom)|animier|3\s?d|scroll|bewegung|kamerafahrt/i.test(t)){const d=doc();if(!cur.ed.hero)return say("Setz zuerst dein Foto bei <b>Titelbild</b> ein (Bilder-Leiste unten, Filmklappe). Dann bekommt es den 3D-Scroll-Effekt.");const f=(t.toLowerCase().match(/tiefe|schwenk|zoom/)||["tiefe"])[0];cur.ed.heroFx=f;store();d&&d.getElementById("pr-hero")&&d.getElementById("pr-hero")._u();return say("Titelbild-Effekt: <b>"+f+"</b> ✓ Scroll in der Vorschau nach unten, dann siehst du ihn. Weitere: Effekt Tiefe, Effekt Schwenk, Effekt Zoom.")}

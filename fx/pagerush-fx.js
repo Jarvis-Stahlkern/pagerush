@@ -6,10 +6,15 @@ var cl=function(x,a,b){return Math.max(a,Math.min(b,x))};
 var VH=function(){return window.innerHeight};
 function prog(sec){var r=sec.getBoundingClientRect(),h=sec.offsetHeight-VH();return h>0?cl(-r.top/h,0,1):0}
 function sticky(sec,len){var st=sec.querySelector("[data-stage]");sec.style.position="relative";st.style.position="sticky";st.style.top="0";st.style.height="100vh";st.style.overflow="hidden";return st}
+var HOCH=function(){return innerWidth<innerHeight*0.85};
+/* 03.11.: auf Handy/Tablet hochkant wurden Bilder in Buehnen extrem abgeschnitten -> ganzes Bild zeigen, Rand mit unscharfer Kopie fuellen */
+function passend(im){if(!im||im._pf)return;im._pf=1;var bg=document.createElement("img");bg.src=im.currentSrc||im.src;bg.alt="";bg.setAttribute("aria-hidden","true");
+ bg.style.cssText="position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(28px) brightness(.55) saturate(1.2);pointer-events:none";im.parentNode.insertBefore(bg,im);
+ var setz=function(){var h=HOCH();bg.style.display=h?"block":"none";im.style.objectFit=h?"contain":"cover"};setz();addEventListener("resize",setz)}
 var FX={};
 FX.camera=function(sec){var len=+sec.dataset.length||400,st=sticky(sec),sc=$$("[data-scene]",st);
- sc.forEach(function(s){s.style.position="absolute";s.style.inset="0";s.style.willChange="opacity";var im=s.querySelector("img");if(im){im.style.cssText+=";position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform"}});
- return{size:function(){sec.style.height=len*VH()/100+"px"},upd:function(){var t=prog(sec)*sc.length;sc.forEach(function(s,i){var d=Math.abs(t-(i+.5)),w=R?(d<.5?1:0):cl((.95-d)*2.2,0,1);s.style.opacity=w;s.style.zIndex=i;var im=s.querySelector("img");if(im&&!R)im.style.transform="scale("+(1+.24*cl(t-i,0,1.2))+") translateY("+(-3*cl(t-i,0,1.2))+"%)";var c=s.querySelector("[data-cap]");if(c){var cw=R?w:cl((.42-d)*4.5,0,1);c.style.opacity=cw;c.style.transform="translateY("+((1-cw)*26)+"px)"}})}}};
+ sc.forEach(function(s){s.style.position="absolute";s.style.inset="0";s.style.willChange="opacity";var im=s.querySelector("img");if(im){im.style.cssText+=";position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform";passend(im)}});
+ return{size:function(){sec.style.height=len*VH()/100+"px"},upd:function(){var t=prog(sec)*sc.length;sc.forEach(function(s,i){var d=Math.abs(t-(i+.5)),w=R?(d<.5?1:0):cl((.95-d)*2.2,0,1);s.style.opacity=w;s.style.zIndex=i;var im=s.querySelector("img");if(im&&!R)im.style.transform="scale("+(1+(HOCH()?.08:.24)*cl(t-i,0,1.2))+") translateY("+(-(HOCH()?1:3)*cl(t-i,0,1.2))+"%)";var c=s.querySelector("[data-cap]");if(c){var cw=R?w:cl((.42-d)*4.5,0,1);c.style.opacity=cw;c.style.transform="translateY("+((1-cw)*26)+"px)"}})}}};
 FX.depth=function(sec){sec.style.position="relative";sec.style.overflow="hidden";var L=[],src=sec.dataset.src;
  if(src){[null,"linear-gradient(to bottom,transparent 18%,#000 48%)","linear-gradient(to bottom,transparent 52%,#000 80%)"].forEach(function(m,i){var d=document.createElement("div");d.style.cssText="position:absolute;inset:-10%;background:center/cover url("+src+");will-change:transform;z-index:0"+(m?";-webkit-mask-image:"+m+";mask-image:"+m:"");d.dataset.depth=[.2,.5,1][i];sec.insertBefore(d,sec.firstChild);L.push(d)});
   Array.prototype.forEach.call(sec.children,function(c){if(!c.dataset.depth){if(getComputedStyle(c).position=="static")c.style.position="relative";c.style.zIndex=2}})}
