@@ -1,4 +1,4 @@
-/* Pagerush FX 1.1 - geprüfte Scroll-Effekte (STAHLKERN GmbH). Keine Netzwerkzugriffe. */
+/* Pagerush FX 1.2 - geprüfte Scroll-Effekte (STAHLKERN GmbH). Keine Netzwerkzugriffe. */
 (function(){
 var R=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
@@ -20,8 +20,8 @@ FX.depth=function(sec){sec.style.position="relative";sec.style.overflow="hidden"
   Array.prototype.forEach.call(sec.children,function(c){if(!c.dataset.depth){if(getComputedStyle(c).position=="static")c.style.position="relative";c.style.zIndex=2}})}
  else L=$$("[data-depth]",sec).map(function(l){l.style.willChange="transform";return l});
  return{size:function(){},upd:function(){if(R)return;var r=sec.getBoundingClientRect(),p=cl(-r.top/Math.max(r.height,1),0,1);L.forEach(function(l){var d=+l.dataset.depth||.3;l.style.transform="translate3d(0,"+(-d*p*13)+"%,0) scale("+(1+d*p*.42)+")"})}}};
-FX.words=function(el){var tx=el.textContent.trim().split(/\s+/);el.textContent="";var sp=tx.map(function(w,i){var s=document.createElement("span");s.textContent=w;s.style.transition="opacity .25s";el.appendChild(s);el.appendChild(document.createTextNode(" "));return s});
- return{size:function(){},upd:function(){var r=el.getBoundingClientRect(),p=R?1:cl((VH()*.88-r.top)/(VH()*.5),0,1),n=sp.length;sp.forEach(function(s,i){s.style.opacity=.16+.84*cl(p*n-i,0,1)})}}};
+FX.words=function(el){var tx=el.textContent.trim().split(/\s+/);el.textContent="";var sp=tx.map(function(w,i){var s=document.createElement("span");s.textContent=w;s.style.transition="opacity .3s,filter .3s";s.style.display="inline-block";el.appendChild(s);el.appendChild(document.createTextNode(" "));return s});
+ return{size:function(){},upd:function(){var r=el.getBoundingClientRect(),p=R?1:cl((VH()*.88-r.top)/(VH()*.5),0,1),n=sp.length;sp.forEach(function(s,i){var q=cl(p*n-i,0,1);s.style.opacity=.14+.86*q;s.style.filter=q<1?"blur("+(2.5*(1-q)).toFixed(2)+"px)":"none"})}}};
 FX.band=function(sec){var st=sticky(sec),tr=st.querySelector("[data-track]");st.style.display="flex";st.style.alignItems="center";tr.style.display="flex";tr.style.width="max-content";tr.style.willChange="transform";Array.prototype.forEach.call(tr.children,function(c){c.style.flexShrink="0"});var dx=0;
  return{size:function(){dx=Math.max(0,tr.scrollWidth-innerWidth+80);sec.style.height=(dx+VH())+"px"},upd:function(){tr.style.transform="translate3d("+(-prog(sec)*dx)+"px,0,0)"}}};
 FX.daynight=function(sec){var len=+sec.dataset.length||300,st=sticky(sec),a=st.querySelector("[data-day]"),b=st.querySelector("[data-night]");
@@ -41,11 +41,35 @@ FX.tilt=function(el){if(R||!matchMedia("(pointer:fine)").matches)return{size:fun
  el.addEventListener("pointerleave",function(){el.style.transition="transform .6s cubic-bezier(.2,.8,.2,1)";el.style.transform="none";g.style.opacity=0});return{size:function(){},upd:function(){}}};
 FX.rotate=function(sec){var o=sec.querySelector("[data-obj]")||sec.firstElementChild;if(o){o.style.willChange="transform";o.style.transformStyle="preserve-3d"}sec.style.perspective="1200px";
  return{size:function(){},upd:function(){if(R||!o)return;var r=sec.getBoundingClientRect(),p=cl(1-(r.top+r.height)/(VH()+r.height),0,1);o.style.transform="rotateY("+(-35+70*p)+"deg) rotateX("+(18-36*p)+"deg) translateZ("+(-120+120*Math.sin(p*Math.PI))+"px)"}}};
-function smooth(){if(R||!matchMedia("(pointer:fine)").matches||document.body.dataset.smooth=="off"||document.documentElement.dataset.smooth=="off")return;
+function smooth(){/* 04.11.: nur noch mit data-smooth="on" – sonst ruckelte es mit Lenis/GSAP */if(R||!matchMedia("(pointer:fine)").matches||window.Lenis||window.lenis||!(document.body.dataset.smooth=="on"||document.documentElement.dataset.smooth=="on"))return;
  var y=scrollY,z=scrollY,run=0;function loop(){z+=(y-z)*.1;if(Math.abs(y-z)<.4){z=y;run=0;scrollTo(0,z);return}scrollTo(0,z);requestAnimationFrame(loop)}
  addEventListener("wheel",function(e){if(e.ctrlKey||e.defaultPrevented)return;var t=e.target;while(t&&t!==document.body){var cs=getComputedStyle(t);if(/(auto|scroll)/.test(cs.overflowY)&&t.scrollHeight>t.clientHeight)return;t=t.parentElement}
   e.preventDefault();if(!run)y=z=scrollY;y=cl(y+e.deltaY*(e.deltaMode==1?40:1),0,document.documentElement.scrollHeight-innerHeight);if(!run){run=1;requestAnimationFrame(loop)}},{passive:false});
  addEventListener("keydown",function(){run=0});addEventListener("scroll",function(){if(!run)y=z=scrollY},{passive:true})}
+
+/* 04.11.: VORHER/NACHHER – ziehen per Maus, Finger, Tastatur, und Maus-Mitfahren am PC. <div data-fx="vorher"><img data-vorher src><img data-nachher src></div> */
+FX.vorher=function(el){var v=el.querySelector("[data-vorher]")||el.querySelectorAll("img")[0],n=el.querySelector("[data-nachher]")||el.querySelectorAll("img")[1];if(!v||!n)return{size:function(){},upd:function(){}};
+ var cs=getComputedStyle(el);if(cs.position=="static")el.style.position="relative";el.style.overflow="hidden";el.style.touchAction="pan-y";el.style.userSelect="none";el.style.cursor="ew-resize";el.setAttribute("role","slider");el.setAttribute("tabindex","0");el.setAttribute("aria-label","Vorher-Nachher-Vergleich");
+ [v,n].forEach(function(i){i.style.cssText+=";position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none";i.draggable=false});if(el.offsetHeight<80)el.style.aspectRatio=el.dataset.ratio||"16/10";
+ var lab=function(t,r){var d=document.createElement("span");d.textContent=t;d.style.cssText="position:absolute;top:16px;"+r+":16px;z-index:3;padding:6px 12px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font:600 12px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(6px);pointer-events:none";el.appendChild(d)};
+ lab(el.dataset.vorherText||"Vorher","left");lab(el.dataset.nachherText||"Nachher","right");
+ var li=document.createElement("div");li.style.cssText="position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:#fff;z-index:2;box-shadow:0 0 18px rgba(0,0,0,.45);pointer-events:none";
+ var kn=document.createElement("div");kn.innerHTML='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>';kn.style.cssText="position:absolute;top:50%;left:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.35)";li.appendChild(kn);el.appendChild(li);
+ var x=50,ziel=50,an=0,gezogen=0;function setz(p){x=cl(p,0,100);n.style.clipPath="inset(0 0 0 "+x+"%)";li.style.left=x+"%";el.setAttribute("aria-valuenow",Math.round(x))}
+ function anim(){if(an)return;an=1;(function f(){x+=(ziel-x)*.18;setz(x);if(Math.abs(ziel-x)>.1)requestAnimationFrame(f);else{setz(ziel);an=0}})()}
+ function vonEvent(e){var r=el.getBoundingClientRect();return (e.clientX-r.left)/r.width*100}
+ var druck=0;el.addEventListener("pointerdown",function(e){druck=1;gezogen=1;try{el.setPointerCapture(e.pointerId)}catch(_){}ziel=vonEvent(e);anim()});
+ el.addEventListener("pointermove",function(e){if(druck||(e.pointerType=="mouse"&&matchMedia("(pointer:fine)").matches)){gezogen=1;ziel=vonEvent(e);anim()}});
+ el.addEventListener("pointerup",function(){druck=0});el.addEventListener("pointercancel",function(){druck=0});
+ el.addEventListener("keydown",function(e){if(e.key=="ArrowLeft"||e.key=="ArrowRight"){gezogen=1;ziel=cl(ziel+(e.key=="ArrowLeft"?-5:5),0,100);anim();e.preventDefault()}});
+ setz(50);
+ return{size:function(){},upd:function(){if(gezogen||R)return;var r=el.getBoundingClientRect(),p=cl((VH()-r.top)/(VH()+r.height),0,1);ziel=85-70*p;anim()}}};
+/* 04.11.: REINZOOMEN wie in einen Raum hinein – <section data-fx="zoom" data-length="300"><div data-stage><img src><img src>…<h2 data-cap>…</h2></div></section> */
+FX.zoom=function(sec){var len=+sec.dataset.length||300,st=sticky(sec),ims=$$("img",st);ims.forEach(function(im,i){im.style.cssText+=";position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform,opacity;transform-origin:"+(im.dataset.fokus||"50% 55%");im.style.opacity=i?0:1});
+ var caps=$$("[data-cap]",st);caps.forEach(function(c){c.style.position=c.style.position||"absolute";c.style.zIndex=2;c.style.willChange="opacity,transform"});
+ return{size:function(){sec.style.height=(len*VH()/100+VH())+"px"},upd:function(){var p=R?0:prog(sec),k=Math.max(1,ims.length),seg=p*k;
+  ims.forEach(function(im,i){var t=cl(seg-i,0,1);var z=1+(HOCH()?.9:1.6)*t*t;im.style.transform="scale("+z.toFixed(3)+")";var aus=i<k-1?cl((t-.7)/.3,0,1):0;var ein=i?cl((seg-i+.3)/.3,0,1):1;im.style.opacity=(Math.min(ein,1-aus)).toFixed(3)});
+  caps.forEach(function(c,i){var m=(i+.5)/Math.max(1,caps.length),d=Math.abs(p-m)*Math.max(1,caps.length);c.style.opacity=cl(1-d*1.6,0,1);c.style.transform="translateY("+(d*30).toFixed(1)+"px)"})}}};
 var inst=[];
 function init(){$$("[data-tilt]").forEach(function(el){if(!el._fx){el._fx=1;FX.tilt(el)}});
  $$("[data-fx]").forEach(function(el){var f=FX[el.dataset.fx];if(f&&!el._fx){try{var o=f(el);el._fx=1;inst.push(o)}catch(e){}}});
