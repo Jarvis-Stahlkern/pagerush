@@ -151,7 +151,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 </div>
 
 <div class="hide" id="lg" style="position:fixed;inset:0;z-index:60;background:#05040acc;backdrop-filter:blur(8px);display:grid;place-items:center">
- <div class="card" style="width:min(420px,92vw);padding:26px"><h3 style="font-size:22px">Anmelden</h3>
+ <div class="card" style="width:min(420px,92vw);padding:26px"><h3 style="font-size:22px" id="lgH">Anmelden</h3>
   <p style="color:var(--mu);margin:6px 0 14px" id="lgT">Gib deine E-Mail ein. Wir schicken dir einen Code. Kein Passwort nötig.</p>
   <input class="in" id="lgM" type="email" placeholder="deine@email.de" autocomplete="email">
   <input class="in hide" id="lgC" inputmode="numeric" maxlength="6" placeholder="6-stelliger Code" style="margin-top:10px;letter-spacing:.3em;text-align:center;font-size:20px">
@@ -222,7 +222,7 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
   if(!fin)throw "Die Verbindung wurde unterbrochen. Bitte nochmal.";
   clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say(info?("Fertig ✓ "+info.replace(/</g,"&lt;")+"<br><small>Sag mir, was ich noch ändern soll.</small>"):"Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
  }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
-function newGen(t){if(!TOK){lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
+function newGen(t){if(!TOK){try{sessionStorage.setItem("pagerush_start",t)}catch(_){}lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
 // 02.11. Djengo: die KI schreibt aus wenigen Worten selbst einen professionellen Prompt, den man sieht und ändern kann
 function profiPrompt(p,z){const bg=document.createElement("div");bg.className="frg-bg";const box=document.createElement("div");box.className="frg";bg.appendChild(box);
  box.innerHTML='<b>✦ Ich schreibe deinen Profi-Prompt …</b><small style="color:#b9b5d6">Dauert ca. 10 Sekunden.</small>';document.body.appendChild(bg);
@@ -282,7 +282,7 @@ function slots(d){const box=$("#slots");const seen=new Set();let h="";
  d.querySelectorAll("img").forEach(im=>{const k=im.dataset.prK||(im.dataset.prK=im.getAttribute("src")||"");if(!k||seen.has(k)||k.startsWith("data:")&&false)return;seen.add(k);h+=`<button data-k="${k.replace(/"/g,"")}"><img src="${im.currentSrc||im.src}" alt=""></button>`});
  box.innerHTML=h||"<small>Keine Bilder gefunden</small>"}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
-function cmd(t,ki){if(!cur){newGen(t);return}
+function cmd(t,ki){if(!cur||(!TOK&&cur.t=="gen"&&!cur.html)){newGen(t);return}
  if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}if(/\b(neue|komplett neue|ganz neue|andere)\s+((web)?seite|website|homepage)|\bvon vorne\b|\bkomplett neu\b|\b(bau|baue|erstell|erstelle|mach)\w*\s+(mir\s+)?(eine|ne)\s+([\w-]+\s+){0,3}[\w-]*?((web)?seite|website|homepage|landingpage)\b/i.test(t)){say("Das klingt nach einer <b>neuen Seite</b>. Ich frag kurz ein paar Dinge und schreib dir einen Profi-Prompt.");newGen(t);return}bauen(t);return}
  const l=t.toLowerCase();let m;
  if(!ki&&!/farbe|effekt\s+(tiefe|schwenk|zoom)/i.test(t)&&!/\btext|überschrift|titel|schreib|formulier|kürzer|länger|slogan|beschreibung|preis|name\b/i.test(t)){say("Das ist mehr als eine Textänderung. Ich baue dafür eine <b>komplett neue Seite</b> nach deiner Beschreibung.");newGen(t);return}
@@ -324,8 +324,8 @@ $("#kGo").onclick=()=>{const txt=$("#kText").value.trim();if(!txt){$("#kText").f
 function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(MAIL||"P")[0].toUpperCase()}
 let stufe=0;
 function lgZu(){$("#lg").classList.add("hide")}
-function lgAuf(){stufe=0;$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
-$("#lgX").onclick=()=>{lgZu();showStudio()};$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
+function lgAuf(){stufe=0;let w="";try{w=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||""}catch(_){}$("#lgH").textContent=w?"Fast geschafft!":"Anmelden";$("#lgT").textContent=w?"Bestätige kurz deine E-Mail – dann baue ich sofort deine Website. Wir schicken dir einen Code, kein Passwort, kein Abo.":"Gib deine E-Mail ein. Wir schicken dir einen Code. Kein Passwort nötig.";$("#lgX").textContent=w?"Erst umsehen":"Ohne Anmeldung weiter";$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
+$("#lgX").onclick=()=>{lgZu();showStudio();let w="";try{w=sessionStorage.getItem("pagerush_start")||""}catch(_){}if(w)say("Dein Wunsch ist gespeichert ✓ Sobald du dich mit deiner E-Mail anmeldest (oben rechts), baue ich die Seite.")};$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
 $("#lgB").onclick=async()=>{const m=$("#lgM").value.trim().toLowerCase(),E=$("#lgE");E.textContent="";$("#lgB").disabled=true;
  try{if(stufe==0){const r=await fetch(API+"code",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";stufe=1;$("#lgM").classList.add("hide");$("#lgC").classList.remove("hide");$("#lgC").focus();$("#lgT").textContent="Code gesendet an "+m+". Schau auch im Spam-Ordner nach.";$("#lgB").textContent="Anmelden"}
  else{const r=await fetch(API+"login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m,code:$("#lgC").value})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";TOK=j.token;MAIL=j.email;try{localStorage.setItem("pr_token",TOK);localStorage.setItem("pr_mail",MAIL)}catch(_){}
