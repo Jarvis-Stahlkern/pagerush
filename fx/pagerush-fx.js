@@ -70,6 +70,18 @@ FX.zoom=function(sec){var len=+sec.dataset.length||300,st=sticky(sec),ims=$$("im
  return{size:function(){sec.style.height=(len*VH()/100+VH())+"px"},upd:function(){var p=R?0:prog(sec),k=Math.max(1,ims.length),seg=p*k;
   ims.forEach(function(im,i){var t=cl(seg-i,0,1);var z=1+(HOCH()?.9:1.6)*t*t;im.style.transform="scale("+z.toFixed(3)+")";var aus=i<k-1?cl((t-.7)/.3,0,1):0;var ein=i?cl((seg-i+.3)/.3,0,1):1;im.style.opacity=(Math.min(ein,1-aus)).toFixed(3)});
   caps.forEach(function(c,i){var m=(i+.5)/Math.max(1,caps.length),d=Math.abs(p-m)*Math.max(1,caps.length);c.style.opacity=cl(1-d*1.6,0,1);c.style.transform="translateY("+(d*30).toFixed(1)+"px)"})}}};
+
+/* 05.11.: WISCH-EFFEKT (wie Super Sauber Kerimov) – beim Scrollen zieht ein Abzieher über das Bild: links scharf und farbig, rechts trüb.
+   <section data-fx="wisch" data-length="200"><div data-stage><img src="FOTO" alt=""><h2 data-cap>Text</h2></div></section> */
+FX.wisch=function(sec){var len=+sec.dataset.length||200,st=sticky(sec),im=st.querySelector("img");if(!im)return{size:function(){},upd:function(){}};
+ im.style.cssText+=";position:absolute;inset:0;width:100%;height:100%;object-fit:cover";
+ var tr=im.cloneNode();tr.setAttribute("aria-hidden","true");tr.alt="";tr.style.filter="grayscale(.7) blur(8px) contrast(.8) brightness(1.08)";tr.style.transform="scale(1.06)";st.insertBefore(tr,im);
+ var ab=document.createElement("div");ab.style.cssText="position:absolute;top:0;bottom:0;width:3px;margin-left:-1px;z-index:2;background:linear-gradient(transparent,rgba(255,255,255,.95) 12%,rgba(255,255,255,.95) 88%,transparent);box-shadow:0 0 24px rgba(255,255,255,.6);pointer-events:none";
+ var gr=document.createElement("div");gr.style.cssText="position:absolute;left:-10px;top:50%;width:22px;height:110px;margin-top:-55px;border-radius:11px;background:var(--pr-ak,#c9a46a);box-shadow:0 10px 28px rgba(0,0,0,.3)";ab.appendChild(gr);st.appendChild(ab);
+ var caps=$$("[data-cap]",st);caps.forEach(function(c){c.style.position=c.style.position||"absolute";c.style.zIndex=3;c.style.transition="opacity .6s,transform .6s"});
+ return{size:function(){sec.style.height=(len*VH()/100+VH())+"px"},upd:function(){var p=R?1:cl((prog(sec)-.05)/.8,0,1),w=(p*100).toFixed(2);
+  im.style.clipPath="inset(0 "+(100-w)+"% 0 0)";im.style.transform="scale("+(1.06-.06*p).toFixed(4)+")";ab.style.left=w+"%";ab.style.opacity=p>.995||p<.005?0:1;
+  caps.forEach(function(c){var an=p>.85;c.style.opacity=an?1:0;c.style.transform=an?"none":"translateY(14px)"})}}};
 var inst=[];
 function init(){$$("[data-tilt]").forEach(function(el){if(!el._fx){el._fx=1;FX.tilt(el)}});
  $$("[data-fx]").forEach(function(el){var f=FX[el.dataset.fx];if(f&&!el._fx){try{var o=f(el);el._fx=1;inst.push(o)}catch(e){}}});
