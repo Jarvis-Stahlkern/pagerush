@@ -80,6 +80,25 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 .frg-a{display:flex;gap:12px;align-items:center;margin-top:4px}
 .pp-t{width:100%;min-height:46vh;font:13px/1.5 ui-monospace,Menlo,monospace;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.35);color:#eee;resize:vertical}
 .frg-skip{background:none;border:0;color:#9b97b8;text-decoration:underline;cursor:pointer;font:13px system-ui}
+</style><style id="pr-domain-css">
+/* 07.11.2026 Claude: Eigene Domain verbinden (Kunde kauft selbst bei IONOS/STRATO) */
+#dmz{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(6,5,14,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:inherit}
+#dmz.an{display:flex}
+#dmz .bx{width:min(620px,94vw);max-height:92vh;overflow:auto;background:linear-gradient(160deg,#191631,#12101f);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:26px 26px 22px;color:#f1effa;box-shadow:0 40px 120px -30px #000,0 0 0 1px rgba(124,92,255,.15)}
+#dmz h3{margin:0 0 4px;font-size:22px}#dmz .mu{color:#9b97b8;font-size:14px;line-height:1.5}
+#dmz .sch{display:flex;gap:8px;margin:16px 0 6px}#dmz .sch i{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.1)}#dmz .sch i.an{background:linear-gradient(90deg,#7c5cff,#b08cff)}
+#dmz input{width:100%;box-sizing:border-box;background:#0a0912;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px 14px;color:#fff;font-size:16px;margin:10px 0}
+#dmz .zw{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}#dmz .zw .btn{flex:1;min-width:150px;text-align:center;text-decoration:none}
+#dmz .gh{background:rgba(255,255,255,.06);box-shadow:none;border:1px solid rgba(255,255,255,.14)}
+#dmz .rec{display:grid;grid-template-columns:60px 70px 1fr auto;gap:8px;align-items:center;background:#0a0912;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px}
+#dmz .rec b{color:#b08cff}#dmz .rec code{font-size:15px;color:#fff}
+#dmz .tabs{display:flex;gap:6px;margin:14px 0 4px}#dmz .tabs button{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#f1effa;border-radius:10px;padding:9px;cursor:pointer;font-weight:600}
+#dmz .tabs button.an{background:rgba(124,92,255,.25);border-color:#7c5cff}
+#dmz ol{margin:8px 0 0 18px;padding:0;line-height:1.65;font-size:14.5px}
+#dmz .st{margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(242,184,75,.1);border:1px solid rgba(242,184,75,.3);font-size:14.5px}
+#dmz .st.ok{background:rgba(56,211,159,.12);border-color:rgba(56,211,159,.45)}
+#dmz .zu{float:right;background:none;border:0;color:#9b97b8;font-size:22px;cursor:pointer;margin:-8px -6px 0 0}
+#dmz .fe{color:#ff8f8f;font-size:14px;min-height:18px}
 </style></head><body>
 
 <div class="app" id="app">
@@ -346,4 +365,45 @@ $("#pub").onclick=async()=>{if(!TOK){lgAuf();return}if(!cur||cur.t!="gen"||!cur.
   document.getElementById("kauf99").onclick=()=>kaufen(j.url)}catch(x){say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")}};
 function kaufen(url){say("<small>Ich leite dich zur sicheren Zahlung weiter …</small>");fetch("https://2-31-5-96.sslip.io/pagerush-api/bestellung",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:MAIL,mail:MAIL,firma:(cur&&cur.name)||"",branche:"",domain:"",text:"Studio-Projekt: "+((cur&&cur.name)||"")+" – Live-Vorschau: "+url})}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const z="https://buy.stripe.com/eVq28rbUEdus0z74tJ3cc08?client_reference_id="+encodeURIComponent(j.ref)+"&prefilled_email="+encodeURIComponent(MAIL);try{window.top.location.href=z}catch(_){location.href=z}}).catch(()=>say("Das hat gerade nicht geklappt. Bitte nochmal oder schreib an info@stahlkern.gmbh."))}
 fill();
+
+/* ---------- 07.11.2026 Claude: Eigene Domain verbinden ---------- */
+(function(){
+ const IP="2.31.5.96";let D="",POLL=null,ANB="ionos";
+ const box=document.createElement("div");box.id="dmz";document.body.appendChild(box);
+ const esc=s=>String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+ function zu(){box.classList.remove("an");clearInterval(POLL)}
+ function rahmen(stufe,inhalt){box.innerHTML=`<div class="bx"><button class="zu" title="Schließen">×</button><h3>Deine eigene Domain</h3><div class="mu">In 3 Schritten ist deine Website unter deinem Namen online.</div><div class="sch">${[1,2,3].map(i=>`<i class="${i<=stufe?"an":""}"></i>`).join("")}</div>${inhalt}</div>`;box.querySelector(".zu").onclick=zu;box.classList.add("an")}
+ function schritt1(){rahmen(1,`<p style="font-size:16px;margin:14px 0 6px"><b>Hast du schon eine Domain?</b></p><div class="zw"><button class="btn" id="dJa">Ja, habe ich</button><button class="btn gh" id="dNein">Nein, jetzt kaufen</button></div>`);
+  box.querySelector("#dJa").onclick=schritt2;box.querySelector("#dNein").onclick=domKaufen}
+ function domKaufen(){rahmen(1,`<p class="mu">Kauf deine Domain direkt beim Anbieter – du bezahlst dort selbst (meist 1–5 € im Monat). Danach kommst du hierher zurück.</p><input id="dWunsch" placeholder="Wunschname, z. B. baeckerei-mueller.de"><div class="zw"><a class="btn" id="dIon" target="_blank" rel="noopener">Bei IONOS kaufen</a><a class="btn gh" id="dStr" target="_blank" rel="noopener">Bei STRATO kaufen</a></div><div class="zw" style="margin-top:14px"><button class="btn gh" id="dWeiter">Gekauft – weiter</button></div>`);
+  const w=box.querySelector("#dWunsch"),i=box.querySelector("#dIon"),s=box.querySelector("#dStr");
+  const set=()=>{const n=encodeURIComponent((w.value||"").trim());i.href="https://www.ionos.de/domains/domain-check"+(n?"?domain="+n:"");s.href="https://www.strato.de/domains/domain-check/"+(n?"?domain="+n:"")};set();w.oninput=set;
+  box.querySelector("#dWeiter").onclick=schritt2}
+ function schritt2(){rahmen(2,`<p class="mu">Wie heißt deine Domain?</p><input id="dDom" placeholder="z. B. baeckerei-mueller.de" autocomplete="off"><div class="fe" id="dFe"></div><div class="zw"><button class="btn" id="dVer">Verbinden</button></div>`);
+  const inp=box.querySelector("#dDom");inp.focus();inp.onkeydown=e=>{if(e.key=="Enter")box.querySelector("#dVer").click()};
+  box.querySelector("#dVer").onclick=async()=>{const fe=box.querySelector("#dFe");fe.textContent="";if(!cur||!cur.pub){fe.textContent="Bitte zuerst oben auf „Veröffentlichen“ klicken.";return}
+   try{const r=await fetch(API+"domain",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({id:cur.id,domain:inp.value})});const j=await r.json();
+    if(r.status==402){zu();say(`Fast geschafft! Schalte deine Website zuerst frei, dann verbindest du deine Domain. <button class="btn sm" id="kauf99b">Für 99 € freischalten</button>`);document.getElementById("kauf99b").onclick=()=>kaufen99();return}
+    if(!r.ok)throw j.fehler||"Das hat nicht geklappt.";D=j.domain;cur.domain=D;store();schritt3()}catch(x){fe.textContent=typeof x=="string"?x:"Keine Verbindung. Bitte nochmal."}}}
+ function anleitung(){const e=ANB=="ionos"?`<ol><li><a class="btn sm" href="https://my.ionos.de/domain-dns-settings/${encodeURIComponent(D)}" target="_blank" rel="noopener">Bei IONOS einloggen</a> (öffnet direkt deine DNS-Einstellungen)</li><li>Gibt es schon einen <b>A-Eintrag</b> für <b>@</b> oder <b>www</b>? Dann auf <b>Bearbeiten</b> klicken, sonst auf <b>Record hinzufügen → A</b>.</li><li>Hostname <b>@</b>, „Zeigt auf“: <b>${IP}</b> → <b>Speichern</b>.</li><li>Das Gleiche noch einmal mit Hostname <b>www</b>.</li></ol>`
+  :ANB=="strato"?`<ol><li><a class="btn sm" href="https://www.strato.de/apps/CustomerService" target="_blank" rel="noopener">Bei STRATO einloggen</a></li><li><b>Domains → Domainverwaltung</b> → beim Zahnrad deiner Domain auf <b>DNS</b>.</li><li>Bei <b>A-Record</b> auf <b>verwalten</b> → „Eigene IP-Adresse“: <b>${IP}</b> → <b>Einstellung übernehmen</b>.</li><li>Falls gefragt: für <b>www</b> ebenfalls <b>${IP}</b>.</li></ol>`
+  :`<ol><li>Logge dich bei deinem Domain-Anbieter ein und öffne die <b>DNS-Einstellungen</b>.</li><li>Lege die zwei Einträge oben an (alte A-Einträge für @ und www ersetzen).</li><li>Speichern – fertig.</li></ol>`;
+  return e}
+ function schritt3(){rahmen(3,`<p class="mu">Trag diese <b>zwei Einträge</b> bei deinem Anbieter ein – mit den Kopier-Knöpfen geht das in 2 Minuten:</p>
+  ${[["@","Hauptadresse"],["www","mit www"]].map(([n,k])=>`<div class="rec"><b>A</b><span>${n}</span><code>${IP}</code><button class="btn sm gh" data-cp="${IP}">Kopieren</button></div>`).join("")}
+  <div class="tabs">${[["ionos","IONOS"],["strato","STRATO"],["andere","Anderer"]].map(([k,n])=>`<button data-anb="${k}" class="${k==ANB?"an":""}">${n}</button>`).join("")}</div><div id="dAnl">${anleitung()}</div>
+  <div class="st" id="dSt">⏳ Warte auf deine Einträge für <b>${esc(D)}</b> … Ich prüfe das automatisch jede Minute. Das kann 5–30 Minuten dauern – du kannst das Fenster offen lassen oder später wiederkommen.</div>`);
+  box.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{try{navigator.clipboard.writeText(b.dataset.cp);b.textContent="Kopiert ✓";setTimeout(()=>b.textContent="Kopieren",1500)}catch(_){}});
+  box.querySelectorAll("[data-anb]").forEach(b=>b.onclick=()=>{ANB=b.dataset.anb;box.querySelectorAll("[data-anb]").forEach(x=>x.classList.toggle("an",x==b));box.querySelector("#dAnl").innerHTML=anleitung()});
+  clearInterval(POLL);pruefen();POLL=setInterval(pruefen,60000)}
+ async function pruefen(){try{const r=await fetch(API+"domain-status?d="+encodeURIComponent(D));const j=await r.json();const st=box.querySelector("#dSt");if(!st)return;
+  if(j.status=="live"){clearInterval(POLL);st.className="st ok";st.innerHTML=`✓ <b>Geschafft!</b> Deine Website ist jetzt live unter <a href="${j.url}" target="_blank" rel="noopener" style="color:#38d39f">${esc(j.url.replace("https://",""))}</a> – mit Sicherheitsschloss 🔒`;cur.domainLive=1;store();say(`Deine Website ist jetzt unter deiner Domain online ✓ <a href="${j.url}" target="_blank" rel="noopener" style="color:#b08cff">${esc(j.url)}</a>`)}
+  else if(j.status=="dns_ok"){st.innerHTML=`🔐 Einträge gefunden! Ich richte gerade das Sicherheitsschloss (https) ein … gleich fertig.`}
+  else{st.innerHTML=`⏳ Warte auf deine Einträge für <b>${esc(D)}</b> … ${j.a?"@ ✓":"@ noch nicht"} · ${j.www?"www ✓":"www noch nicht"}. Ich prüfe automatisch jede Minute.`}}catch(_){}}
+ const kaufen99=()=>{try{kaufen(cur.url)}catch(_){}};
+ window.domainStart=function(){if(!TOK){lgAuf();return}if(cur&&cur.domain){D=cur.domain;schritt3()}else schritt1()};
+ // Knopf „Eigene Domain“ in jeder Erfolgsmeldung + nach der Zahlung automatisch öffnen
+ const altSay=say;window.say=say=function(t,u){altSay(t,u);try{if(/Deine Website ist online ✓/.test(t)){const d=document.createElement("div");d.className="m";d.innerHTML=`<button class="btn sm" onclick="domainStart()">🌐 Eigene Domain verbinden</button>`;$("#msgs").appendChild(d)}}catch(_){}};
+ try{if(new URLSearchParams(location.search).get("domain")=="1")setTimeout(()=>{const p=(P||[]).filter(x=>x.pub).slice(-1)[0];if(p){try{open(p.id)}catch(_){}cur=p}domainStart()},1600)}catch(_){}
+})();
 </script></body></html>
