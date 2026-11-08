@@ -132,3 +132,14 @@ $$('.stapel').forEach(st => st.addEventListener('pointerenter', e => { if (e.tar
     location.href = weg === 'wa' ? `https://wa.me/491737220769?text=${text}` : `mailto:info@nexora-reutlingen.de?subject=${encodeURIComponent('Anfrage ' + f.bereich.value)}&body=${text}`;
   });
 })();
+
+/* Rohbau → fertig: Lichtkante wischt den fertigen Raum frei */
+(() => {
+  const r = $('#raum.wischraum'); if (!r) return; const b = $('.buehne', r);
+  const lauf = () => { const p = fortschritt(r), w = Math.min(1, Math.max(0, (p - .12) / .7));
+    const e = w < .5 ? 2 * w * w : 1 - Math.pow(-2 * w + 2, 2) / 2;
+    b.style.setProperty('--p', p); b.style.setProperty('--w', (e * 100).toFixed(2) + '%'); b.style.setProperty('--lo', e > 0 && e < 1 ? 1 : 0);
+    $$('.blende', r).forEach(x => x.classList.toggle('an', p >= +x.dataset.ab && p < +(x.dataset.bis || .97)));
+    requestAnimationFrame(lauf); };
+  requestAnimationFrame(lauf);
+})();

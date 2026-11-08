@@ -48,3 +48,9 @@ footer a{color:inherit}
 @media (max-width:860px){.personal .p-film{min-height:0}.personal .p-film img,.personal .p-film video{min-height:30vh}.personal{grid-template-columns:1fr}.zwei,.qs-liste,.felder{grid-template-columns:1fr}.bereiche.vier,.werte{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.bereiche.vier,.werte{grid-template-columns:1fr}}
 @media (max-width:860px){.demo-band{display:none}}
+
+/* Rohbau → fertig: Vorher/Nachher per Scroll (keine KI-Bewegung) */
+.wischraum .standbild,.wischraum .nachher{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.08 - var(--p,0)*.08));will-change:transform}
+.wischraum .nachher{z-index:1;clip-path:inset(0 calc(100% - var(--w,0%)) 0 0)}
+.wischraum .wischlicht{position:absolute;top:0;bottom:0;z-index:2;width:3px;left:var(--w,0%);margin-left:-1px;background:linear-gradient(180deg,transparent,#fff 20%,#fff 80%,transparent);
+  box-shadow:0 0 18px 6px rgba(255,235,200,.55),0 0 60px 20px rgba(255,220,170,.25);opacity:var(--lo,0)}
