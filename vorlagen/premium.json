@@ -1,0 +1,11 @@
+[
+ {"id":"nagelstudio","slug":"nagelstudio-velour","name":"Nagelstudio „Velour“","branche":"Nagelstudio & Beauty","aktiv":true,
+  "text":"Kundinnen probieren Nageltyp, Design und Farbe direkt an der Hand – und buchen genau diesen Look.",
+  "punkte":["Farb- und Design-Wechsel live","Preise je Nageltyp","Terminanfrage mit gewähltem Look"],"nehmen":"studio"},
+ {"id":"sneaker","slug":"sneaker-arkade","name":"Sneaker-Shop „Arkade“","branche":"Shop & Mode","aktiv":true,
+  "text":"Eine beleuchtete Schuhwand: antippen, Kamera fährt heran, Farbe wechseln, Größe wählen, in den Warenkorb.",
+  "punkte":["Produkte mit Farben und Größen","Kamerafahrt und Lichtwand","Warenkorb mit Bestellung per E-Mail"],"nehmen":"studio"},
+ {"id":"anzug","slug":"massschneider-varden","name":"Maßschneider „Varden“","branche":"Mode & Handwerk","aktiv":false,
+  "text":"Scroll-Film: Hemd, Weste und Sakko setzen sich beim Scrollen zum Anzug zusammen.",
+  "punkte":["Scroll-Film in Kinoqualität","Termin für Maßanfertigung","Ideal für Ateliers und Manufakturen"],"nehmen":"anfrage"}
+]

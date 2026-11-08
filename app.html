@@ -99,6 +99,23 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
 #dmz .st.ok{background:rgba(56,211,159,.12);border-color:rgba(56,211,159,.45)}
 #dmz .zu{float:right;background:none;border:0;color:#9b97b8;font-size:22px;cursor:pointer;margin:-8px -6px 0 0}
 #dmz .fe{color:#ff8f8f;font-size:14px;min-height:18px}
+<style id="pr-vorlagen-css">
+/* 08.11.2026 Claude: Premium-Vorlagen-Editor */
+#ved{z-index:35;grid-template-columns:400px 1fr}@media(max-width:900px){#ved{grid-template-columns:minmax(0,1fr)}}#ved .vpan{overflow:auto}.vform{padding:14px;display:grid;gap:12px}
+.vkopf b{display:block;font-size:17px}.vkopf small,.vhin{color:var(--mu);font-size:12.5px;display:block;line-height:1.45}
+.vsek{background:var(--p2);border:1px solid var(--ln);border-radius:14px;padding:12px}.vsek>summary{cursor:pointer;font-weight:600;list-style:none}.vsek>summary::before{content:"▸ ";color:var(--ak2)}.vsek[open]>summary::before{content:"▾ "}
+.vsek[open]>summary{margin-bottom:10px}.vsub{margin:8px 0}.vsub>summary{cursor:pointer;font-size:13px;color:var(--ak2)}
+.vl{display:grid;gap:4px;font-size:12.5px;color:var(--mu);margin-bottom:8px}.vl .in{font-size:15px;color:var(--tx)}.vl textarea.in{min-height:64px}
+.v2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.vzeile{display:flex;gap:8px;align-items:center;margin-bottom:8px}.vzeile .in{flex:1}
+.vkarte{border:1px solid var(--ln);border-radius:12px;padding:10px;margin-bottom:10px;background:#0c0b18}.vkarte.aus{opacity:.55}.vchk{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--mu)}
+.vfotos,.vdesigns,.vfarben{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 10px}.vdesigns,.vfarben{display:grid;gap:10px}
+.vdesign{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:start;border-top:1px solid var(--ln);padding-top:10px}.vdx .vl{margin-bottom:4px}
+.vfoto{display:grid;gap:4px;width:86px}.vfoto button{width:86px;height:86px;border-radius:12px;border:1.5px dashed #ff8a8a;background:#1a1426;overflow:hidden;padding:0;display:grid;place-items:center;color:#ffb0b0;font-size:12px}
+.vfoto.hat button{border:1px solid var(--ln);background:#fff}.vfoto img{width:100%;height:100%;object-fit:cover}.vfoto small{font-size:11px;color:var(--mu);line-height:1.3;word-break:break-word}.vfoto .fehlt{color:#ff9a9a}
+.vfarbe{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--mu)}.vfarbe input{width:38px;height:32px;border:0;background:none;padding:0}
+.vweg{font-size:12px;color:#ff9a9a}.vmsg{background:#38d39f1a;border:1px solid #38d39f66;border-radius:12px;padding:12px;font-size:14px}.vmsg.fe{background:#ff6a6a14;border-color:#ff6a6a66}
+.vende{position:sticky;bottom:-14px;background:var(--p1);padding:10px 0 14px;display:grid;gap:6px}
+#vGross{display:none}@media(max-width:900px){#vGross{display:inline-block}#ved.gross .vpan{display:none}#ved .vpan{max-height:44vh}#ved #vSave{display:none}#ved #vPub{padding:7px 9px;font-size:12px}}
 </style></head><body>
 
 <div class="app" id="app">
@@ -123,7 +140,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
       <h2>Deine Website.<br><em>In wenigen Minuten.</em></h2>
       <p>Erzähl einfach, was du machst. Die KI baut dir eine Website, die nach Agentur aussieht. Kein Abo.</p>
       <button class="btn" data-v="neu">⚡ Jetzt Website erstellen →</button> <a class="btn g" href="kino/beauty/" target="_blank" style="text-decoration:none;display:inline-block">▶ Live-Demo ansehen</a>
-      <div class="chk"><span><b>✓</b> Einmalig 99 €</span><span><b>✓</b> Keine Abos</span><span><b>✓</b> In Minuten online</span><span><b>✓</b> Hosting inklusive</span></div>
+      <div class="chk"><span><b>✓</b> Ab 99 € einmalig</span><span><b>✓</b> Keine Abos</span><span><b>✓</b> In Minuten online</span><span><b>✓</b> Hosting inklusive</span></div>
       <div class="dev"><div><iframe src="kino/beauty/" loading="lazy" tabindex="-1"></iframe></div></div>
      </div>
      <div class="sec"><h3>Beispiel-Websites</h3><div class="tpls" id="tplA"></div></div>
@@ -132,7 +149,7 @@ input.in{width:100%;background:#0c0b18;border:1px solid var(--ln);border-radius:
      <div class="card"><h3>Neue Website erstellen</h3><textarea class="in" id="dashW" placeholder="z. B. „Ich bin Friseurin in Stuttgart und möchte eine edle Website mit Online-Termin.“"></textarea><button class="btn" style="width:100%;margin-top:10px" id="dashGo">Website mit KI erstellen →</button></div>
      <div class="card"><h3>Schnellaktionen</h3><button class="q" data-v="vor">Vorlage auswählen <span>›</span></button><button class="q" data-v="neu">Eigene Fotos &amp; Logo hochladen <span>›</span></button><button class="q" data-v="dom">Domain verbinden <span>›</span></button></div>
      <div class="card"><h3>Deine Websites <a href="#" data-v="meine" style="font-size:12px;color:var(--ak2)">Alle</a></h3><div id="mini"></div></div>
-     <div class="card price"><h3 style="font-size:18px">Nur 99 € – kein Abo</h3><ul><li>Website mit KI erstellen</li><li>Hosting inklusive</li><li>Alle Funktionen</li><li>Einmalig bezahlen</li></ul></div>
+     <div class="card price"><h3 style="font-size:18px">Ab 99 € – kein Abo</h3><ul><li>Website mit KI erstellen</li><li>Hosting inklusive</li><li>Alle Funktionen</li><li>Einmalig bezahlen</li></ul></div>
     </div>
    </div>
   </section>
@@ -182,9 +199,18 @@ const TPL=[{id:"beauty",n:"Beauty & Friseur",u:"kino/beauty/",d:"Film-Look, Onli
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 let P=[];try{P=JSON.parse(localStorage.getItem("pr_projekte")||"[]")}catch(_){}
 const API="https://2-31-5-96.sslip.io/konto/";let TOK="",MAIL="",tm=null;
+// 08.11.2026 Claude: Gast-Weg – Geräte-Kennung (nur für das Tageslimit kostenloser KI-Vorschauen)
+let GERAET="";try{GERAET=localStorage.getItem("pr_geraet")||"";if(!GERAET){GERAET="g"+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem("pr_geraet",GERAET)}}catch(_){GERAET="g-ohne-speicher"}
+const KOPF=()=>({"content-type":"application/json",authorization:"Bearer "+(TOK||"gast"),"x-pr-geraet":GERAET});
+const IDB={db:null,open(){return this.db||(this.db=new Promise((ok,no)=>{try{const r=indexedDB.open("pagerush",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}}))},
+ async set(k,v){try{const d=await this.open();await new Promise((ok,no)=>{const t=d.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(_){}},
+ async get(k){try{const d=await this.open();return await new Promise((ok,no)=>{const q=d.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})}catch(_){return null}}};
+let PUB_ID="";
 try{TOK=localStorage.getItem("pr_token")||"";MAIL=localStorage.getItem("pr_mail")||""}catch(_){}
-const sync=()=>{if(!TOK)return;clearTimeout(tm);tm=setTimeout(()=>fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:P})}).then(r=>{if(r.status==401)abmelden()}).catch(()=>{}),900)};
-const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){};sync()};
+const fuerServer=()=>P.map(p=>p.t=="vorlage"&&p.id!==PUB_ID?Object.assign({},p,{html:""}):p);
+const sync=()=>{if(!TOK)return;clearTimeout(tm);tm=setTimeout(()=>fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:fuerServer()})}).then(r=>{if(r.status==401)abmelden()}).catch(()=>{}),900)};
+const store=()=>{try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){try{localStorage.setItem("pr_projekte",JSON.stringify(P.map(p=>p.t=="vorlage"?Object.assign({},p,{daten:null,html:"",nurIdb:1}):p)))}catch(__){}}IDB.set("projekte",P);sync()};
+IDB.get("projekte").then(v=>{if(!Array.isArray(v)||!v.length)return;const m=new Map(v.map(p=>[p.id,p]));P=P.map(p=>(p.nurIdb||!p.daten&&p.t=="vorlage")&&m.get(p.id)?m.get(p.id):p);const ids=new Set(P.map(p=>p.id));v.forEach(p=>{if(!ids.has(p.id))P.push(p)});try{fill()}catch(_){}});
 function abmelden(){TOK="";MAIL="";try{localStorage.removeItem("pr_token");localStorage.removeItem("pr_mail")}catch(_){}ui()}
 let sel="beauty",cur=null,lastEl=null;
 function tplCard(t,cls){return `<div class="tpl" data-t="${t.id}" ${t.soon?'style="opacity:.7"':''}><div class="pv ${t.soon?'soon':''}">${t.soon?'Bald':'<iframe src="'+t.u+'" loading="lazy" tabindex="-1"></iframe>'}</div><div class="in"><div><b>${t.n}</b><br><small>${t.d||'In Arbeit'}</small></div>${t.soon?'':'<button class="btn sm">Nehmen</button>'}</div></div>`}
@@ -192,7 +218,7 @@ function fill(){["tplA","tplV"].forEach(i=>$("#"+i).innerHTML=TPL.filter(t=>!t.s
  $("#tplN").innerHTML=TPL.filter(t=>!t.soon).map(t=>tplCard(t)).join("");
  $$("#tplN .tpl").forEach(c=>c.classList.toggle("sel",c.dataset.t==sel));
  $$("#tplN .tpl").forEach(c=>c.style.outline=c.dataset.t==sel?"2px solid #7c5cff":"");
- const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${(TPL.find(t=>t.id==p.t)||{n:"KI-Website"}).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span><button class="btn g sm" data-del="${p.id}" style="margin-left:8px">Löschen</button></div>`).join("")||'<p style="color:var(--mu);margin-bottom:10px">Noch keine Website.</p><button class="btn sm" data-v="ki">＋ Website mit KI erstellen</button>';
+ const rows=P.map(p=>`<div class="row" data-id="${p.id}" style="cursor:pointer"><div class="thumb"></div><div><b>${p.name}</b><br><small style="color:var(--mu)">${p.t=="vorlage"?"Premium-Vorlage":(TPL.find(t=>t.id==p.t)||{n:"KI-Website"}).n}</small></div><span class="st ${p.pub?'on1':'dr'}">${p.pub?'Online':'Entwurf'}</span><button class="btn g sm" data-del="${p.id}" style="margin-left:8px">Löschen</button></div>`).join("")||'<p style="color:var(--mu);margin-bottom:10px">Noch keine Website.</p><button class="btn sm" data-v="ki">＋ Website mit KI erstellen</button>';
  $("#liste").innerHTML=rows;$("#mini").innerHTML=rows}
 function view(v){if(v=="ki"){showStudio();return}$$("section").forEach(s=>s.classList.add("hide"));$("#v-"+v).classList.remove("hide");$$(".nav").forEach(n=>n.classList.toggle("on",n.dataset.v==v));$("#titel").textContent=({dash:"Dashboard",neu:"Neue Website",meine:"Meine Websites",vor:"Vorlagen",ki:"KI-Assistent",dom:"Domains & E-Mail",set:"Einstellungen"})[v]}
 document.addEventListener("click",e=>{
@@ -209,10 +235,10 @@ $("#mkBtn").onclick=()=>{const p={id:"p"+Date.now(),name:$("#nFirma").value.trim
 // Editor
 const fr=$("#fr");
 function say(t,u){const d=document.createElement("div");d.className="m"+(u?" u":"");d.innerHTML=t;$("#msgs").appendChild(d);$("#msgs").scrollTop=1e9}
-function open(p){if(p.t=="gen")return openGen(p);cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");
+function open(p){if(p.t=="gen")return openGen(p);if(p.t=="vorlage")return vEdit(p);cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");
  if(!Array.isArray(cur.ed.tx)||(cur.ed.tx[0]&&cur.ed.tx[0].s)){cur.ed.tx=[];cur.ed.im=[]}
  $("#msgs").innerHTML="";say("Hallo! Schreib mir unten, was du ändern willst. Oder tipp direkt in der Vorschau auf einen Text. Eigene Fotos setzt du über die Bilder-Leiste ein.");
- fr.onload=()=>{apply();setTimeout(()=>{const d=doc();d&&slots(d)},1800);if(p.txt&&!p.ki&&TOK){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.removeAttribute("srcdoc");fr.removeAttribute("sandbox");fr.src=TPL.find(t=>t.id==p.t).u;chipsSet(false);renderProj()}
+ fr.onload=()=>{apply();setTimeout(()=>{const d=doc();d&&slots(d)},1800);if(p.txt&&!p.ki){p.ki=1;store();say("Ich passe die Texte an dein Geschäft an …");cmd("Passe alle Texte dieser Website an dieses Geschäft an, passend und hochwertig: "+p.name+". "+p.txt,true)}};fr.removeAttribute("srcdoc");fr.removeAttribute("sandbox");fr.src=TPL.find(t=>t.id==p.t).u;chipsSet(false);renderProj()}
 const PLACE='<!doctype html><body style="margin:0;background:#0a0912;color:#9b97b8;font:16px system-ui;display:grid;place-items:center;height:100vh;text-align:center"><div style="max-width:320px;padding:20px"><div style="font-size:42px">✦</div><p style="margin-top:12px">Hier erscheint deine Website.<br>Beschreib sie im Chat.</p></div>';
 let pend=[];
 function withImgs(p){return (p.html||"").replace(/\{\{IMG(\d+)\}\}/g,(m,n)=>(p.imgs||[])[n-1]||"")}
@@ -220,7 +246,7 @@ function chipsSet(g){$("#chips").innerHTML=(g?["Mehr 3D-Effekt beim Scrollen","E
 function renderProj(){$("#proj").innerHTML=P.map(p=>`<button data-o="${p.id}" class="${cur&&cur.id==p.id?"on":""}">${(p.name||"Website").replace(/</g,"")}</button>`).join("")+'<button data-o="">＋ Neu</button>'}
 $("#proj").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.o)open(P.find(p=>p.id==b.dataset.o));else newState()};
 function newState(){cur=null;$("#ed").classList.remove("hide");$("#edName").textContent="Neues Projekt";$("#edSt").textContent="";fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.srcdoc=PLACE;$("#msgs").innerHTML="";say("Hallo! Beschreib mir deine Website, ich baue sie komplett. Zum Beispiel: <b>„Friseursalon in Esslingen, edel, dunkel, mit Termin-Buchung und Scroll-Effekten“</b>. Fotos kannst du mit 📎 hinzufügen.");chipsSet(true);$("#slots").innerHTML="<small>Fotos mit 📎 hinzufügen</small>";renderProj()}
-function showStudio(){$("#ed").classList.remove("hide");P.length&&P[0].t=="gen"?open(P[0]):newState()}
+function showStudio(){$("#ed").classList.remove("hide");P.length&&(P[0].t=="gen"||P[0].t=="vorlage"&&P[0].daten)?open(P[0]):newState()}
 function openGen(p){cur=p;$("#ed").classList.remove("hide");$("#edName").textContent=p.name;$("#edSt").textContent=p.pub?"Online":"Entwurf";$("#edSt").className="st "+(p.pub?"on1":"dr");fr.onload=null;fr.setAttribute("sandbox","allow-scripts");fr.removeAttribute("src");fr.srcdoc=p.html?withImgs(p):PLACE;$("#msgs").innerHTML="";say(p.html?"Deine Website ist geladen. Sag mir, was ich ändern soll.":"Ich baue …");chipsSet(true);gSlots();renderProj()}
 function gSlots(){$("#slots").innerHTML=(cur&&cur.imgs&&cur.imgs.length)?cur.imgs.map((u,i)=>`<button title="IMG${i+1}"><img src="${u}" alt=""></button>`).join(""):"<small>Fotos mit 📎 hinzufügen</small>"}
 let busy=false;
@@ -232,8 +258,8 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
  let acc="",lastLen=0,fin="",info="";
  const fix=h=>{const i=h.toLowerCase().indexOf("<!doctype");if(i>0)h=h.slice(i);return h.replace(/\{\{IMG(\d+)\}\}/g,(x,n)=>(p.imgs||[])[n-1]||"")};
  const show=()=>{if(acc.search(/<body/i)<0||acc.length-lastLen<1200&&lastLen)return;lastLen=acc.length;if(cur&&cur.id==p.id)fr.srcdoc=csp(fix(acc))};
- fetch(API+"bauen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({anweisung:t,html:p.html||"",bilder:(p.imgs||[]).length})}).then(async r=>{
-  if(!r.ok||!r.body){const j=await r.json().catch(()=>({}));throw j.fehler||"Das hat nicht geklappt."}
+ fetch(API+"bauen",{method:"POST",headers:KOPF(),body:JSON.stringify({anweisung:t,html:p.html||"",bilder:(p.imgs||[]).length})}).then(async r=>{
+  if(!r.ok||!r.body){const j=await r.json().catch(()=>({}));if(r.status==429&&j.anmelden&&!TOK){setTimeout(()=>lgAuf("limit"),400)}throw j.fehler||"Das hat nicht geklappt."}
   const rd=r.body.getReader(),dec=new TextDecoder();let buf="";
   for(;;){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let k;
    while((k=buf.indexOf("\n\n"))>=0){const line=buf.slice(0,k);buf=buf.slice(k+2);if(!line.startsWith("data:"))continue;let o;try{o=JSON.parse(line.slice(5))}catch(_){continue}
@@ -241,12 +267,12 @@ function bauen(t,neu){if(busy)return say("Ich arbeite noch. Einen Moment.");busy
   if(!fin)throw "Die Verbindung wurde unterbrochen. Bitte nochmal.";
   clearInterval(iv);busy=false;m.remove();p.prev=p.html;p.html=fin;store();if(cur&&cur.id==p.id){fr.srcdoc=pageHtml(p);say(info?("Fertig ✓ "+info.replace(/</g,"&lt;")+"<br><small>Sag mir, was ich noch ändern soll.</small>"):"Fertig ✓ Scroll in der Vorschau nach unten. Sag mir, was ich ändern soll.")}
  }).catch(x=>{clearInterval(iv);busy=false;m.remove();if(cur&&cur.id==p.id)fr.srcdoc=p.html?pageHtml(p):PLACE;say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")})}
-function newGen(t){if(!TOK){try{sessionStorage.setItem("pagerush_start",t)}catch(_){}lgAuf();return}const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
+function newGen(t){const p={id:"p"+Date.now(),name:t.replace(/^(ich|wir)\s+(bin|sind|habe|haben|möchte|will)\s+/i,"").slice(0,26)||"Meine Website",t:"gen",txt:t,html:"",imgs:pend.slice(),pub:0,ed:{}};pend=[];P.unshift(p);store();fill();openGen(p);fragen(p,t)}
 // 02.11. Djengo: die KI schreibt aus wenigen Worten selbst einen professionellen Prompt, den man sieht und ändern kann
 function profiPrompt(p,z){const bg=document.createElement("div");bg.className="frg-bg";const box=document.createElement("div");box.className="frg";bg.appendChild(box);
  box.innerHTML='<b>✦ Ich schreibe deinen Profi-Prompt …</b><small style="color:#b9b5d6">Dauert ca. 10 Sekunden.</small>';document.body.appendChild(bg);
  const weiter=x=>{bg.remove();p.txt=x;store();bauen(x,true)};
- fetch(API+"prompt",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({text:z})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
+ fetch(API+"prompt",{method:"POST",headers:KOPF(),body:JSON.stringify({text:z})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
   if(!ok||!j.prompt)return weiter(z);
   box.innerHTML='<b>✦ Dein Profi-Prompt</b><small style="color:#b9b5d6">Die KI hat ihn aus deinen Angaben geschrieben. Du kannst ihn noch ändern.</small><textarea id="pp-t" class="pp-t"></textarea><div class="frg-a"><button type="button" class="btn sm" id="pp-go">So bauen</button><button type="button" class="frg-skip" id="pp-alt">Ohne Profi-Prompt bauen</button></div>';
   const ta=box.querySelector("#pp-t");ta.value=j.prompt;box.querySelector("#pp-go").onclick=()=>weiter(ta.value.trim()||z);box.querySelector("#pp-alt").onclick=()=>weiter(z)
@@ -301,18 +327,17 @@ function slots(d){const box=$("#slots");const seen=new Set();let h="";
  d.querySelectorAll("img").forEach(im=>{const k=im.dataset.prK||(im.dataset.prK=im.getAttribute("src")||"");if(!k||seen.has(k)||k.startsWith("data:")&&false)return;seen.add(k);h+=`<button data-k="${k.replace(/"/g,"")}"><img src="${im.currentSrc||im.src}" alt=""></button>`});
  box.innerHTML=h||"<small>Keine Bilder gefunden</small>"}
 const COL={gold:"#c8a465",blau:"#3d7bff",rot:"#e0453a",grün:"#2fbf71",gruen:"#2fbf71",lila:"#8b5cf6",rosa:"#ec6fa8",orange:"#f2893a"};
-function cmd(t,ki){if(!cur||(!TOK&&cur.t=="gen"&&!cur.html)){newGen(t);return}
- if(cur.t=="gen"){if(!TOK){lgAuf();return}if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}if(/\b(neue|komplett neue|ganz neue|andere)\s+((web)?seite|website|homepage)|\bvon vorne\b|\bkomplett neu\b|\b(bau|baue|erstell|erstelle|mach)\w*\s+(mir\s+)?(eine|ne)\s+([\w-]+\s+){0,3}[\w-]*?((web)?seite|website|homepage|landingpage)\b/i.test(t)){say("Das klingt nach einer <b>neuen Seite</b>. Ich frag kurz ein paar Dinge und schreib dir einen Profi-Prompt.");newGen(t);return}bauen(t);return}
+function cmd(t,ki){if(!cur){newGen(t);return}
+ if(cur.t=="gen"){if(/^rückgängig/i.test(t)){if(cur.prev){const x=cur.html;cur.html=cur.prev;cur.prev=x;store();fr.srcdoc=pageHtml(cur);say("Rückgängig gemacht ✓")}else say("Es gibt nichts zum Rückgängigmachen.");return}if(/\b(neue|komplett neue|ganz neue|andere)\s+((web)?seite|website|homepage)|\bvon vorne\b|\bkomplett neu\b|\b(bau|baue|erstell|erstelle|mach)\w*\s+(mir\s+)?(eine|ne)\s+([\w-]+\s+){0,3}[\w-]*?((web)?seite|website|homepage|landingpage)\b/i.test(t)){say("Das klingt nach einer <b>neuen Seite</b>. Ich frag kurz ein paar Dinge und schreib dir einen Profi-Prompt.");newGen(t);return}bauen(t);return}
  const l=t.toLowerCase();let m;
  if(!ki&&!/farbe|effekt\s+(tiefe|schwenk|zoom)/i.test(t)&&!/\btext|überschrift|titel|schreib|formulier|kürzer|länger|slogan|beschreibung|preis|name\b/i.test(t)){say("Das ist mehr als eine Textänderung. Ich baue dafür eine <b>komplett neue Seite</b> nach deiner Beschreibung.");newGen(t);return}
  if(!ki&&/effekt\s+(tiefe|schwenk|zoom)|animier|3\s?d|scroll|bewegung|kamerafahrt/i.test(t)){const d=doc();if(!cur.ed.hero)return say("Setz zuerst dein Foto bei <b>Titelbild</b> ein (Bilder-Leiste unten, Filmklappe). Dann bekommt es den 3D-Scroll-Effekt.");const f=(t.toLowerCase().match(/tiefe|schwenk|zoom/)||["tiefe"])[0];cur.ed.heroFx=f;store();d&&d.getElementById("pr-hero")&&d.getElementById("pr-hero")._u();return say("Titelbild-Effekt: <b>"+f+"</b> ✓ Scroll in der Vorschau nach unten, dann siehst du ihn. Weitere: Effekt Tiefe, Effekt Schwenk, Effekt Zoom.")}
  if(!ki&&(m=l.match(/farbe\s+(\w+)/))){const c=COL[m[1]];if(!c)return say("Diese Farbe kenne ich noch nicht. Probier: Gold, Blau, Rot, Grün, Lila, Rosa, Orange.");
   cur.ed.css=`:root{--gold:${c}!important;--akzent:${c}!important;--ak:${c}!important;--c:${c}!important}`;apply();store();return say("Farbe geändert ✓")}
- if(!TOK){say("Melde dich kurz an, dann kann die KI deine Wünsche umsetzen.");lgAuf();return}
  const d=doc();if(!d)return;const list=leaves(d);
  const texte=list.map((el,i)=>({i,v:el.textContent.trim().slice(0,200)})).slice(0,90);
  say("<small>Moment, ich arbeite daran …</small>");
- fetch(API+"bearbeiten",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({wunsch:t,texte})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
+ fetch(API+"bearbeiten",{method:"POST",headers:KOPF(),body:JSON.stringify({wunsch:t,texte})}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
   if(!ok)return say(j.fehler||"Das hat nicht geklappt.");
   (j.texte||[]).forEach(o=>{const el=list[o.i];if(!el)return;const k=el.dataset.prO||el.textContent.trim();el.dataset.prO=k;el.textContent=o.v;cur.ed.tx=(cur.ed.tx||[]).filter(x=>x.o!=k);cur.ed.tx.push({o:k,v:o.v})});
   if(j.farbe){cur.ed.css=`:root{--gold:${j.farbe}!important;--akzent:${j.farbe}!important;--ak:${j.farbe}!important;--c:${j.farbe}!important}`;const s2=d.getElementById("pr-ed")||d.head.appendChild(Object.assign(d.createElement("style"),{id:"pr-ed"}));s2.textContent=cur.ed.css}
@@ -334,36 +359,43 @@ $$("#seg button").forEach(x=>x.classList.toggle("on",+x.dataset.w==VW));
 $("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;$$("#seg button").forEach(x=>x.classList.toggle("on",x==b));VW=+b.dataset.w;ansicht()};
 addEventListener("resize",ansicht);new ResizeObserver(ansicht).observe(document.querySelector(".stage"));
 $("#back").onclick=()=>{$("#ed").classList.add("hide");fr.removeAttribute("srcdoc");fr.src="about:blank";fill();view("dash")};
-$("#save").onclick=()=>{store();say(TOK?"Gespeichert ✓ in deinem Konto":"Gespeichert ✓ (nur in diesem Browser. Melde dich an, um überall zugreifen zu können.)")};
+$("#save").onclick=()=>{store();if(!TOK){weiter=()=>$("#save").click();lgAuf("save");return}say("Gespeichert ✓ in deinem Konto")};
 var kSel="auto";function kTplFill(){$("#kTpl").innerHTML=`<button data-t="auto" class="${kSel=="auto"?"on":""}">Automatisch</button>`+TPL.filter(t=>!t.soon).map(t=>`<button data-t="${t.id}" class="${t.id==kSel?"on":""}">${t.n}</button>`).join("")}
 kTplFill();$("#kTpl").onclick=e=>{const b=e.target.closest("button");if(!b)return;kSel=b.dataset.t;kTplFill()};
 $("#kGo").onclick=()=>{const txt=$("#kText").value.trim();if(!txt){$("#kText").focus();return}
- if(!TOK){lgAuf();return}
  const p={id:"p"+Date.now(),name:$("#kFirma").value.trim()||"Meine Website",t:(kSel=="auto"?(/restaurant|essen|küche|gourmet|café|cafe|bistro|speise|koch|pizza|bar\b|gastro/i.test(txt+" "+$("#kFirma").value)?"gourmet":"beauty"):kSel),txt,pub:0,ed:{}};P.unshift(p);store();fill();open(p)};
 function ui(){$("#mail").textContent=TOK?MAIL:"Anmelden";$("#av").textContent=(MAIL||"P")[0].toUpperCase()}
 let stufe=0;
 function lgZu(){$("#lg").classList.add("hide")}
-function lgAuf(){stufe=0;let w="";try{w=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||""}catch(_){}$("#lgH").textContent=w?"Fast geschafft!":"Anmelden";$("#lgT").textContent=w?"Bestätige kurz deine E-Mail – dann baue ich sofort deine Website. Wir schicken dir einen Code, kein Passwort, kein Abo.":"Gib deine E-Mail ein. Wir schicken dir einen Code. Kein Passwort nötig.";$("#lgX").textContent=w?"Erst umsehen":"Ohne Anmeldung weiter";$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
-$("#lgX").onclick=()=>{lgZu();showStudio();let w="";try{w=sessionStorage.getItem("pagerush_start")||""}catch(_){}if(w)say("Dein Wunsch ist gespeichert ✓ Sobald du dich mit deiner E-Mail anmeldest (oben rechts), baue ich die Seite.")};$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
+let weiter=null;
+function lgAuf(w){stufe=0;const T={pub:["Fast online!","Zum Veröffentlichen brauchst du ein kostenloses Konto: E-Mail eingeben, du bekommst sofort einen Code. Kein Passwort. Dein Entwurf bleibt erhalten und wird in dein Konto übernommen."],save:["Speichern","Zum Speichern in deinem Konto: E-Mail eingeben, du bekommst sofort einen Code. Kein Passwort. Dein Entwurf bleibt erhalten."],limit:["Weiter bauen?","Du hast heute deine kostenlosen KI-Vorschauen ohne Konto genutzt. Melde dich kostenlos an (nur E-Mail-Code), dann geht es sofort weiter – dein Entwurf bleibt erhalten."]}[w]||["Anmelden","Gib deine E-Mail ein. Wir schicken dir einen Code. Kein Passwort nötig."];
+ $("#lgH").textContent=T[0];$("#lgT").textContent=T[1];$("#lgX").textContent=w?"Später":"Ohne Anmeldung weiter";if(!w)weiter=null;$("#lgM").classList.remove("hide");$("#lgC").classList.add("hide");$("#lgB").textContent="Code senden";$("#lgE").textContent="";$("#lg").classList.remove("hide");$("#lgM").focus()}
+$("#lgX").onclick=()=>{weiter=null;lgZu();if(!window.VCUR&&$("#ed").classList.contains("hide"))showStudio()};$("#mail").onclick=()=>{TOK?(confirm("Abmelden?")&&abmelden()):lgAuf()};
 $("#lgB").onclick=async()=>{const m=$("#lgM").value.trim().toLowerCase(),E=$("#lgE");E.textContent="";$("#lgB").disabled=true;
  try{if(stufe==0){const r=await fetch(API+"code",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";stufe=1;$("#lgM").classList.add("hide");$("#lgC").classList.remove("hide");$("#lgC").focus();$("#lgT").textContent="Code gesendet an "+m+". Schau auch im Spam-Ordner nach.";$("#lgB").textContent="Anmelden"}
  else{const r=await fetch(API+"login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({email:m,code:$("#lgC").value})});const j=await r.json();if(!r.ok)throw j.fehler||"Fehler";TOK=j.token;MAIL=j.email;try{localStorage.setItem("pr_token",TOK);localStorage.setItem("pr_mail",MAIL)}catch(_){}
-  const g=await fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>r.json()).catch(()=>({projekte:[]}));const srv=g.projekte||[];const ids=new Set(srv.map(p=>p.id));P=srv.concat(P.filter(p=>!ids.has(p.id)));store();fill();ui();lgZu();showStudio();startText()}}
+  const g=await fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>r.json()).catch(()=>({projekte:[]}));const srv=g.projekte||[];const ids=new Set(srv.map(p=>p.id));P=P.filter(p=>!ids.has(p.id)).concat(srv);store();fill();ui();lgZu();if(!window.VCUR)showStudio();if(window.VCUR)vInfo("Angemeldet ✓ Dein Entwurf ist jetzt in deinem Konto gespeichert.");if(weiter){const w=weiter;weiter=null;setTimeout(w,250)}else startText()}}
  catch(x){E.textContent=typeof x=="string"?x:"Keine Verbindung. Bitte nochmal."}$("#lgB").disabled=false};
 $("#lgM").onkeydown=$("#lgC").onkeydown=e=>{if(e.key=="Enter")$("#lgB").click()};
 ui();
 if(TOK)fetch(API+"projekte",{headers:{authorization:"Bearer "+TOK}}).then(r=>{if(r.status==401){abmelden();return null}return r.json()}).then(g=>{if(!g)return;const srv=g.projekte||[],ids=new Set(srv.map(p=>p.id));P=srv.concat(P.filter(p=>!ids.has(p.id)));try{localStorage.setItem("pr_projekte",JSON.stringify(P))}catch(_){};fill()}).catch(()=>{});
-else setTimeout(()=>{showStudio();lgAuf()},400);
-function startText(){let st="";try{st=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||"";sessionStorage.removeItem("pagerush_start")}catch(_){}if(st&&TOK){showStudio();newGen(st)}}
-if(TOK){setTimeout(()=>{const hasS=(()=>{try{return !!(sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w"))}catch(_){return false}})();if(hasS)startText();else showStudio()},300)}
-$("#pub").onclick=async()=>{if(!TOK){lgAuf();return}if(!cur||cur.t!="gen"||!cur.html)return say("Bau zuerst eine Website mit der KI, dann kannst du sie veröffentlichen.");
+else setTimeout(()=>{if(!vStart()){showStudio();startText()}},300);
+function startText(){let st="";try{st=sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w")||"";sessionStorage.removeItem("pagerush_start");if(st&&new URLSearchParams(location.search).get("w"))history.replaceState(null,"",location.pathname)}catch(_){}if(st){showStudio();newGen(st)}}
+if(TOK){setTimeout(()=>{if(vStart())return;const hasS=(()=>{try{return !!(sessionStorage.getItem("pagerush_start")||new URLSearchParams(location.search).get("w"))}catch(_){return false}})();if(hasS)startText();else showStudio()},300)}
+$("#pub").onclick=async()=>{if(!cur||cur.t!="gen"||!cur.html)return say("Bau zuerst eine Website mit der KI, dann kannst du sie veröffentlichen.");if(!TOK){weiter=()=>$("#pub").click();lgAuf("pub");return}
  say("<small>Ich stelle deine Website online …</small>");
  try{await fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:P})});
   const r=await fetch(API+"veroeffentlichen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({id:cur.id})});const j=await r.json();if(!r.ok)throw j.fehler||"Das hat nicht geklappt.";
   cur.pub=1;cur.url=j.url;store();$("#edSt").textContent="Online";$("#edSt").className="st on1";
   say(`Deine Website ist online ✓<br><a href="${j.url}" target="_blank" rel="noopener" style="color:#b08cff;word-break:break-all">${j.url}</a><br><br>Eigene Domain und dauerhaft online: <button class="btn sm" id="kauf99">Für 99 € freischalten</button>`);
   document.getElementById("kauf99").onclick=()=>kaufen(j.url)}catch(x){say(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.")}};
-function kaufen(url){say("<small>Ich leite dich zur sicheren Zahlung weiter …</small>");fetch("https://2-31-5-96.sslip.io/pagerush-api/bestellung",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:MAIL,mail:MAIL,firma:(cur&&cur.name)||"",branche:"",domain:"",text:"Studio-Projekt: "+((cur&&cur.name)||"")+" – Live-Vorschau: "+url})}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const z="https://buy.stripe.com/eVq28rbUEdus0z74tJ3cc08?client_reference_id="+encodeURIComponent(j.ref)+"&prefilled_email="+encodeURIComponent(MAIL);try{window.top.location.href=z}catch(_){location.href=z}}).catch(()=>say("Das hat gerade nicht geklappt. Bitte nochmal oder schreib an info@stahlkern.gmbh."))}
+// 08.11.2026: zwei Bezahl-Links – 99 € (Selbst gemacht/KI) und 199 € (Premium-Vorlage). Gleicher Ablauf: Bestellung speichern -> Stripe mit client_reference_id
+const KAUF_LINKS={selbst:"https://buy.stripe.com/eVq28rbUEdus0z74tJ3cc08",premium:""/*PREMIUM_LINK*/};
+function kaufen(url,paket,projekt,melde){paket=paket||"selbst";const pr=projekt||cur;const m=melde||say;const link=KAUF_LINKS[paket];
+ m("<small>Ich leite dich zur sicheren Zahlung weiter …</small>");
+ fetch("https://2-31-5-96.sslip.io/pagerush-api/bestellung",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:MAIL,mail:MAIL,firma:(pr&&pr.name)||"",branche:paket=="premium"?"Premium-Vorlage "+((pr&&pr.vorlage)||""):"",domain:"",text:(paket=="premium"?"Paket: Premium-Vorlage 199 € – ":"Paket: Selbst gemacht 99 € – ")+"Studio-Projekt: "+((pr&&pr.name)||"")+" – Live-Vorschau: "+url})}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{
+  if(!link){m("Danke! Deine Bestellung <b>"+j.ref+"</b> ist gespeichert. Die Online-Zahlung für Premium-Vorlagen wird gerade freigeschaltet – wir schicken dir den Zahlungslink per Mail an "+MAIL+".");return}
+  const z=link+"?client_reference_id="+encodeURIComponent(j.ref)+"&prefilled_email="+encodeURIComponent(MAIL);try{window.top.location.href=z}catch(_){location.href=z}}).catch(()=>m("Das hat gerade nicht geklappt. Bitte nochmal oder schreib an info@stahlkern.gmbh."))}
 fill();
 
 /* ---------- 07.11.2026 Claude: Eigene Domain verbinden ---------- */
@@ -383,7 +415,7 @@ fill();
   const inp=box.querySelector("#dDom");inp.focus();inp.onkeydown=e=>{if(e.key=="Enter")box.querySelector("#dVer").click()};
   box.querySelector("#dVer").onclick=async()=>{const fe=box.querySelector("#dFe");fe.textContent="";if(!cur||!cur.pub){fe.textContent="Bitte zuerst oben auf „Veröffentlichen“ klicken.";return}
    try{const r=await fetch(API+"domain",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({id:cur.id,domain:inp.value})});const j=await r.json();
-    if(r.status==402){zu();say(`Fast geschafft! Schalte deine Website zuerst frei, dann verbindest du deine Domain. <button class="btn sm" id="kauf99b">Für 99 € freischalten</button>`);document.getElementById("kauf99b").onclick=()=>kaufen99();return}
+    if(r.status==402){zu();const pv=cur&&cur.t=="vorlage";say(`Fast geschafft! Schalte deine Website zuerst frei, dann verbindest du deine Domain. <button class="btn sm" id="kauf99b">Für ${pv?"199":"99"} € freischalten</button>`);document.getElementById("kauf99b").onclick=()=>pv?kaufen(cur.url,"premium",cur):kaufen99();return}
     if(!r.ok)throw j.fehler||"Das hat nicht geklappt.";D=j.domain;cur.domain=D;store();schritt3()}catch(x){fe.textContent=typeof x=="string"?x:"Keine Verbindung. Bitte nochmal."}}}
  function anleitung(){const e=ANB=="ionos"?`<ol><li><a class="btn sm" href="https://my.ionos.de/domain-dns-settings/${encodeURIComponent(D)}" target="_blank" rel="noopener">Bei IONOS einloggen</a> (öffnet direkt deine DNS-Einstellungen)</li><li>Gibt es schon einen <b>A-Eintrag</b> für <b>@</b> oder <b>www</b>? Dann auf <b>Bearbeiten</b> klicken, sonst auf <b>Record hinzufügen → A</b>.</li><li>Hostname <b>@</b>, „Zeigt auf“: <b>${IP}</b> → <b>Speichern</b>.</li><li>Das Gleiche noch einmal mit Hostname <b>www</b>.</li></ol>`
   :ANB=="strato"?`<ol><li><a class="btn sm" href="https://www.strato.de/apps/CustomerService" target="_blank" rel="noopener">Bei STRATO einloggen</a></li><li><b>Domains → Domainverwaltung</b> → beim Zahnrad deiner Domain auf <b>DNS</b>.</li><li>Bei <b>A-Record</b> auf <b>verwalten</b> → „Eigene IP-Adresse“: <b>${IP}</b> → <b>Einstellung übernehmen</b>.</li><li>Falls gefragt: für <b>www</b> ebenfalls <b>${IP}</b>.</li></ol>`
@@ -401,9 +433,116 @@ fill();
   else if(j.status=="dns_ok"){st.innerHTML=`🔐 Einträge gefunden! Ich richte gerade das Sicherheitsschloss (https) ein … gleich fertig.`}
   else{st.innerHTML=`⏳ Warte auf deine Einträge für <b>${esc(D)}</b> … ${j.a?"@ ✓":"@ noch nicht"} · ${j.www?"www ✓":"www noch nicht"}. Ich prüfe automatisch jede Minute.`}}catch(_){}}
  const kaufen99=()=>{try{kaufen(cur.url)}catch(_){}};
- window.domainStart=function(){if(!TOK){lgAuf();return}if(cur&&cur.domain){D=cur.domain;schritt3()}else schritt1()};
+ window.domainStart=function(){if(!TOK){weiter=()=>window.domainStart();lgAuf("pub");return}if(cur&&cur.domain){D=cur.domain;schritt3()}else schritt1()};
  // Knopf „Eigene Domain“ in jeder Erfolgsmeldung + nach der Zahlung automatisch öffnen
  const altSay=say;window.say=say=function(t,u){altSay(t,u);try{if(/Deine Website ist online ✓/.test(t)){const d=document.createElement("div");d.className="m";d.innerHTML=`<button class="btn sm" onclick="domainStart()">🌐 Eigene Domain verbinden</button>`;$("#msgs").appendChild(d)}}catch(_){}};
  try{if(new URLSearchParams(location.search).get("domain")=="1")setTimeout(()=>{const p=(P||[]).filter(x=>x.pub).slice(-1)[0];if(p){try{open(p.id)}catch(_){}cur=p}domainStart()},1600)}catch(_){}
 })();
+
+/* ---------- 08.11.2026 Claude: Premium-Vorlagen (199 €) – Vorlage wählen, Daten eingeben, Fotos, KI-Texte, Vorschau – alles ohne Anmeldung ---------- */
+const PV={nagelstudio:{slug:"nagelstudio-velour",n:"Nagelstudio Velour",art:"Nagelstudio"},sneaker:{slug:"sneaker-arkade",n:"Sneaker-Shop Arkade",art:"Sneaker-Shop"}};
+const PVC={};const pvGet=(id,f)=>PVC[id+f]||(PVC[id+f]=fetch("vorlagen/"+PV[id].slug+"/"+f+"?v=20261108").then(r=>{if(!r.ok)throw 0;return f.endsWith(".json")?r.json():r.text()}));
+window.VCUR=null;let vT=null,vVW=innerWidth<900?390:1440;
+const vesc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function vPath(o,p){return p.split(".").reduce((a,k)=>a==null?a:a[k],o)}
+function vSet(o,p,v){const k=p.split(".");let a=o;for(let i=0;i<k.length-1;i++){if(a[k[i]]==null)a[k[i]]=/^\d+$/.test(k[i+1])?[]:{};a=a[k[i]]}a[k[k.length-1]]=v}
+function vStart(){let id="";try{id=new URLSearchParams(location.search).get("vorlage")||""}catch(_){}if(!PV[id])return false;
+ const alt=P.find(p=>p.t=="vorlage"&&p.vorlage==id&&!p.pub&&p.daten);if(alt){vEdit(alt);return true}
+ pvGet(id,"start.json").then(d=>{const p={id:"v"+Date.now(),name:PV[id].n,t:"vorlage",vorlage:id,daten:d,html:"",pub:0,ed:{}};P.unshift(p);store();fill();vEdit(p)}).catch(()=>alert("Die Vorlage konnte nicht geladen werden. Bitte Seite neu laden."));return true}
+function vBox(){let b=$("#ved");if(b)return b;b=document.createElement("div");b.id="ved";b.className="ed";b.innerHTML=`
+ <div class="edbar"><button class="btn g sm" id="vBack">☰ Dashboard</button><div class="nm"><span id="vName">Vorlage</span><span class="st dr">Premium-Vorlage · Entwurf</span></div>
+  <div class="seg" id="vSeg"><button data-w="1440" title="Desktop-Ansicht">🖥<span class="sgt"> Desktop</span></button><button data-w="820" title="Tablet-Ansicht">▭<span class="sgt"> Tablet</span></button><button data-w="390" title="Handy-Ansicht">📱<span class="sgt"> Handy</span></button></div>
+  <button class="btn g sm" id="vGross" title="Vorschau groß / Formular">⤢</button><button class="btn g sm" id="vSave">Speichern</button><button class="btn sm" id="vPub">Veröffentlichen · 199 €</button></div>
+ <div class="chat vpan"><div class="vform" id="vForm"></div></div>
+ <div class="stage" id="vStage"><div class="frame" id="vFrame" style="width:100%"><iframe id="vfr" sandbox="allow-scripts allow-popups allow-forms" title="Vorschau deiner Website"></iframe></div></div>`;document.body.appendChild(b);
+ $("#vBack").onclick=()=>{b.classList.add("hide");window.VCUR=null;$("#ed").classList.add("hide");fill();view("dash");try{history.replaceState(null,"",location.pathname)}catch(_){}};
+ $("#vSeg").onclick=e=>{const x=e.target.closest("button");if(!x)return;vVW=+x.dataset.w;vAns()};
+ $("#vSave").onclick=()=>{store();if(!TOK){weiter=()=>$("#vSave").click();lgAuf("save");return}vInfo("Gespeichert ✓ in deinem Konto")};
+ $("#vPub").onclick=vPub;$("#vGross").onclick=()=>{b.classList.toggle("gross");$("#vGross").textContent=b.classList.contains("gross")?"✎":"⤢";setTimeout(vAns,30)};new ResizeObserver(vAns).observe($("#vStage"));addEventListener("resize",vAns);return b}
+function vAns(){const st=$("#vStage"),f=$("#vFrame"),fr=$("#vfr");if(!st)return;$$("#vSeg button").forEach(x=>x.classList.toggle("on",+x.dataset.w==vVW));const cs=getComputedStyle(st),av=st.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+ if(vVW<=av+2){f.style.width=Math.min(vVW,av)+"px";fr.style.width="100%";fr.style.height="100%";fr.style.transform=""}else{const k=av/vVW;f.style.width=av+"px";fr.style.width=vVW+"px";fr.style.height=(f.clientHeight/k)+"px";fr.style.transform="scale("+k+")";fr.style.transformOrigin="0 0"}}
+function vInfo(t,fehler){const m=$("#vMsg");if(!m)return;m.innerHTML=t;m.className="vmsg"+(fehler?" fe":"");m.hidden=false;m.scrollIntoView({block:"nearest",behavior:"smooth"})}
+function vEdit(p){window.VCUR=p;cur=null;const b=vBox();b.classList.remove("hide");$("#vName").textContent=p.name||PV[p.vorlage].n;vForm();vRender(true);setTimeout(vAns,30);
+ try{const u=new URL(location.href);if(u.searchParams.get("vorlage")!=p.vorlage){u.searchParams.set("vorlage",p.vorlage);history.replaceState(null,"",u.pathname+u.search)}}catch(_){}}
+async function vHtml(p){const v=await pvGet(p.vorlage,"vorlage.html");const d=Object.assign({},p.daten,{demo:false});const F=d.firma||{};
+ const basis=new URL("vorlagen/"+PV[p.vorlage].slug+"/",location.href).href;
+ const tit=vesc((F.name||PV[p.vorlage].art)+(F.ort?" – "+PV[p.vorlage].art+" in "+F.ort:""));
+ return v.replace("/*PR_DATEN*/",JSON.stringify(d).replace(/</g,"\\u003c")).replace(/__BASIS__/g,basis).replace(/<title>[^<]*<\/title>/,"<title>"+tit+"</title>")}
+function vRender(sofort){clearTimeout(vT);vT=setTimeout(async()=>{const p=window.VCUR;if(!p)return;try{$("#vfr").srcdoc=await vHtml(p)}catch(_){vInfo("Vorschau konnte nicht geladen werden. Bitte Seite neu laden.",1)}},sofort?0:450)}
+// Fotos verkleinern (Handy-Fotos sind oft 5 MB groß)
+function vBild(file,max,alpha){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const x=c.getContext("2d");if(!alpha){x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height)}x.drawImage(im,0,0,c.width,c.height);
+  let u=alpha?c.toDataURL("image/webp",.86):c.toDataURL("image/jpeg",.82);if(alpha&&!u.startsWith("data:image/webp"))u=c.toDataURL("image/png");ok(u)};im.onerror=no;im.src=r.result};r.onerror=no;r.readAsDataURL(file)})}
+const vFile=document.createElement("input");vFile.type="file";vFile.accept="image/*";vFile.style.display="none";document.body.appendChild(vFile);let vFileZiel=null;
+vFile.onchange=async()=>{const f=vFile.files[0];const z=vFileZiel;vFile.value="";if(!f||!z||!window.VCUR)return;try{const u=await vBild(f,z.max||1200,z.alpha);vSet(window.VCUR.daten,z.k,u);store();vForm();vRender()}catch(_){vInfo("Dieses Foto konnte nicht gelesen werden. Bitte ein JPG oder PNG nehmen.",1)}};
+// Formular
+function fIn(k,l,ph,typ){const v=vPath(window.VCUR.daten,k);return `<label class="vl">${l}<input class="in" data-k="${k}" ${typ?'type="'+typ+'"':""} value="${vesc(v==null?"":v)}" placeholder="${vesc(ph||"")}"></label>`}
+function fTa(k,l,ph,zeilen){const v=vPath(window.VCUR.daten,k);return `<label class="vl">${l}<textarea class="in" data-k="${k}" ${zeilen?'data-zeilen="1"':""} rows="3" placeholder="${vesc(ph||"")}">${vesc(Array.isArray(v)?v.join("\n"):(v||""))}</textarea></label>`}
+function fFoto(k,l,o){const v=vPath(window.VCUR.daten,k);return `<div class="vfoto ${v?"hat":""}"><button type="button" data-foto="${k}" data-max="${(o&&o.max)||1200}" data-alpha="${o&&o.alpha?1:""}" title="Foto wählen">${v?`<img src="${v}" alt="">`:"<span>＋ Foto</span>"}</button><small>${l}${v?` · <a href="#" data-weg="${k}">entfernen</a>`:` · <b class="fehlt">fehlt</b>`}</small></div>`}
+function fColor(k,l){const v=vPath(window.VCUR.daten,k)||"#cccccc";return `<label class="vfarbe"><input type="color" data-k="${k}" value="${vesc(v)}"><span>${l}</span></label>`}
+function vForm(){const p=window.VCUR,d=p.daten,id=p.vorlage;const fl=(d.firma||{});let h=`<div class="vkopf"><b>${vesc(PV[id].n)}</b><small>Premium-Vorlage · 199 € einmalig · Vorschau gratis, ohne Anmeldung</small></div>
+ <details open class="vsek"><summary>1 · Dein Geschäft</summary>${fIn("firma.name","Firmenname *","z. B. Nagelstudio Lea")}${fIn("firma.zusatz","Zusatz (klein neben dem Namen)",id=="sneaker"?"z. B. Sneaker Store":"z. B. Nail Studio")}
+  ${fIn("firma.ort","Ort","z. B. Böblingen")}${fIn("firma.adresse","Adresse","Straße Nr. · PLZ Ort")}${fIn("firma.telefon","Telefon","z. B. 07031 123456","tel")}${fIn("firma.email","E-Mail (Anfragen kommen hier an)","info@deine-firma.de","email")}
+  ${fIn("firma.inhaber","Inhaber/in (für das Impressum)","Vor- und Nachname")}${fTa("firma.oeffnungszeiten","Öffnungszeiten (eine Zeile pro Tag)","Di – Fr 10 – 19 Uhr",1)}
+  <div class="vfotos">${fFoto("firma.logo","Logo (optional)",{max:600,alpha:1})}${id=="nagelstudio"?fFoto("studio_foto","Foto vom Studio"):""}</div></details>
+ <details open class="vsek"><summary>2 · Texte – von der KI geschrieben</summary><label class="vl">Was macht euch besonders? (für die KI)<textarea class="in" id="vBes" rows="3" placeholder="${id=="sneaker"?"z. B. limitierte Modelle, Beratung im Laden, schneller Versand":"z. B. Naturkosmetik, ruhige Atmosphäre, auch Fußpflege"}">${vesc(p.besonders||"")}</textarea></label>
+  <button type="button" class="btn" id="vKi" style="width:100%">✦ Texte mit KI schreiben &amp; Vorschau bauen</button><small class="vhin">Gratis ohne Anmeldung (bis zu 3 KI-Vorschauen am Tag).</small>
+  <details class="vsub"><summary>Texte selbst ändern</summary>${Object.keys(d.texte||{}).filter(k=>typeof d.texte[k]=="string").map(k=>fTa("texte."+k,({hero_kicker:"Kleine Zeile oben",hero_titel:"Große Überschrift (*Wort* = schräg)",hero_text:"Text unter der Überschrift",farben_titel:"Überschrift Farben",farben_text:"Text Farben",designs_text:"Text Designs",beratung_text:"Beratungs-Text",studio_titel:"Überschrift Studio",preis_hinweis:"Hinweis unter den Preisen",termin_titel:"Überschrift Termin",termin_text:"Text Termin",band:"Laufband-Text",fokus_kicker:"Kleine Zeile Fokus",fokus_titel:"Überschrift Fokus"})[k]||k)).join("")}
+   ${(d.texte.fakten||d.texte.service||[]).map((f,i)=>{const b=d.texte.fakten?"texte.fakten.":"texte.service.";return fIn(b+i+".titel","Punkt "+(i+1)+" – Titel")+fTa(b+i+".text","Punkt "+(i+1)+" – Text")}).join("")}</details></details>`;
+ if(id=="nagelstudio"){h+=`<details open class="vsek"><summary>3 · Nageltypen, Preise &amp; Designs</summary><p class="vhin">Zu jedem Design gehört <b>dein eigenes Foto</b>. Ohne Foto zeigt die Seite einen deutlich markierten Platzhalter – nie fremde Bilder.</p>`+
+  (d.typen||[]).map((t,ti)=>`<div class="vkarte ${t.aktiv===false?"aus":""}"><div class="vzeile"><label class="vchk"><input type="checkbox" data-chk="typen.${ti}.aktiv" ${t.aktiv!==false?"checked":""}> anbieten</label><b>${vesc(t.name)}</b></div>
+   <div class="v2">${fIn("typen."+ti+".name","Name")}${fIn("typen."+ti+".kurz","Kurzname")}</div><div class="v2">${fIn("typen."+ti+".preis","Preis","ab 59 €")}${fIn("typen."+ti+".dauer","Dauer / Info","ca. 90 Min.")}</div>
+   <div class="vdesigns">${(t.designs||[]).map((x,di)=>`<div class="vdesign">${fFoto("typen."+ti+".designs."+di+".foto",vesc(x.name))}<div class="vdx">${fIn("typen."+ti+".designs."+di+".name","Design")}
+     ${x.farbwahl?`<details class="vsub"><summary>Fotos je Farbe (optional)</summary><div class="vfotos">${(d.farben||[]).map(c=>fFoto("typen."+ti+".designs."+di+".fotos."+c.id,vesc(c.name))).join("")}</div></details>`:""}
+     <a href="#" class="vweg" data-del="typen.${ti}.designs.${di}">Design entfernen</a></div></div>`).join("")}</div>
+   <button type="button" class="btn g sm" data-add-design="${ti}">＋ Design hinzufügen</button></div>`).join("")+`</details>
+  <details class="vsek"><summary>4 · Farben</summary>${(d.farben||[]).map((c,ci)=>`<div class="vzeile">${fColor("farben."+ci+".hex","")}<input class="in" data-k="farben.${ci}.name" value="${vesc(c.name)}"><a href="#" class="vweg" data-del="farben.${ci}">✕</a></div>`).join("")}<button type="button" class="btn g sm" data-add-farbe="1">＋ Farbe</button></details>`}
+ if(id=="sneaker"){h+=`<details open class="vsek"><summary>3 · Produkte</summary><p class="vhin">Bis 12 Produkte mit bis zu 3 Farben. Am schönsten wirken <b>freigestellte Produktfotos</b> (Schuh seitlich, ohne Hintergrund). Ohne Foto erscheint ein markierter Platzhalter.</p>`+
+  (d.produkte||[]).map((m,mi)=>`<div class="vkarte"><div class="v2">${fIn("produkte."+mi+".name","Name *")}${fIn("produkte."+mi+".preis","Preis in €","129","number")}</div><div class="v2">${fIn("produkte."+mi+".kategorie","Kategorie","Running")}${fIn("produkte."+mi+".groessen_txt","Größen (leer = Standard)",(d.groessen||[]).join(", "))}</div>
+   ${fTa("produkte."+mi+".text","Kurzbeschreibung","Für lange Läufe gebaut …")}${fIn("produkte."+mi+".aus_txt","Ausverkaufte Größen","z. B. 38, 46")}
+   ${(m.details||[]).map((x,xi)=>`<div class="v2">${fIn("produkte."+mi+".details."+xi+".0","Merkmal")}${fIn("produkte."+mi+".details."+xi+".1","Wert")}</div>`).join("")}
+   <div class="vfarben">${(m.farben||[]).map((c,ci)=>`<div class="vdesign">${fFoto("produkte."+mi+".farben."+ci+".bild",vesc(c.name||"Farbe"),{max:1100,alpha:1})}<div class="vdx">${fIn("produkte."+mi+".farben."+ci+".name","Farbname")}<div class="vzeile">${fColor("produkte."+mi+".farben."+ci+".hex1","Farbe 1")}${fColor("produkte."+mi+".farben."+ci+".hex2","Farbe 2")}</div><a href="#" class="vweg" data-del="produkte.${mi}.farben.${ci}">Farbe entfernen</a></div></div>`).join("")}</div>
+   ${(m.farben||[]).length<3?`<button type="button" class="btn g sm" data-add-pfarbe="${mi}">＋ Farbe</button>`:""} <a href="#" class="vweg" data-del="produkte.${mi}">Produkt entfernen</a></div>`).join("")+
+  `${(d.produkte||[]).length<12?'<button type="button" class="btn g sm" data-add-produkt="1">＋ Produkt</button>':""}</details>
+  <details class="vsek"><summary>4 · Versand</summary><div class="v2">${fIn("versandfrei_ab","Versandfrei ab €","100","number")}${fIn("versand","Versandkosten €","4.90","number")}</div>${fIn("lieferzeit","Lieferzeit","2–4 Werktage")}${fIn("groessen_txt","Standard-Größen",(d.groessen||[]).join(", "))}</details>`}
+ h+=`<div class="vmsg" id="vMsg" hidden></div><div class="vende"><button type="button" class="btn" id="vPub2" style="width:100%">Veröffentlichen · 199 €</button><small class="vhin">Anmelden erst beim Veröffentlichen (E-Mail-Code, kein Passwort). Dein Entwurf bleibt erhalten.</small></div>`;
+ const box=$("#vForm"),y=box.parentElement.scrollTop,auf=[...box.querySelectorAll("details")].map(x=>x.open);box.innerHTML=h;box.querySelectorAll("details").forEach((x,i)=>{if(auf[i]!=null)x.open=auf[i]});box.parentElement.scrollTop=y;
+ // Hilfsfelder (Größen-Listen als Text)
+ box.querySelectorAll('[data-k$="groessen_txt"],[data-k$="aus_txt"]').forEach(i=>{const k=i.dataset.k,echt=k.replace(/groessen_txt$/,"groessen").replace(/aus_txt$/,"ausverkauft");const v=vPath(d,echt);if(Array.isArray(v)&&v.length)i.value=v.join(", ")});
+ $("#vPub2").onclick=vPub;$("#vKi").onclick=vKi;$("#vBes").oninput=e=>{p.besonders=e.target.value;store()}}
+document.addEventListener("input",e=>{const i=e.target;if(!window.VCUR||!i.closest||!i.closest("#vForm")||!i.dataset.k)return;const d=window.VCUR.daten;let k=i.dataset.k,v=i.value;
+ if(i.dataset.zeilen)v=v.split("\n").map(x=>x.trim()).filter(Boolean);
+ else if(/groessen_txt$|aus_txt$/.test(k)){k=k.replace(/groessen_txt$/,"groessen").replace(/aus_txt$/,"ausverkauft");v=v.split(/[,;\s]+/).map(Number).filter(x=>x>0&&x<70)}
+ else if(i.type=="number")v=v===""?null:+v;
+ vSet(d,k,v);if(k=="firma.name"){window.VCUR.name=v||PV[window.VCUR.vorlage].n;$("#vName").textContent=window.VCUR.name}store();vRender()});
+document.addEventListener("change",e=>{const i=e.target;if(!window.VCUR||!i.closest||!i.closest("#vForm"))return;if(i.dataset.chk){vSet(window.VCUR.daten,i.dataset.chk,i.checked);store();vForm();vRender()}});
+document.addEventListener("click",e=>{if(!window.VCUR)return;const t=e.target;if(!t.closest||!t.closest("#vForm"))return;const d=window.VCUR.daten;
+ const fo=t.closest("[data-foto]");if(fo){vFileZiel={k:fo.dataset.foto,max:+fo.dataset.max,alpha:!!fo.dataset.alpha};vFile.click();return}
+ const w=t.closest("[data-weg]");if(w){e.preventDefault();vSet(d,w.dataset.weg,null);store();vForm();vRender();return}
+ const dl=t.closest("[data-del]");if(dl){e.preventDefault();const k=dl.dataset.del.split(".");const i=+k.pop();const arr=vPath(d,k.join("."));if(Array.isArray(arr)&&arr.length>1){arr.splice(i,1);store();vForm();vRender()}else vInfo("Mindestens ein Eintrag muss bleiben.",1);return}
+ const ad=t.closest("[data-add-design]");if(ad){const ty=d.typen[+ad.dataset.addDesign];ty.designs.push({id:"d"+Date.now().toString(36),name:"Neues Design",kurz:"",text:"",farbwahl:false,foto:null,fotos:{}});store();vForm();vRender();return}
+ if(t.closest("[data-add-farbe]")){d.farben.push({id:"f"+Date.now().toString(36),name:"Neue Farbe",hex:"#c98f8a",kurz:"",text:""});store();vForm();vRender();return}
+ const pf=t.closest("[data-add-pfarbe]");if(pf){d.produkte[+pf.dataset.addPfarbe].farben.push({name:"Neue Farbe",hex1:"#333333",hex2:"#ff6a1a",bild:null});store();vForm();vRender();return}
+ if(t.closest("[data-add-produkt]")){d.produkte.push({id:"p"+Date.now().toString(36),name:"Neues Modell",kategorie:"Sneaker",preis:129,text:"",details:[["Obermaterial",""]],ausverkauft:[],farben:[{name:"Schwarz",hex1:"#151515",hex2:"#ff6a1a",bild:null}]});store();vForm();vRender();return}});
+// KI schreibt die Texte aus den Angaben (Vorlage = Stil/Struktur)
+function vKi(){const p=window.VCUR,d=p.daten,F=d.firma||{};if(!(F.name||"").trim()){vInfo("Bitte zuerst den Firmennamen eintragen.",1);const i=$('#vForm [data-k="firma.name"]');i&&i.focus();return}
+ const b=$("#vKi");b.disabled=true;b.textContent="✦ Die KI schreibt deine Texte …";
+ const angaben={name:F.name,zusatz:F.zusatz,ort:F.ort,besonders:p.besonders||"",leistungen:p.vorlage=="nagelstudio"?(d.typen||[]).filter(t=>t.aktiv!==false).map(t=>t.name+" "+(t.preis||"")+": "+(t.designs||[]).map(x=>x.name).join(", ")).join(" | "):(d.produkte||[]).map(m=>m.name+" ("+(m.kategorie||"")+", "+(m.preis||"")+" €)").join(", ")};
+ fetch(API+"vorlage-texte",{method:"POST",headers:KOPF(),body:JSON.stringify({vorlage:p.vorlage,angaben,texte:d.texte})}).then(r=>r.json().then(j=>({r,j}))).then(({r,j})=>{
+  if(!r.ok){if(r.status==429&&j.anmelden&&!TOK){weiter=()=>vKi();lgAuf("limit")}throw j.fehler||"Das hat nicht geklappt."}
+  Object.keys(j.texte||{}).forEach(k=>{if(k in d.texte)d.texte[k]=j.texte[k]});store();vForm();vRender(true);vInfo("Fertig ✓ Die KI hat deine Texte geschrieben. Schau dir die Vorschau rechts an – Farben und Designs kannst du dort direkt ausprobieren."+(j.rest!=null&&!TOK?` <small>(Heute noch ${j.rest} kostenlose KI-Vorschau${j.rest==1?"":"en"} ohne Anmeldung.)</small>`:""))})
+ .catch(x=>vInfo(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.",1)).finally(()=>{b.disabled=false;b.innerHTML="✦ Texte mit KI schreiben &amp; Vorschau bauen"})}
+// Veröffentlichen: erst hier anmelden; danach 199 € freischalten
+async function vPub(){const p=window.VCUR;if(!p)return;const F=p.daten.firma||{};if(!(F.name||"").trim()){vInfo("Bitte zuerst den Firmennamen eintragen.",1);return}
+ if(!TOK){weiter=()=>vPub();lgAuf("pub");return}
+ vInfo("<small>Ich stelle deine Website online …</small>");
+ try{p.html=await vHtml(p);PUB_ID=p.id;IDB.set("projekte",P);
+  const r0=await fetch(API+"projekte",{method:"PUT",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({projekte:fuerServer()})});if(r0.status==413||r0.status==400)throw "Deine Fotos sind zusammen zu groß. Bitte ein paar Fotos weniger oder kleinere nehmen.";if(r0.status==401){abmelden();weiter=()=>vPub();lgAuf("pub");return}
+  const r=await fetch(API+"veroeffentlichen",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+TOK},body:JSON.stringify({id:p.id})});const j=await r.json();if(!r.ok)throw j.fehler||"Das hat nicht geklappt.";
+  p.pub=1;p.url=j.url;p.html="";PUB_ID="";store();
+  vInfo(`Deine Vorschau ist online ✓<br><a href="${j.url}" target="_blank" rel="noopener" style="color:#b08cff;word-break:break-all">${j.url}</a><br><br>Dauerhaft online mit eigener Domain: <button class="btn sm" id="kauf199">Für 199 € freischalten</button>`);
+  $("#kauf199").onclick=()=>{cur=p;kaufen(j.url,"premium",p,vInfo)}}
+ catch(x){PUB_ID="";p.html="";vInfo(typeof x=="string"?x:"Keine Verbindung. Bitte nochmal.",1)}}
+// Premium-Vorlagen auch im Studio unter „Vorlagen“ zeigen
+(function(){const s=$("#v-vor");if(!s)return;const d=document.createElement("div");d.className="sec";d.style.marginTop="0";
+ d.innerHTML=`<h3>Premium-Vorlagen <small style="color:var(--mu);font-weight:400">· 199 € einmalig · Vorschau gratis</small></h3><div class="tpls">${Object.keys(PV).map(id=>`<div class="tpl" style="cursor:default"><div class="pv" style="background:#000 url(vorlagen/vorschau/${id}.webp) center/cover"></div><div class="in"><div><b>${PV[id].n}</b><br><small><a href="vorlagen/${PV[id].slug}/" target="_blank" rel="noopener" style="color:var(--ak2)">Live ansehen</a></small></div><a class="btn sm" href="app.html?vorlage=${id}" style="text-decoration:none">Nehmen</a></div></div>`).join("")}</div><h3 style="margin-top:22px">Weitere Vorlagen</h3>`;s.prepend(d)})();
 </script></body></html>
