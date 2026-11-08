@@ -1,0 +1,50 @@
+/* ===== v3: Personal & Pflege ===== */
+.personal{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--nacht)}
+.personal .p-film{display:grid;grid-template-rows:1fr 1fr;min-height:100vh}
+.personal .p-film img,.personal .p-film video{width:100%;height:100%;object-fit:cover;min-height:40vh;display:block}
+.p-inhalt,.qs-inhalt{padding:clamp(48px,7vw,110px) clamp(20px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
+.personal h2,.qs h2,.anfrage h2{font-stretch:125%;font-weight:850;font-size:clamp(32px,4.6vw,68px);line-height:.95}
+.personal .lead,.qs .lead,.anfrage .lead{margin-top:16px;color:rgba(242,240,236,.82);line-height:1.55;max-width:50ch}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
+.zwei h3{font-stretch:115%;font-weight:800;font-size:18px;padding-bottom:10px;border-bottom:2px solid var(--rot)}
+.zwei ul{list-style:none;margin-top:10px}.zwei li{padding:7px 0;font-size:15px;color:rgba(242,240,236,.85);line-height:1.4}
+.knopfreihe{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+/* Qualitätssicherung */
+.qs{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#000}
+.qs-bild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6}
+.qs::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.94) 0,rgba(0,0,0,.6) 50%,rgba(0,0,0,.1))}
+.qs-inhalt{position:relative;z-index:2;max-width:760px}
+.qs-liste{list-style:none;margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.qs-liste li{padding:14px 0;border-top:1px solid rgba(242,240,236,.15);color:rgba(242,240,236,.75);font-size:15px}
+.qs-liste b{display:block;color:var(--gips);font-stretch:110%;font-size:17px;margin-bottom:2px}
+/* Gruppe vier + Werte */
+.bereiche.vier{grid-template-columns:repeat(4,1fr)}
+.werte{position:relative;margin-top:70px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.werte h4{font-stretch:110%;font-weight:800;font-size:17px;color:var(--gold)}
+.werte p{margin-top:8px;color:rgba(242,240,236,.75);font-size:15px;line-height:1.5}
+/* Anfrage */
+.anfrage{padding:clamp(80px,11vw,150px) clamp(16px,6vw,96px);background:var(--schwarz)}
+.a-form{margin-top:40px;max-width:900px}
+.bereichwahl{border:0;display:flex;flex-wrap:wrap;gap:10px}
+.bereichwahl legend{font-size:14px;color:var(--gold);margin-bottom:10px}
+.bereichwahl label{position:relative}
+.bereichwahl input{position:absolute;opacity:0;pointer-events:none}
+.bereichwahl span{display:inline-flex;padding:11px 18px;border-radius:999px;cursor:pointer;font-weight:700;font-size:15px;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.12);transition:background .3s,box-shadow .3s}
+.bereichwahl input:checked+span{background:radial-gradient(120% 140% at 50% 0,#ff5a5f,#e2141b 45%,#8d070c);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 24px rgba(226,20,27,.5)}
+.bereichwahl input:focus-visible+span{outline:2px solid var(--gips);outline-offset:3px}
+.felder{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.felder label{display:flex;flex-direction:column;gap:7px;font-size:14px;color:rgba(242,240,236,.75)}
+.felder .breit{grid-column:1/-1}
+.felder input,.felder select,.felder textarea{font:inherit;font-size:16px;color:var(--gips);padding:14px 16px;border-radius:14px;border:0;outline:0;
+  background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 2px 6px rgba(0,0,0,.4);-webkit-appearance:none;appearance:none}
+.felder select{background-image:linear-gradient(45deg,transparent 50%,#aaa 50%),linear-gradient(135deg,#aaa 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat;background-color:rgba(255,255,255,.06)}
+.felder select option{background:#121214}
+.felder input:focus,.felder select:focus,.felder textarea:focus{box-shadow:inset 0 0 0 1.5px var(--rot),0 0 0 4px rgba(226,20,27,.2)}
+.a-form.kein-bau .nur-bau{display:none}
+.hinweis-form{margin-top:14px;min-height:1.4em;color:#ff8a8d;font-size:14px}
+button.liquid{border:0;font-family:inherit}
+footer a{color:inherit}
+@media (max-width:860px){.personal .p-film{min-height:0}.personal .p-film img,.personal .p-film video{min-height:30vh}.personal{grid-template-columns:1fr}.zwei,.qs-liste,.felder{grid-template-columns:1fr}.bereiche.vier,.werte{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.bereiche.vier,.werte{grid-template-columns:1fr}}
+@media (max-width:860px){.demo-band{display:none}}

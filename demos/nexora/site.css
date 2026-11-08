@@ -1,0 +1,195 @@
+
+:root{
+  --schwarz:#000; --nacht:#121214; --rot:#E2141B; --gold:#B08D57; --gips:#F2F0EC; --beton:#8A8780;
+  --f:"Archivo",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--schwarz);color:var(--gips);font-family:var(--f);-webkit-font-smoothing:antialiased}
+body{background:var(--schwarz);overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--rot);outline-offset:4px}
+img{display:block;max-width:100%}
+
+/* Kopfzeile */
+.kopf{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,48px);pointer-events:none}
+.kopf>*{pointer-events:auto}
+.kopf img{height:30px;width:auto;opacity:0;transition:opacity .5s}
+.kopf.zeigen img{opacity:1}
+
+
+
+/* ===== Liquid-Glas-Knöpfe (nach Djengos TikTok-Vorlage „Liquid Button“) ===== */
+.liquid{--x:50%;--y:50%;position:relative;isolation:isolate;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--gips);
+  font-weight:700;font-stretch:110%;font-size:16px;padding:18px 22px 18px 20px;border-radius:999px;cursor:pointer;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.04) 55%,rgba(255,255,255,.08));
+  -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.55),inset 0 -3px 8px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.14),
+    0 7px 0 -1px rgba(255,255,255,.07),0 8px 0 -1px rgba(0,0,0,.6),0 22px 40px rgba(0,0,0,.55);
+  transition:transform .35s cubic-bezier(.2,.9,.2,1),box-shadow .45s,color .3s}
+.liquid::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;
+  background:radial-gradient(120% 140% at var(--x) var(--y),#ff5a5f 0,#e2141b 38%,#8d070c 100%);
+  clip-path:circle(0% at var(--x) var(--y));transition:clip-path .65s cubic-bezier(.3,.8,.2,1)}
+.liquid::after{content:"";position:absolute;left:7%;right:7%;top:2px;height:38%;border-radius:999px 999px 60% 60%/999px 999px 40% 40%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0) 90%);opacity:.5}
+.liquid .ic{width:22px;height:22px;flex:none;opacity:.9}
+.liquid .pkt{margin-left:auto;letter-spacing:2px;opacity:.6;font-weight:900}
+.liquid:hover,.liquid:focus-visible,.liquid.voll{color:#fff;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),inset 0 -3px 10px rgba(80,0,0,.6),inset 0 0 0 1px rgba(255,160,160,.35),
+    0 7px 0 -1px rgba(255,90,95,.35),0 8px 0 -1px rgba(60,0,0,.8),0 0 34px rgba(226,20,27,.55),0 22px 44px rgba(0,0,0,.55)}
+.liquid:hover::before,.liquid:focus-visible::before,.liquid.voll::before{clip-path:circle(150% at var(--x) var(--y))}
+.liquid:active{transform:translateY(3px) scale(.985)}
+.liquid .wellen{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;z-index:0}
+.liquid .welle{position:absolute;border-radius:50%;width:12px;height:12px;margin:-6px 0 0 -6px;
+  background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,120,120,.5) 40%,transparent 70%);animation:welle .7s ease-out forwards}
+@keyframes welle{to{transform:scale(30);opacity:0}}
+.stapel{margin-top:36px;display:grid;gap:16px;max-width:420px;transform:perspective(1100px) rotateX(16deg) rotateZ(-6deg);transform-origin:30% 50%;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.stapel:hover,.stapel:focus-within{transform:perspective(1100px) rotateX(0) rotateZ(0)}
+.kopf a.liquid{padding:11px 18px;font-size:14px}
+
+/* ===== Glas-Navigation mit Licht-Welle (nach „Glassy Navigation Tabs“) ===== */
+.glasnav{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:55;width:min(560px,calc(100vw - 24px));height:82px;transform:translate(-50%,140%);transition:transform .7s cubic-bezier(.2,.9,.2,1)}
+.glasnav.da{transform:translate(-50%,0)}
+.glasnav .glas{position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,40,44,.55),rgba(14,14,16,.72));-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.glasnav svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.glasnav ul{position:absolute;left:0;right:0;bottom:0;height:64px;display:flex;list-style:none}
+.glasnav li{flex:1}
+.glasnav a{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-decoration:none;color:rgba(242,240,236,.62);font-size:11.5px;font-weight:600;transition:color .3s,transform .45s cubic-bezier(.2,.9,.2,1)}
+.glasnav a svg{position:static;width:22px;height:22px;overflow:visible}
+.glasnav a.an{color:#fff;transform:translateY(-9px)}
+.glasnav a.an svg{filter:drop-shadow(0 0 6px rgba(255,70,75,.9))}
+.glasnav .strahl{position:absolute;bottom:0;height:64px;width:64px;margin-left:-32px;pointer-events:none;
+  background:radial-gradient(60% 90% at 50% 0,rgba(255,60,66,.45),transparent 70%);transition:left .5s cubic-bezier(.2,.9,.2,1)}
+@media (max-width:860px){.stapel{transform:none}.stapel:hover{transform:none}.kopf a.liquid{display:none}}
+@media (prefers-reduced-motion:reduce){.liquid::before,.stapel,.glasnav,.glasnav a{transition:none}}
+
+/* Kapitel: Scroll-Film */
+.kapitel{position:relative}
+.kapitel .buehne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.kapitel canvas,.kapitel .standbild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#chef .standbild{object-position:74% 50%}#start .standbild{object-position:38% 50%}
+.kapitel .standbild{z-index:0}
+.kapitel canvas{z-index:1}
+.schleier{position:absolute;inset:0;z-index:2;pointer-events:none}
+.text{position:absolute;z-index:3;left:clamp(16px,6vw,96px);right:clamp(16px,6vw,96px);bottom:clamp(120px,16vh,180px);max-width:640px}
+.text h2{font-stretch:125%;font-weight:850;font-size:clamp(34px,6.2vw,92px);line-height:.92;letter-spacing:-.01em}
+.text p{margin-top:18px;font-size:clamp(16px,1.35vw,20px);line-height:1.5;max-width:46ch;color:rgba(242,240,236,.86)}
+.text .wer{margin-top:22px;font-size:15px;color:var(--gold);font-weight:600}
+.blende{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.blende.an{opacity:1;transform:none}
+
+
+/* Hero */
+#start .schleier{background:linear-gradient(180deg,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 28%,rgba(0,0,0,.15) 45%,rgba(0,0,0,.92) 100%)}
+#start .text h2{font-size:clamp(32px,4.8vw,68px)}
+.logo-gross{position:absolute;z-index:3;left:50%;top:44%;width:min(74vw,860px);transform:translate(-50%,-50%);will-change:transform,opacity}
+.hinweis{position:absolute;z-index:3;left:50%;bottom:28px;transform:translateX(-50%);font-size:13px;color:rgba(242,240,236,.7);display:flex;flex-direction:column;align-items:center;gap:10px}
+.hinweis i{display:block;width:1px;height:42px;background:linear-gradient(var(--gips),transparent);animation:tropf 1.8s infinite}
+@keyframes tropf{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+#start .text{text-align:left}
+
+#chef .schleier{background:linear-gradient(90deg,rgba(0,0,0,.88) 0,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 70%)}
+#raum .schleier{background:linear-gradient(0deg,rgba(0,0,0,.75) 0,rgba(0,0,0,0) 45%)}
+#auto .schleier{background:linear-gradient(90deg,rgba(0,0,0,.85) 0,rgba(0,0,0,0) 60%)}
+
+/* Bauablauf-Leiste im Raum-Kapitel (echte Reihenfolge) */
+.ablauf{position:absolute;z-index:3;right:clamp(16px,6vw,96px);top:50%;transform:translateY(-50%);display:grid;gap:16px;list-style:none}
+.ablauf li{text-shadow:0 1px 12px rgba(0,0,0,.8);display:flex;align-items:center;gap:14px;font-stretch:110%;font-weight:700;font-size:clamp(14px,1.2vw,17px);color:rgba(242,240,236,.4);transition:color .4s}
+.ablauf li b{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-size:13px}
+.ablauf li.an{color:var(--gips)}
+.ablauf li.an b{background:var(--rot);border-color:var(--rot);color:#fff}
+
+/* Bau-Video-Abschnitt */
+.baustelle{display:grid;grid-template-columns:1.25fr 1fr;min-height:100vh;background:var(--nacht)}
+.baustelle video{width:100%;height:100%;object-fit:cover;min-height:60vh}
+.baustelle .inhalt{padding:clamp(40px,7vw,110px) clamp(20px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
+.baustelle h2,.leistungen h2,.kontakt h2{font-stretch:125%;font-weight:850;font-size:clamp(32px,4.6vw,68px);line-height:.95}
+.baustelle p{margin-top:18px;line-height:1.55;color:rgba(242,240,236,.82);max-width:46ch}
+.liste{margin-top:30px;list-style:none;border-top:1px solid rgba(242,240,236,.15)}
+.liste li{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid rgba(242,240,236,.15);font-size:17px}
+.liste li span{color:var(--beton);font-size:14px;text-align:right}
+
+/* Leistungen der Gruppe */
+.leistungen{padding:clamp(80px,12vw,170px) clamp(16px,6vw,96px);background:var(--schwarz);position:relative;overflow:hidden}
+.leistungen .karte-welt{position:absolute;right:-8%;top:8%;width:70%;opacity:.16;pointer-events:none}
+.leistungen h2{max-width:14ch;position:relative}
+.bereiche{position:relative;margin-top:60px;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,48px)}
+.bereich h3{font-stretch:125%;font-weight:800;font-size:22px;padding-bottom:14px;border-bottom:2px solid var(--rot)}
+.bereich ul{list-style:none;margin-top:16px}
+.bereich li{padding:9px 0;color:rgba(242,240,236,.85);font-size:16px}
+.zahlen{position:relative;margin-top:90px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid rgba(242,240,236,.15);padding-top:36px}
+.zahlen div strong{display:block;font-stretch:125%;font-weight:850;font-size:clamp(34px,4.4vw,64px);color:var(--gips)}
+.zahlen div span{color:var(--gold);font-size:15px}
+.qm{position:relative;margin-top:48px;color:var(--beton);font-size:14px}
+
+/* Kontakt */
+.kontakt{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--nacht)}
+.kontakt .bild{background:#000 center/cover no-repeat}
+.kontakt .inhalt{padding:clamp(48px,7vw,110px) clamp(20px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
+.kontakt p.lead{margin-top:16px;color:rgba(242,240,236,.82);line-height:1.55;max-width:42ch}
+.daten{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:22px;font-size:15px;line-height:1.55;color:rgba(242,240,236,.85)}
+.daten b{display:block;color:var(--gold);font-weight:600;margin-bottom:4px}
+footer{padding:28px clamp(16px,6vw,96px) 120px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--beton);font-size:13px;border-top:1px solid rgba(242,240,236,.1)}
+.demo-band{position:fixed;right:12px;top:72px;z-index:60;font-size:11px;color:rgba(242,240,236,.55);background:rgba(0,0,0,.55);padding:5px 9px;border-radius:20px}
+
+/* ohne JS: Standbilder statt Film */
+.ohne-js .kapitel{height:auto!important}
+.ohne-js .kapitel .buehne{position:relative}
+.ohne-js .blende{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .baustelle,.kontakt{grid-template-columns:1fr}
+  .bereiche{grid-template-columns:1fr}
+  .zahlen{grid-template-columns:1fr 1fr}
+  .ablauf{top:auto;bottom:auto;top:96px;transform:none;right:auto;left:16px;grid-auto-flow:column;gap:10px}
+  .ablauf li span{display:none}
+  .kontakt .bild{min-height:56vh}
+  .daten{grid-template-columns:1fr}
+  #chef .schleier{background:linear-gradient(0deg,rgba(0,0,0,.9) 0,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 75%)}
+  #auto .schleier{background:linear-gradient(0deg,rgba(0,0,0,.85) 0,rgba(0,0,0,0) 60%)}
+}
+@media (prefers-reduced-motion:reduce){.blende{transition:none}.hinweis i{animation:none}}
+
+/* ===== Trailer (Hauptfenster) ===== */
+.trailer{position:relative;height:100vh;height:100svh;overflow:hidden;background:#000}
+.trailer video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.trailer .schleier{background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0,rgba(0,0,0,0) 25%,rgba(0,0,0,0) 60%,rgba(0,0,0,.85) 100%)}
+.trailer .mitte{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-56%);width:min(78vw,820px);text-align:center}
+.trailer .mitte img{width:100%}
+.trailer .worte{position:absolute;z-index:3;left:0;right:0;bottom:clamp(150px,22vh,230px);text-align:center;height:1.2em;font-stretch:125%;font-weight:850;font-size:clamp(26px,3.6vw,52px)}
+.trailer .worte span{position:absolute;left:0;right:0;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .6s cubic-bezier(.2,.9,.2,1);letter-spacing:.02em}
+.trailer .worte span.an{opacity:1;transform:none}
+.trailer .aktion{position:absolute;z-index:4;left:50%;bottom:clamp(64px,10vh,110px);transform:translateX(-50%);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.trailer .aktion .liquid{padding:14px 22px;white-space:nowrap}
+.balken{position:absolute;left:0;right:0;height:7vh;background:#000;z-index:2}.balken.o{top:0}.balken.u{bottom:0}
+.kino{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.92);display:none;place-items:center;padding:4vw}
+.kino.offen{display:grid}
+.kino video{width:min(1200px,100%);max-height:86vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.kino .zu{position:absolute;top:20px;right:20px;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:10px 16px;font:inherit;cursor:pointer}
+/* Auto fährt ins X */
+.x-blende{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,#ff2a30 0,#e2141b 35%,#3a0003 100%)}
+.logo-gross{transform-origin:42.4% 50.6%}
+/* Gewerke-Kacheln */
+.gewerke{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);margin-top:56px;position:relative}
+.kachel{position:relative;display:block;aspect-ratio:4/5;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;isolation:isolate;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 24px 60px rgba(0,0,0,.5)}
+.kachel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.9,.2,1);z-index:-2}
+.kachel::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.88))}
+.kachel:hover img,.kachel:focus-visible img{transform:scale(1.07)}
+.kachel .k-text{position:absolute;left:22px;right:22px;bottom:22px}
+.kachel h3{font-stretch:125%;font-weight:850;font-size:clamp(28px,2.6vw,40px);padding:0;border:0}
+.kachel p{margin-top:8px;color:rgba(255,255,255,.8);font-size:15px;line-height:1.45}
+.kachel .mehr{display:inline-flex;margin-top:16px;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.kachel:hover .mehr{background:var(--rot)}
+/* Unterseiten-Kopf */
+.seitenkopf{position:relative;height:88vh;height:88svh;overflow:hidden}
+.seitenkopf video,.seitenkopf>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.seitenkopf .schleier{background:linear-gradient(0deg,rgba(0,0,0,.9) 0,rgba(0,0,0,.2) 55%,rgba(0,0,0,.45) 100%)}
+.seitenkopf .text{bottom:clamp(110px,14vh,160px)}
+.leistungsraster{display:grid;grid-template-columns:repeat(2,1fr);gap:0 clamp(24px,4vw,64px);margin-top:44px}
+.leistung{padding:26px 0;border-top:1px solid rgba(242,240,236,.15)}
+.leistung h3{font-stretch:115%;font-weight:800;font-size:22px}
+.leistung p{margin-top:8px;color:rgba(242,240,236,.75);line-height:1.5;max-width:44ch}
+.block{padding:clamp(80px,11vw,150px) clamp(16px,6vw,96px);background:var(--schwarz)}
+.block h2{font-stretch:125%;font-weight:850;font-size:clamp(32px,4.6vw,68px);line-height:.95;max-width:16ch}
+.block .lead{margin-top:18px;color:rgba(242,240,236,.8);line-height:1.55;max-width:52ch}
+.zurueck{display:inline-flex;margin-top:26px}
+@media (max-width:860px){.gewerke{grid-template-columns:1fr}.kachel{aspect-ratio:16/11}.leistungsraster{grid-template-columns:1fr}.balken{height:4vh}}
