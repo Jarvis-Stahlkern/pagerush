@@ -229,6 +229,7 @@ body.cart-open .cart{transform:none}
 .vl-demo{position:fixed;right:14px;bottom:14px;z-index:300;background:rgba(255,106,26,.92);color:#111;font:700 12px/1.3 var(--sans);padding:8px 14px;border-radius:99px;box-shadow:0 8px 30px rgba(0,0,0,.4);white-space:nowrap;pointer-events:none}
 @media(max-width:640px){.vl-demo{right:auto;left:50%;transform:translateX(-50%);bottom:12px;font-size:11px}}
 .logo img{height:30px;width:auto;display:block}
+.vl-fv{display:inline-block;margin-top:12px;background:rgba(255,106,26,.16);border:1px solid rgba(255,106,26,.5);color:#ffb27a;font:600 11px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:99px}
 footer .imp{width:100%;font-size:11.5px;opacity:.7}
 footer a{color:inherit;border-bottom:1px solid var(--faint)}
 </style>
@@ -255,6 +256,7 @@ footer a{color:inherit;border-bottom:1px solid var(--faint)}
       <div class="crumb"><button class="back" id="back" aria-label="Zurück zur Wand">←</button>Kollektion<i></i><span id="dser">ARKADE / 06</span></div>
       <h2 class="dname" id="dname" aria-live="polite"></h2>
       <p class="dsub" id="dsub"></p>
+      <p class="vl-fv" id="vlFv" hidden>Farbvorschau · Foto folgt</p>
     </div>
     <div class="dright" id="dright">
       <div class="prow"><span id="dcat">Herren / Damen</span><b id="dprice">149 €</b></div>
@@ -311,7 +313,24 @@ const PH={};function ph(label){if(PH[label])return PH[label];const t=esc(String(
 const M=(D.produkte||[]).filter(p=>p&&(p.farben||[]).length).slice(0,12).map((p,i)=>({id:String(p.id||("p"+i)),n:p.name||"Produkt",cat:p.kategorie||"",price:+p.preis||0,sub:p.text||"",det:(p.details||[]).filter(x=>x&&x[0]),out:(p.ausverkauft||[]).map(Number),sizes:(p.groessen&&p.groessen.length?p.groessen:null),
   c:(p.farben||[]).slice(0,3).map(c=>[c.name||"",c.hex1||"#222",c.hex2||c.hex1||"#444",okUrl(c.bild)?c.bild:""])}));
 if(!M.length)M.push({id:"p0",n:"Produkt",cat:"",price:0,sub:"",det:[],out:[],sizes:null,c:[["Farbe","#222","#ff6a1a",""]]});
-const img=(m,k)=>M[m].c[k][3]||ph(M[m].n+" · "+M[m].c[k][0]);
+/* 08.11.2026: Farbe ohne eigenes Foto -> eigenes Foto einer anderen Farbe dieses Produkts wird eingefärbt (gekennzeichnet „Farbvorschau“) */
+const TINT={},TWAIT={};
+const rgbOf=h=>{h=(h||"#000").replace("#","");if(h.length==3)h=h.replace(/./g,"$&$&");const n=parseInt(h,16)||0;return [n>>16&255,n>>8&255,n&255]};
+function hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6}return [h,s,l]}
+function rgb(h,s,l){if(!s)return [l*255,l*255,l*255];const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q,f=t=>{t<0&&(t+=1);t>1&&(t-=1);return t<1/6?p+(q-p)*6*t:t<1/2?q:t<2/3?p+(q-p)*(2/3-t)*6:p};return [f(h+1/3)*255,f(h)*255,f(h-1/3)*255]}
+function quelle(m){const c=M[m].c.find(x=>x[3]);return c||null}
+function faerben(m,k){const key=m+"|"+k;if(TINT[key]||TWAIT[key])return;const q=quelle(m);if(!q)return;TWAIT[key]=1;const im=new Image();im.crossOrigin="anonymous";
+ im.onload=()=>{try{const w=im.naturalWidth,h=im.naturalHeight,cv=document.createElement("canvas");cv.width=w;cv.height=h;const x=cv.getContext("2d");x.drawImage(im,0,0);const B=x.getImageData(0,0,w,h),P=B.data;
+  const [th0,ts0,tl0]=hsl(...rgbOf(M[m].c[k][1])),[th2,ts2,tl2]=hsl(...rgbOf(M[m].c[k][2]));const bunt=ts0>=.1||ts2<.1;const th=bunt?th0:th2,ts=bunt?ts0:ts2,tl=bunt?tl0:tl2;
+  for(let i=0;i<P.length;i+=4){if(P[i+3]<10)continue;let [hh,ss,ll]=hsl(P[i],P[i+1],P[i+2]);
+   if(ss>.16&&ll>.08&&ll<.94){hh=th;ss=ts<.1?ss*.1:Math.min(1,ts*(.55+ss*.6));if(ts<.1)ll=ll*.4+tl*.6}
+   const o=rgb(hh,ss,ll);P[i]=o[0];P[i+1]=o[1];P[i+2]=o[2]}
+  x.putImageData(B,0,0);TINT[key]=cv.toDataURL("image/png");}catch(_){TINT[key]=""}delete TWAIT[key];
+  const u=TINT[key];if(!u)return;$$(".niche").forEach((el,j)=>{const n=N[j];if(n&&n.m===m&&n.k===k){el.querySelector(".shoe").src=u;el.querySelector(".gl").src=u}});
+  if(cur>=0&&N[cur].m===m&&N[cur].k===k){hs.src=u;hg.src=u}const r=[...document.querySelectorAll("#rot img")];if(m===0&&r[k])r[k].src=u};
+ im.onerror=()=>{delete TWAIT[key]};im.src=q[3]}
+const istVorschau=(m,k)=>!DEMO&&!M[m].c[k][3]&&!!quelle(m);
+const img=(m,k)=>{const c=M[m].c[k];if(c[3])return c[3];if(!DEMO&&quelle(m)){const key=m+"|"+k;if(TINT[key])return TINT[key];faerben(m,k);return quelle(m)[3]}return ph(M[m].n+" · "+c[0])};
 if(!DEMO)document.body.classList.add("vl-kunde");
 const SIZES=(D.groessen&&D.groessen.length?D.groessen:[38,39,40,41,42,43,44,45,46]).map(Number);const sizesOf=m=>(m.sizes||SIZES).map(Number);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -372,7 +391,7 @@ function heroOn(){placeHero();const sw=$$(".niche")[cur].querySelector(".sw");
   (hs.decode?hs.decode().catch(()=>{}):Promise.resolve()).then(go);}
 function heroOff(){$$(".niche .sw.hid").forEach(x=>x.classList.remove("hid"));hs.classList.remove("on");hg.classList.remove("on");}
 function nameAnim(t){const d=$("#dname");d.innerHTML=[...t].map((ch,i)=>`<span style="transition-delay:${.05+i*.035}s">${ch===" "?"&nbsp;":ch}</span>`).join("");}
-function fill(j){const n=N[j],m=M[n.m];nameAnim(m.n);$("#dsub").textContent=m.sub;$("#dprice").textContent=eur(m.price);$("#dcat").textContent=m.cat;
+function fill(j){const n=N[j],m=M[n.m];nameAnim(m.n);$("#vlFv").hidden=!istVorschau(n.m,n.k);$("#dsub").textContent=m.sub;$("#dprice").textContent=eur(m.price);$("#dcat").textContent=m.cat;
   $("#dser").textContent=String(F.name||"").toUpperCase()+" / "+String(n.m+1).padStart(2,"0");
   $("#swatches").innerHTML=m.c.map((c,k)=>`<button class="swc" data-k="${k}" aria-label="Farbe ${esc(c[0])}" aria-pressed="${k===n.k}"><i style="background:linear-gradient(135deg,${c[1]} 50%,${c[2]} 50%)"></i></button>`).join("");
   $("#cname").textContent=m.c[n.k][0];
@@ -393,7 +412,7 @@ function pan(d){if(busy||cur<0)return;busy=true;document.body.classList.remove("
   const j=(cur+d+N.length)%N.length;setTimeout(()=>{cur=j;fill(j);aim(j);setTimeout(()=>document.body.classList.add("ready"),900);setTimeout(()=>{heroOn();busy=false},1260)},120)}
 function recolor(k){if(cur<0||busy)return;const n=N[cur];if(n.k===k)return;const el=$$(".niche")[cur],sh=el.querySelector(".shoe"),gl=el.querySelector(".gl");
   n.k=k;$$(".swc").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.k===k));$("#cname").textContent=M[n.m].c[k][0];
-  const pre=new Image();pre.src=img(n.m,k);
+  $("#vlFv").hidden=!istVorschau(n.m,k);const pre=new Image();pre.src=img(n.m,k);
   const tgt=hs.classList.contains("on")?hs:sh;busy=true;hg.classList.remove("on");
   tgt.classList.remove("turn-in");tgt.classList.add("turn-out");
   setTimeout(()=>{(pre.decode?pre.decode():Promise.resolve()).catch(()=>{}).then(()=>{sh.src=pre.src;sh.alt=`${M[n.m].n} in ${M[n.m].c[k][0]}`;gl.src=pre.src;
